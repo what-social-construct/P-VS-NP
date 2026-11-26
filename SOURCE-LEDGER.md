@@ -194,6 +194,10 @@ hyperplane reduction for a downward-closed level predicate. The
 two-planes and the residual polynomials modulo 5. The geometric lift
 of this check fixes the given rational two-plane before specializing.
 
+[PEqualNP Ideas discussion #37059](https://github.com/open-goat/pequalnp-proofs/discussions/37059)
+was posted on 2026-11-26. It asks for a helper step on the hyperplane
+section and first-variation bound for `L-gct-231`.
+
 ## GODEL
 
 Balthasar Grabmayr,
