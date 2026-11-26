@@ -13,6 +13,7 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
 | [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
 | [CR](#cr) | Cook and Reckhow, JSL 44 (1979) | Proof systems, p-simulation, polynomial boundedness | Resource-bounded comparison |
+| [VV](#vv) | Valiant and Vazirani, TCS 47 (1986) | Randomized reduction to distinguishing zero and one satisfying assignments | Empty off-diagonal residual and witness feasibility |
 | [ML](#ml) | Mathlib at `56a0058` | Linear-map kernels, finite-dimensional rank–nullity | Lean algebra and the cardinality derivation |
 | [ST](#st) | Stacks Project, Tags 00DT and 04PN | Chinese remainder and idempotents of spectra | Background for the finite split scheme realization |
 | [PEQ](#peq) | PEqualNP public `MetaComplexity.lean` | Bounded circuit semantics | External comparison target |
@@ -99,6 +100,16 @@ uses the exact identity on the proved formula and the polynomial bound on
 the translator as separate hypotheses. The polynomial proof length result
 belongs to the `NP = coNP` comparison.
 
+## VV
+
+Leslie G. Valiant and Vijay V. Vazirani,
+[*NP is as easy as detecting unique solutions*](https://ics.uci.edu/~vazirani/ValVaz.pdf),
+Theoretical Computer Science 47 (1986), 85–93. Theorem 1.1 reduces SAT
+in randomized polynomial time to distinguishing formulas with zero or
+one satisfying assignment, allowing arbitrary answers on formulas with
+multiple assignments. This supports the [witness selection comparison](SEMANTIC-PARITY.md#witness-selection-under-prefix-restrictions)
+for the zero-or-one promise.
+
 ## ML
 
 Lean 4.35.0 and Mathlib are pinned in the
@@ -151,3 +162,13 @@ checks. The one-gate case uses two disjoint incident inputs. The
 primary-output cases use preservation of the initial wire list by
 circuit evaluation and a singleton input. These checks used only
 `PEqualNP.Defs` from the public fork.
+
+The [submitted reduction for `L-meta-17243`](https://github.com/open-goat/pequalnp-proofs/pull/24293)
+uses the two empty-set rejection tests to exclude primary output wires.
+It removes missing wires and repeated indices from the selected list,
+preserving the OR of its values on every input. A positive incidence
+test makes the resulting list nonempty. The lower bound then has two
+cases, according to whether the list has one or two distinct generated
+wires. The public row allowed reductions, and the desk issued a
+prove-only reservation. The desk recorded the reservation as submitted
+after the one-file PR opened.

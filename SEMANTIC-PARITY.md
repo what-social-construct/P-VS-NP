@@ -104,6 +104,33 @@ has one matching partner for each nonzero direction in $K_J$.
 | Bounded circuit agreement | $I_E=([x^\alpha](P_a-N_b))_\alpha$ | Coefficient equations cut out exact Boolean agreement. Contracting the ideal to target parameters gives the represented targets. | [Projection and example](manuscript/03-complexity/section.tex); [symbolic check](agreement_scheme.py) | Derived for finite Boolean families. Executable for constant and affine one-bit candidates. A comparison to the site’s general circuit predicate and a uniform complexity transfer are targets. |
 | Tagged graphs of evaluations | $E=\operatorname{Eq}(a,b)$ on $Z=U\times V$ | Keeping the parameter pair in the graph forces agreement to be a cross component of a tagged self-collision. Its two ordered cross components are the off-diagonal residual. | [Graph square](manuscript/03-complexity/section.tex); [Galois source](SOURCE-LEDGER.md#got) | Derived for the finite Boolean families. The target complement is computed by the separate projection in the preceding row. |
 
+## Witness selection under prefix restrictions
+
+For a polynomial-time verifier $V(x,w)$ with a known polynomial bound on
+the witness length, write $W_x$ for its witness fiber. Fix a witness
+encoding of that length and define
+
+$$
+F(x,u)\quad\Longleftrightarrow\quad
+\text{some witness in } W_x \text{ starts with }u .
+$$
+
+A polynomial-time test for $F$ gives a selector. Test the empty prefix
+for feasibility, then extend a feasible prefix $u$ by testing $u0$.
+Choose $u0$ when it is feasible and $u1$ otherwise. At most one test per
+witness bit suffices after the initial feasibility check. For the
+explicit affine family, each prefix adds coordinate equations and
+Gaussian elimination tests their consistency.
+
+Adding $k$ free bits replaces a fiber of size $m$ by one of size
+$m2^k$, with $m2^k(m2^k-1)$ off-diagonal ordered pairs. A selector
+extends the original witness by $k$ zeros. An executable check with
+the fresh-sign affine selector and four extra bits increased the fiber
+from 2 to 32 and the residual from 2 to 992 pairs, preserving the first two
+selected bits. At the other extreme, fibers of size zero and one both have
+empty off-diagonal residual. The promised satisfiability comparison between
+these two cases has a [randomized hardness result](SOURCE-LEDGER.md#vv).
+
 ## PEqualNP contribution status
 
 | Step | Exact scope | Evidence and status |
@@ -112,6 +139,7 @@ has one matching partner for each nonzero direction in $K_J$.
 | `L-meta-19020` | Every pair of sparse point and line sets with no incidences in the order-three plane is covered by a relabeling of one of eight sample masks. | An independent Python enumeration covered all 12,234 eligible pairs. Another contributor's [Lean proof #23821](https://github.com/open-goat/pequalnp-proofs/pull/23821) merged. |
 | `R-meta-17715-1`, second hypothesis | An order-two incidence circuit with the specified first AND gate needs a second gate. | Lean checked the exact hypothesis in the public fork's pinned environment. Awaiting a child step ID for the [merged reduction #23858](https://github.com/open-goat/pequalnp-proofs/pull/23858). |
 | `R-meta-17918-2` and `R-meta-17920-2`, first hypotheses | An order-three incidence circuit cannot use a primary input as its output. A singleton input would make that output true without any incidence. | Lean checked both exact hypotheses in the public fork's pinned environment. Awaiting child step IDs for the [merged reductions #23852](https://github.com/open-goat/pequalnp-proofs/pull/23852) and [#23853](https://github.com/open-goat/pequalnp-proofs/pull/23853). |
+| `R-meta-17243-1` | Reduces the order-three incidence lower-bound step to cases with one generated output wire or two distinct generated output wires. | The Lean build, import guards, and compiled declaration check passed locally. [Submitted upstream as PR #24293](https://github.com/open-goat/pequalnp-proofs/pull/24293). The authoritative verdict is pending. |
 
 Run `python3 affine_witness_selector.py` to see the common squared CVP cost
 on two distinct witnesses and then reduce the fiber to one witness with a
