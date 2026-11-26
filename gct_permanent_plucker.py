@@ -34,6 +34,9 @@ EDGE_PIVOT_PAIRS = (
     ((0, 1), (1, 2)),
     ((0, 1), (2, 3)),
 )
+MATCHING_CROSS_EDGES = ((0, 2), (0, 3), (1, 2), (1, 3))
+MATCHING_PIVOT_PAIRS = tuple(combinations(MATCHING_CROSS_EDGES[:3], 2))
+ADJACENT_PIVOT_PAIRS = tuple(combinations((edge for edge in OFF_DIAGONAL if edge != (0, 1)), 2))
 EDGE_GRAPH_PIVOTS = {
     "star": ((0, 1), (0, 2), (0, 3)),
     "triangle": ((0, 1), (0, 2), (1, 2)),
@@ -221,6 +224,85 @@ def edge_graph_chart(pivots):
     return names, list(coefficients.values())
 
 
+def path_reversal_chart():
+    """Return the path equations in coordinates adapted to path reversal."""
+    names = tuple(f"{label}{coordinate}" for label in "abc" for coordinate in "uvwxyz")
+    coefficients, *variables = ring(names, sp.GF(PRIME), "grevlex")
+    directions = []
+    for index in range(3):
+        diag_sum, diag_diff, outer_diff, cross_sum, cross_diff, edge03 = variables[6*index:6*(index+1)]
+        pivot_sum, pivot_diff, middle = (coefficients(int(index == j)) for j in range(3))
+        outer_sum = -diag_sum - 2*(pivot_sum + cross_sum + edge03 + middle)
+        directions.append({
+            (0, 0): (outer_sum + outer_diff)/2,
+            (0, 1): (pivot_sum + pivot_diff)/2,
+            (0, 2): (cross_sum + cross_diff)/2,
+            (0, 3): edge03,
+            (1, 1): (diag_sum + diag_diff)/2,
+            (1, 2): middle,
+            (1, 3): (cross_sum - cross_diff)/2,
+            (2, 2): (diag_sum - diag_diff)/2,
+            (2, 3): (pivot_sum - pivot_diff)/2,
+            (3, 3): (outer_sum - outer_diff)/2,
+        })
+    odd_variables = tuple(6*column + slot for column in range(3) for slot in range(6)
+                          if (slot in (1, 2, 4)) != (column == 1))
+    coefficients_by_degree = pencil_coefficients(coefficients, directions)
+    assert len(odd_variables) == 9 and len(coefficients_by_degree) == 31
+    for powers, polynomial in coefficients_by_degree.items():
+        assert all(sum(monomial[i] for i in odd_variables) % 2 == powers[1] % 2
+                   for monomial in polynomial)
+    return names, list(coefficients_by_degree.values())
+
+
+def matching_direction(coefficient_ring, r, h):
+    """Normalize a level direction on the matching (01, 23)."""
+    values = {
+        (0, 1): coefficient_ring.one,
+        (1, 1): -1-h,
+        (2, 2): r*(-1+h),
+        (2, 3): r,
+        (3, 3): r*(-1-h),
+    }
+    return tangent_direction(values.get(slot, coefficient_ring.zero) for slot in COORDINATES)
+
+
+def verify_matching_direction_identities():
+    """Check the polar identities used to cover the matching incidence."""
+    coefficients, *entries, r, h = ring("p,q,a,b,c,d,e,f,r,h", sp.QQ, "grevlex")
+    trial = tangent_direction((coefficients.zero, *entries))
+    direction = matching_direction(coefficients, r, h)
+    pencil = pencil_coefficients(coefficients, (direction, trial))
+    relation = h*h - 2
+    cross = trial[0, 2] - trial[0, 3] - trial[1, 2] + trial[1, 3]
+    assert (pencil[2, 1, 0] - 4*r*cross).rem([relation]) == 0
+    assert (pencil[1, 1, 0].diff(trial[1, 1]) - 4*h).rem([relation]) == 0
+
+
+def matching_direction_chart(pivots):
+    """Return the extension system through a direction with two opposite edges."""
+    fixed = ((0, 1), (1, 1), MATCHING_CROSS_EDGES[-1], *pivots)
+    remaining = tuple(slot for slot in COORDINATES if slot not in fixed)
+    names = (*(f"{label}{i}{j}" for label in "ab" for i, j in remaining), "r", "h", "u")
+    coefficients, *entries, r, h, inverse = ring(names, sp.GF(PRIME), "grevlex")
+    relation = h*h - 2
+    direction = matching_direction(coefficients, r, h)
+    entries = iter(entries)
+    frame = []
+    for pivot in pivots:
+        values = {slot: next(entries) if slot in remaining else coefficients(int(slot == pivot))
+                  for slot in COORDINATES}
+        x, y, z, w = MATCHING_CROSS_EDGES
+        values[w] = -values[x] + values[y] + values[z]
+        mixed_quadratic = pencil_coefficients(coefficients, (direction, tangent_direction(values.values())))
+        values[1, 1] = (-h*mixed_quadratic[1, 1, 0]/8).rem([relation])
+        frame.append(tangent_direction(values.values()))
+    pencil = pencil_coefficients(coefficients, (*frame, direction))
+    equations = [equation for value in pencil.values() if (equation := value.rem([relation]))]
+    assert len(equations) == 22
+    return names, [relation, inverse*r - 1, *equations]
+
+
 def single_edge_chart(pivots):
     """Return a chart used to exclude three-planes through a single-edge direction."""
     fixed_edge = (1, 3)
@@ -263,6 +345,73 @@ def single_edge_chart(pivots):
     return names, equations
 
 
+def order_three_chart():
+    """Return the symmetric order-three level two-plane system."""
+    names = ("a12", "a11", "a22", "b12", "b11", "b22")
+    coefficients, *_ = ring(names, sp.GF(PRIME), "grevlex")
+    a12, a11, a22, b12, b11, b22 = coefficients.symbols
+    directions = (
+        sp.Matrix([[-2-2*a12-a11-a22, 1, 0], [1, a11, a12], [0, a12, a22]]),
+        sp.Matrix([[-2-2*b12-b11-b22, 0, 1], [0, b11, b12], [1, b12, b22]]),
+    )
+    difference = permanent_difference(sp.ones(3), directions)
+    assert len(difference.terms()) == 7
+    assert all(sum(powers) >= 2 for powers, _ in difference.terms())
+    return names, [coefficients.from_expr(value) for value in difference.coeffs()]
+
+
+def verify_isolated_row_identities():
+    """Check the isolated-row coefficients and the determinant for adjacent edges."""
+    d, e, f, p, q, r, w = sp.symbols("d e f p q r w")
+    block = sp.Matrix([[d, p, q], [p, e, r], [q, r, f]])
+    cofactors = sp.Matrix(3, 3, lambda i, j: block.minor_submatrix(i, j).per())
+    direction = sp.diag(block, sp.zeros(1))
+    isolated = permanent_difference(sp.ones(4), (sp.diag(block, w),))
+    assert sp.expand(isolated.nth(1) - 6*(sum(block) + w)) == 0
+    assert sp.expand(isolated.nth(2) - 2*(sum(cofactors) + w*sum(block))) == 0
+    assert sp.expand(isolated.nth(3) - block.per() - w*sum(cofactors)) == 0
+    assert sp.expand(isolated.nth(4) - w*block.per()) == 0
+
+    a, b, c, x, y, z, u, v, l, m = sp.symbols("a b c x y z u v l m")
+    top = sp.Matrix([[a, x, y], [x, b, z], [y, z, c]])
+    side = sp.Matrix([u, v, l])
+    trial = top.row_join(side).col_join(side.T.row_join(sp.Matrix([[m]])))
+    first = permanent_difference(sp.ones(4), (direction, trial)).nth(2, 1)
+    second = permanent_difference(sp.zeros(4), (direction, trial)).nth(2, 2)
+    polar = sum(top.multiply_elementwise(cofactors))
+    assert sp.expand(first - polar - m*sum(cofactors) - 2*(side.T*cofactors*sp.ones(3, 1))[0]) == 0
+    assert sp.expand(second - m*polar - (side.T*cofactors*side)[0]) == 0
+
+    adjacent = {p: 1, r: 0}
+    determinant = cofactors.det().subs(adjacent)
+    assert sp.expand(determinant - (d*e*f - e*q*q - f)*block.per().subs(adjacent) - 4*e*f*q*q) == 0
+
+
+def adjacent_direction_chart(pivots):
+    """Return the extension system through the singular adjacent-edge direction."""
+    fixed = ((0, 1), (1, 1), (2, 2), *pivots)
+    remaining = tuple(slot for slot in COORDINATES if slot not in fixed)
+    names = tuple(f"{label}{i}{j}" for label in "ab" for i, j in remaining)
+    coefficients, *entries = ring(names, sp.GF(PRIME), "grevlex")
+    direction = tangent_direction((coefficients.one, -coefficients.one, *([coefficients.zero] * 7)))
+    frame = []
+    entries = iter(entries)
+    for pivot in pivots:
+        values = {slot: next(entries) if slot in remaining else coefficients(int(slot == pivot))
+                  for slot in COORDINATES}
+        d, e, f = (values[slot] for slot in ((1, 2), (1, 3), (2, 3)))
+        values[1, 1] = d + (f-e)/2
+        values[2, 2] = d + (e-f)/2
+        frame.append(tangent_direction(values.values()))
+    pencil = pencil_coefficients(coefficients, (*frame, direction))
+    assert all(not value for powers, value in pencil.items()
+               if sum(powers) <= 1 or sum(powers[:2]) == 0 or powers[-1] >= 3
+               or (powers[-1] == 1 and sum(powers[:2]) == 1))
+    equations = [value for value in pencil.values() if value]
+    assert len(equations) == 22
+    return names, equations
+
+
 def write_msolve_system(names, equations, output):
     """Emit the generators as prime-field polynomials for msolve."""
     def polynomial_text(polynomial):
@@ -283,7 +432,14 @@ def main():
                        help="emit a full cut system with pivot coordinates such as u P v")
     modes.add_argument("--single-edge", type=int, choices=range(len(EDGE_PIVOT_PAIRS)),
                        help="emit one of the four single-edge systems, numbered 0 to 3")
+    modes.add_argument("--matching", type=int, choices=range(len(MATCHING_PIVOT_PAIRS)),
+                       help="emit one of the three opposite-edge direction systems, numbered 0 to 2")
+    modes.add_argument("--adjacent-edge", type=int, choices=range(len(ADJACENT_PIVOT_PAIRS)),
+                       help="emit one of the ten adjacent-edge direction systems, numbered 0 to 9")
+    modes.add_argument("--order-three", action="store_true", help="emit the order-three level two-plane system")
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
+    modes.add_argument("--path-reversal", action="store_true",
+                       help="emit the path chart in coordinates adapted to path reversal")
     args = parser.parse_args()
     if args.chart:
         first, second, third = args.chart
@@ -293,10 +449,25 @@ def main():
             parser.error(str(error))
     elif args.single_edge is not None:
         system = single_edge_chart(EDGE_PIVOT_PAIRS[args.single_edge])
+    elif args.matching is not None:
+        system = matching_direction_chart(MATCHING_PIVOT_PAIRS[args.matching])
+    elif args.adjacent_edge is not None:
+        system = adjacent_direction_chart(ADJACENT_PIVOT_PAIRS[args.adjacent_edge])
+    elif args.order_three:
+        system = order_three_chart()
     elif args.path:
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
+    elif args.path_reversal:
+        system = path_reversal_chart()
     else:
         verify_chart_data()
+        verify_matching_direction_identities()
+        verify_isolated_row_identities()
+        names, equations = order_three_chart()
+        assert unit_ideal_at_degree(equations, len(names), PRIME, degree_cap=7)
+        for pivots in ADJACENT_PIVOT_PAIRS:
+            adjacent_direction_chart(pivots)
+        print("Checked the isolated-row and adjacent-edge formulas and the order-three unit ideal over F5.")
         print(f"No cut zeros among {verify_rational_rank_cut()} rational rank-drop two-planes over F5.")
         verify_extension_field_witness()
         print("Verified a rank-six point on the cuts over F25. Its only possible extension fails q2.")

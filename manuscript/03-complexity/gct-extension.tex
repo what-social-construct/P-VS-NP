@@ -225,3 +225,122 @@ coefficients of degrees two through four. The executable emits this
 single chart over \(\mathbb F_5\). A unit ideal would settle
 nonexistence over \(\mathbb C\) by proper specialization. The
 unrestricted path system remains open.
+
+\paragraph{Excluding a direction supported on two opposite edges.}
+In fact, a level three-plane cannot contain even one direction whose
+off-diagonal entries are supported on a perfect matching. The
+single-edge and diagonal cases were excluded above. For the remaining
+case relabel the matching as \(01,23\) and scale these entries to
+\(1,r\), with \(r\ne0\). The block argument gives the diagonal
+entries \(-1+h,-1-h,r(-1+h),r(-1-h)\) with \(h^2=2\).
+Swapping endpoints within a pair allows both blocks to use the same
+choice of \(h\). Call this direction \(C\).
+
+The kernel \(W\) of the \(01\) entry on the plane has dimension two
+and projects injectively onto the four cross edges. A nonzero element
+of the kernel of that projection would be supported off the diagonal
+on at most the single edge \(23\). For \(B\in W\), the coefficient
+\([s^2t]q_3(sC+tB)\) is
+\(4r(B_{02}-B_{03}-B_{12}+B_{13})\).
+Its vanishing determines \(B_{13}\). Projection of \(W\) onto
+\(02,03,12\) is therefore injective, so one of their three pairs is
+a pivot pair. In each normalized frame, the quadratic polar equation
+with \(C\) determines the \(11\) entry of each basis direction with
+coefficient \(4h\).
+
+Each chart has eight remaining frame variables, \(r,h\), and an
+inverse variable for \(r\). The 24 generators impose the full pencil
+and the two auxiliary relations. The exact reduced Gr\"obner basis is
+\([1]\) in all three charts over \(\mathbb F_5\).
+The rank-drop condition for projection onto the four cross edges is
+closed in the Grassmannian. Proper specialization of this incidence
+excludes it over \(\mathbb C\) as well.
+Every candidate thus projects injectively onto each four-cycle of
+off-diagonal edges. Any triple of edges in a four-cycle is a path.
+
+\paragraph{Excluding a direction supported on two adjacent edges.}
+Let \(D\) be such a direction. Relabel its support to \(01,02\) and
+scale those entries to \(1,r\), with \(r\ne0\).
+Write its upper \(3\times3\) block as \(C\) and its last diagonal
+entry as \(d\). Put \(H=\operatorname{cof}_{\rm per}(C)\), the
+symmetric matrix of permanent cofactors, and set
+\(\ell=\sum C_{ij}\), \(e=\mathbf1^TH\mathbf1\),
+\(k=\operatorname{per}(C)\).
+For an arbitrary symmetric block matrix the identity
+\[
+ \operatorname{per}\begin{pmatrix}M&x\\x^T&w\end{pmatrix}
+ =w\operatorname{per}(M)+x^T\operatorname{cof}_{\rm per}(M)x
+\]
+follows by grouping permutations by their use of the last row and
+column. Applying it at \(J_4+sD\) gives
+\(\ell+d=0\), \(e+d\ell=0\), \(k+de=0\), and \(dk=0\).
+Consequently \(d=\ell=e=k=0\).
+
+For another direction \(B\) with upper block \(A\), last diagonal
+\(y\), and last column above it \(z\), let \(k_A\) be the derivative
+of \(\operatorname{per}(C)\) along \(A\).
+The coefficients of \(us^2t\) and \(s^2t^2\) in
+\(\operatorname{per}(uJ_4+sD+tB)\) are
+\(k_A+2\mathbf1^THz\) and \(yk_A+z^THz\).
+Both vanish, so \((z-y\mathbf1)^TH(z-y\mathbf1)=0\) on all of \(L\).
+If \(H\) is invertible, the image of \(B\mapsto z-y\mathbf1\)
+is totally isotropic in a nondegenerate three-dimensional quadratic
+space and has dimension at most one. Its kernel thus has dimension
+at least two. On that kernel the last row is constant within each
+matrix. The factor \(1+ty\) of \(\operatorname{per}(J_4+tB)\)
+forces \(y=0\), leaving a zero last row and column.
+The upper blocks would form a symmetric level two-plane at \(J_3\),
+by the same block calculation with \(d=0\).
+Projection of such a two-plane to its three off-diagonal entries is
+injective by the diagonal calculation for order three. Relabeling
+reduces its two pivot entries to \(01,02\). That chart has six
+variables and its ideal over \(\mathbb F_5\) is the unit ideal.
+
+For singular \(H\), write \(a,b,c\) for the diagonal of \(C\).
+Direct expansion gives
+\[
+ \det H=(abc-br^2-c)k+4bcr^2,
+ \qquad k=abc+br^2+c.
+\]
+Since \(k=0\) and \(r\ne0\), singularity forces \(b=c=0\).
+Then \(e=(r+1)^2\), so \(r=-1\), and \(\ell=0\) gives \(a=0\).
+This leaves a fixed direction with zero diagonal and edges \(1,-1\).
+The kernel of the \(01\) entry projects injectively onto the other
+five off-diagonal entries, giving ten pivot pairs. For each of its
+basis directions \(B\), the quadratic and cubic polar equations
+determine \(B_{11},B_{22}\) as
+\[
+ B_{12}+\tfrac12(B_{23}-B_{13}),
+ \qquad B_{12}+\tfrac12(B_{13}-B_{23}).
+\]
+All ten normalized extension charts have eight variables and
+22 generators, with exact Gr\"obner basis \([1]\) over
+\(\mathbb F_5\). The incidence of a level three-plane containing a
+direction supported on the prescribed two edges is projective.
+Proper specialization excludes the adjacent case over \(\mathbb C\).
+Together with the matching case, every candidate projects injectively
+onto any four off-diagonal entries.
+
+\paragraph{Path reversal and bounded-degree certificates.}
+Replace the three path pivots by \(B_{01}+B_{23}, B_{01}-B_{23}, B_{12}\).
+This is an invertible change in odd characteristic.
+Reversal \(\rho=(03)(12)\) acts on these pivots by
+\(D=\operatorname{diag}(1,-1,1)\), so on a normalized frame \(T\)
+it acts by \(T\mapsto\rho TD\).
+In each column the six free linear forms can be chosen as
+\(B_{11}+B_{22}, B_{11}-B_{22}, B_{00}-B_{33},
+B_{02}+B_{13}, B_{02}-B_{13}, B_{03}\).
+Three have each reversal sign, and the middle column exchanges the
+signs through \(D\). Thus there are nine variables of each sign.
+By simultaneous permutation invariance of the permanent, a generator
+from \(s^at^bz^c\) has sign \((-1)^b\).
+The executable verifies the signs on all expanded monomials.
+
+In a degree-bounded identity \(1=\sum_g h_g g\), average with its
+reversal. Each multiplier can then be taken with the same sign as its
+generator, with the same degree bound, so every product is even.
+The linear system for such an identity needs only the monomials with
+even total degree in the nine odd variables. At total degree at most
+seven this gives 240,460 columns out of 480,700.
+This restriction does not decide whether a certificate exists at that
+degree.

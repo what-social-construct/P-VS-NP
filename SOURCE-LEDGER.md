@@ -219,6 +219,26 @@ through degree seven on the input polynomials. The unrestricted path
 system was exported for exact msolve and the run ended before a basis
 was produced.
 
+The matching-direction extension uses the same block identity and the
+previous single-edge exclusion. The [pencil generator](gct_permanent_plucker.py)
+checks the two polar identities over $\mathbb Q$ modulo $h^2-2$. All
+three normalized matching systems were checked over $\mathbb F_5$ with
+[msolve v0.11.0](https://msolve.lip6.fr/) in exact Gröbner mode
+(`-g 2 -l 2`) and return the unit basis. The [written coverage argument](manuscript/03-complexity/gct-extension.tex)
+uses projectivity of the rank-drop incidence for the complex conclusion.
+
+The adjacent-edge extension uses the permanent cofactor formula
+obtained by expanding along the last row and column. The [written argument](manuscript/03-complexity/gct-extension.tex)
+reduces the nonsingular cofactor case to a symmetric order-three
+two-plane and the singular case to one fixed adjacent direction.
+The order-three chart and ten extensions through that fixed direction
+give unit bases over $\mathbb F_5$. The generator checks the identities
+over exact coefficients and emits the msolve systems.
+
+The same section derives the path-reversal change of coordinates and
+the averaging identity for bounded-degree certificates. A pilot
+standard F4 run with those coordinates ended before returning a basis.
+
 The Homotopical Encryption local repository was reviewed at
 `1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3
 `lean/Proximity/Core/PolynomialAgreement/Boundary.lean` supplies
