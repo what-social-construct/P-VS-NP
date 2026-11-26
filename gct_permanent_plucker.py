@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from itertools import combinations, permutations, product
+from itertools import combinations, combinations_with_replacement, permutations, product
 
 import numpy as np
 import sympy as sp
@@ -42,6 +42,10 @@ EDGE_GRAPH_PIVOTS = {
     "triangle": ((0, 1), (0, 2), (1, 2)),
     "path": ((0, 1), (1, 2), (2, 3)),
 }
+PATH_REVERSAL_ODD = frozenset(
+    6*column + slot for column in range(3) for slot in range(6)
+    if (slot in (1, 2, 4)) != (column == 1)
+)
 
 
 def cut_values(left, right):
@@ -245,14 +249,53 @@ def path_reversal_chart():
             (2, 3): (pivot_sum - pivot_diff)/2,
             (3, 3): (outer_sum - outer_diff)/2,
         })
-    odd_variables = tuple(6*column + slot for column in range(3) for slot in range(6)
-                          if (slot in (1, 2, 4)) != (column == 1))
     coefficients_by_degree = pencil_coefficients(coefficients, directions)
-    assert len(odd_variables) == 9 and len(coefficients_by_degree) == 31
+    assert len(PATH_REVERSAL_ODD) == 9 and len(coefficients_by_degree) == 31
     for powers, polynomial in coefficients_by_degree.items():
-        assert all(sum(monomial[i] for i in odd_variables) % 2 == powers[1] % 2
+        assert all(sum(monomial[i] for i in PATH_REVERSAL_ODD) % 2 == powers[1] % 2
                    for monomial in polynomial)
     return names, list(coefficients_by_degree.values())
+
+
+def verify_path_degree_dual(source):
+    """Check a functional taking 1 to 1 and killing all bounded even products."""
+    degree_cap = int(next(source, "0"))
+    if degree_cap < 2:
+        raise ValueError("The degree cap must be at least two.")
+    names, equations = path_reversal_chart()
+    width = degree_cap.bit_length()
+    mask = (1 << width) - 1
+    values = {}
+    for line in source:
+        key, residue = map(int, line.split())
+        if not 0 <= key < 1 << (width*len(names)) or key in values or not 0 < residue < PRIME:
+            raise ValueError("Invalid or duplicate nonzero dual entry.")
+        powers = tuple((key >> (width*i)) & mask for i in range(len(names)))
+        if sum(powers) > degree_cap or sum(powers[i] for i in PATH_REVERSAL_ODD) % 2:
+            raise ValueError("Dual entries must index even monomials within the degree cap.")
+        values[key] = residue
+    if values.get(0) != 1:
+        raise ValueError("The functional must take the constant monomial to one.")
+
+    degrees = [max(map(sum, equation)) for equation in equations]
+    multipliers = [([], []) for _ in range(degree_cap - min(degrees) + 1)]
+    for degree, by_parity in enumerate(multipliers):
+        for indices in combinations_with_replacement(range(len(names)), degree):
+            parity = sum(i in PATH_REVERSAL_ODD for i in indices) % 2
+            by_parity[parity].append(sum(1 << (width*i) for i in indices))
+    count = 0
+    for index, (equation, degree) in enumerate(zip(equations, degrees)):
+        parity = sum(next(iter(equation))[i] for i in PATH_REVERSAL_ODD) % 2
+        terms = [(sum(power << (width*i) for i, power in enumerate(powers)), int(coefficient))
+                 for powers, coefficient in equation.items()]
+        for multiplier_degree in range(degree_cap-degree+1):
+            for multiplier in multipliers[multiplier_degree][parity]:
+                # The degree bound prevents carries between adjacent exponent fields.
+                value = sum(coefficient*values.get(key+multiplier, 0) for key, coefficient in terms)
+                if value % PRIME:
+                    raise ValueError(f"Nonzero pairing for generator {index} with multiplier {multiplier}.")
+                count += 1
+    return degree_cap, count
 
 
 def matching_direction(coefficient_ring, r, h):
@@ -440,6 +483,8 @@ def main():
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
     modes.add_argument("--path-reversal", action="store_true",
                        help="emit the path chart in coordinates adapted to path reversal")
+    modes.add_argument("--verify-path-dual", type=argparse.FileType("r"), metavar="FILE",
+                       help="check a bounded-degree functional for the path chart")
     args = parser.parse_args()
     if args.chart:
         first, second, third = args.chart
@@ -459,6 +504,14 @@ def main():
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
     elif args.path_reversal:
         system = path_reversal_chart()
+    elif args.verify_path_dual is not None:
+        try:
+            with args.verify_path_dual as source:
+                degree, rows = verify_path_degree_dual(source)
+        except ValueError as error:
+            parser.error(str(error))
+        print(f"Checked {rows:,} even products over F{PRIME}. No path certificate through degree {degree}.")
+        return
     else:
         verify_chart_data()
         verify_matching_direction_identities()

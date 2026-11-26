@@ -240,6 +240,13 @@ over exact coefficients and emits the msolve systems.
 The same section derives the path-reversal change of coordinates and
 the averaging identity for bounded-degree certificates. A pilot
 standard F4 run with those coordinates ended before returning a basis.
+The subsequent exact degree-seven search uses the same 31 adapted
+generators over $\mathbb F_5$. Sparse row elimination gives rank
+130,832 for the 147,622 by 240,460 even matrix. The
+[stored functional](gct_permanent_path_degree7.dual.gz) and its
+[independent verifier](gct_permanent_plucker.py) certify separation of
+the constant from the row span. The verifier checks every original row
+and needs only the functional, without the elimination transcript.
 
 The Homotopical Encryption local repository was reviewed at
 `1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3

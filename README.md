@@ -77,6 +77,20 @@ python3 gct_permanent_plucker.py --path > /tmp/gct-path.ms
 python3 gct_permanent_plucker.py --path-reversal > /tmp/gct-path-reversal.ms
 ~~~
 
+The exact degree-seven certificate search found a functional that
+takes the constant to one and annihilates every even monomial multiple
+of the path generators within the degree cap. Replay all 147,622
+pairings with
+
+~~~sh
+gzip -dc gct_permanent_path_degree7.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
+~~~
+
+The data contains the degree cap followed by nonzero entries
+`key residue` over `F5`. For exponents in path-reversal variable order,
+`key` packs each exponent into three bits, starting at the least
+significant end. Unlisted monomials have value zero.
+
 The quadratic-field check uses a C++17 compiler.
 
 ~~~sh

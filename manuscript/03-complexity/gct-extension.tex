@@ -342,5 +342,14 @@ generator, with the same degree bound, so every product is even.
 The linear system for such an identity needs only the monomials with
 even total degree in the nine odd variables. At total degree at most
 seven this gives 240,460 columns out of 480,700.
-This restriction does not decide whether a certificate exists at that
-degree.
+The even monomial multiples of the 31 generators give 147,622 rows.
+Exact elimination over \(\mathbb F_5\) finds a linear functional
+\(\lambda\) on the columns taking \(1\) to \(1\) and vanishing on
+every row. The executable independently checks these pairings from
+the stored values of \(\lambda\) and the generated equations.
+Consequently the path generators admit no identity
+\(1=\sum_g h_g g\) with every product of total degree at most
+seven. The same bound holds over field extensions of
+\(\mathbb F_5\) by extending \(\lambda\) linearly.
+The existence of a higher-degree identity and the full path ideal
+remain undecided.
