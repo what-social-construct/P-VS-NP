@@ -45,6 +45,14 @@ python3 agreement_scheme.py
 python3 polynomial_agreement_selector.py
 ~~~
 
+The permanent checks use SymPy. The modular certificates also use NumPy
+for exact integer arithmetic.
+
+~~~sh
+python3 gct_permanent_fiber.py
+python3 gct_permanent_modular.py
+~~~
+
 The imported Homotopical Encryption Lean sources retain their
 [MIT notice](lean/LICENSE). The
 [source ledger](SOURCE-LEDGER.md) identifies the copied modules,

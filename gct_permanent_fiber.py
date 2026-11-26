@@ -55,8 +55,19 @@ def hadamard_basis():
                       [1, -1, 1, -1], [1, -1, -1, 1]]) / 2
 
 
-def witt_basis():
-    """Four hyperbolic pairs and a norm-12 direction for the quadratic coefficient."""
+def hadamard_direction(arms, diagonal, opposite):
+    """Return a tangent matrix from the all-ones and Klein character coordinates."""
+    b0, b1, b2 = arms
+    d0, d1, d2 = diagonal
+    c0, c1, c2 = opposite
+    modal = sp.Matrix([[0, b0, b1, b2], [b0, d0, c2, c1],
+                      [b1, c2, d1, c0], [b2, c1, c0, d2]])
+    hadamard = hadamard_basis()
+    return hadamard * modal * hadamard.T
+
+
+def rational_witt_components():
+    """Three hyperbolic pairs and three orthogonal norm-12 vectors."""
     columns = hadamard_basis()
     one = columns[:, 0]
     characters = [columns[:, index] for index in range(1, 4)]
@@ -68,9 +79,13 @@ def witt_basis():
         arm = one * character.T + character * one.T
         pairs.append((2 * diagonal + opposite + arm, (2 * diagonal - opposite - arm) / 8))
         perpendicular.append(3 * opposite + arm)
-    u, v, h = perpendicular
-    pairs.append((u + sp.I * v, (u - sp.I * v) / 24))
-    return tuple(pairs), h
+    return tuple(pairs), tuple(perpendicular)
+
+
+def witt_basis():
+    """Four hyperbolic pairs and a norm-12 direction for the quadratic coefficient."""
+    pairs, (u, v, h) = rational_witt_components()
+    return (*pairs, (u + sp.I * v, (u - sp.I * v) / 24)), h
 
 
 WITT_CHART_REPRESENTATIVES = (
@@ -182,8 +197,7 @@ def verify_row_sum_zero_exclusion(base):
     x0, x1, x2 = sp.symbols("x:3")
     y0, y1, y2 = sp.symbols("y:3")
     small = sp.Matrix([[x0, y2, y1], [y2, x1, y0], [y1, y0, x2]])
-    characters = hadamard_basis()[:, 1:]
-    difference = permanent_difference(base, (characters * small * characters.T,))
+    difference = permanent_difference(base, (hadamard_direction((0, 0, 0), (x0, x1, x2), (y0, y1, y2)),))
     assert difference.nth(1) == 0
     assert sp.expand(difference.nth(2) - (small**2).trace()) == 0
     assert sp.expand(difference.nth(3) - small.per()) == 0

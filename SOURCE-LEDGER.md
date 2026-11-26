@@ -154,6 +154,17 @@ derivations from permanent coefficients. The [executable](gct_permanent_fiber.py
 generates the four remaining systems and checks the finite-field rank
 certificate used in the zero-row-sum argument.
 
+The [modular obstructions](manuscript/03-complexity/gct-modular.tex) use
+the Stacks Project results [projective implies proper, Tag 01WC](https://stacks.math.columbia.edu/tag/01WC)
+and [valuative criterion for properness, Tag 0BX5](https://stacks.math.columbia.edu/tag/0BX5).
+The two geometric special-fiber exclusions are written reductions to
+unit-ideal checks. The [modular executable](gct_permanent_modular.py)
+checks the rank obstructions over the algebraic closures at 11 and 23
+via explicit chart equations and polynomial operations in the prime
+fields. It also checks absence of rational points at 5 and 7 by exact
+enumeration and compatibility. The latter two checks supply the local
+and global arithmetic restrictions via the valuative criterion.
+
 ## GODEL
 
 Balthasar Grabmayr,
