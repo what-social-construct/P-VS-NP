@@ -197,6 +197,8 @@ of this check fixes the given rational two-plane before specializing.
 [PEqualNP Ideas discussion #37059](https://github.com/open-goat/pequalnp-proofs/discussions/37059)
 was posted on 2026-11-26. It asks for a helper step on the hyperplane
 section and first-variation bound for `L-gct-231`.
+The [public follow-up](https://github.com/open-goat/pequalnp-proofs/discussions/37059#discussioncomment-19935662)
+records the two-edge exclusion and its specialization argument.
 
 The [Plücker-cut generator and checks](gct_permanent_plucker.py) use the
 same permanent coefficients as the extension checker. The finite-field
