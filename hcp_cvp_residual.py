@@ -19,6 +19,7 @@ class ClosestVector:
     point: tuple
     hodge_residual_squared: Fraction
     coefficient_error_squared: Fraction
+    hodge_residual: tuple = ()
 
     @property
     def squared_distance(self):
@@ -101,9 +102,12 @@ class FreshSignProfile:
         projection = tuple(_dot(row, signed_center) for row in self.matrix)
         point = (0, coefficients, tuple(_dot(row, signed_coefficients) for row in self.matrix))
         residual = (
-            Fraction(exact) ** 2
-            + sum((x - value) ** 2 for x, value in zip(information, center))
-            + sum((y - value) ** 2 for y, value in zip(parity, projection))
+            Fraction(exact),
+            tuple(x - value for x, value in zip(information, center)),
+            tuple(y - value for y, value in zip(parity, projection)),
         )
+        residual_squared = sum(value ** 2 for value in (residual[0], *residual[1], *residual[2]))
         coefficient_error = gram * sum((x - value) ** 2 for x, value in zip(center, coefficients))
-        return ClosestVector(center, coefficients, point, residual, Fraction(coefficient_error))
+        return ClosestVector(
+            center, coefficients, point, residual_squared, Fraction(coefficient_error), residual
+        )

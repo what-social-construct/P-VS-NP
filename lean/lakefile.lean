@@ -10,6 +10,6 @@ require mathlib from git
 lean_lib PvsNP where
   roots := #[`PvsNP, `Axioms, `CVP, `HCP, `Hardness, `Helfer, `Laplacian,
     `Protocol, `Sheaf, `TCB]
-  globs := #[.one `PvsNP, .submodules `Axioms, .one `CVP,
+  globs := #[.andSubmodules `PvsNP, .submodules `Axioms, .one `CVP,
     .andSubmodules `HCP, .one `Hardness, .andSubmodules `Helfer,
     .submodules `Laplacian, .submodules `Protocol, .submodules `Sheaf, .submodules `TCB]

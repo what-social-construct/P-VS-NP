@@ -26,6 +26,10 @@ class WitnessFamily:
     def unique(self):
         return not self.kernel_basis
 
+    @property
+    def cardinality(self):
+        return 1 << len(self.kernel_basis)
+
     def residual_collision(self):
         """Return one ordered pair of distinct witnesses, if it exists."""
         if self.unique:
@@ -82,18 +86,27 @@ def _affine_decomposition(rows, width):
     return tuple(particular), tuple(basis)
 
 
-def select_witness_family(matrix, scale, expected_exact, cochain, constraints=()):
+def select_witness_family(
+    matrix, scale, expected_exact, cochain, constraints=(), *, residual_coordinates=()
+):
     """Return the entire family in affine form, or None for an empty fiber.
 
     Invalid public parameters or constraint encodings raise ValueError.
     Cochains outside the generated profile yield None.
     """
     profile = FreshSignProfile(matrix, scale, expected_exact)
-    return select_for_profile(profile, cochain, constraints)
+    return select_for_profile(
+        profile, cochain, constraints, residual_coordinates=residual_coordinates
+    )
 
 
-def select_for_profile(profile, cochain, constraints=()):
-    """Select against the same validated profile used for lattice CVP."""
+def select_for_profile(profile, cochain, constraints=(), *, residual_coordinates=()):
+    """Select compatible witnesses for optional disclosed residual coordinates.
+
+    Each disclosure is a pair (index, value) in the residual's information
+    block. In the fresh-sign profile, these coordinates are the negatives of
+    the harmonic message coefficients.
+    """
     mask = profile.mask_bits(cochain)
     if mask is None:
         return None
@@ -110,6 +123,15 @@ def select_for_profile(profile, cochain, constraints=()):
             [int(a) ^ int(b) for a, b in zip(key, message)]
             + [int(rhs) ^ (sum(a * t for a, t in zip(key, mask)) % 2)]
         )
+    for index, value in residual_coordinates:
+        if type(index) is not int or not 0 <= index < width:
+            raise ValueError("residual coordinate index is outside the information block")
+        if value not in (profile.scale, -profile.scale):
+            return None
+        row = [0] * (width + 1)
+        row[index] = 1
+        row[-1] = int(value == -profile.scale)
+        rows.append(row)
 
     solution = _affine_decomposition(rows, width)
     if solution is None:
@@ -139,3 +161,9 @@ if __name__ == "__main__":
             f"Hodge residual² {closest.hodge_residual_squared}, "
             f"coefficient penalty {closest.coefficient_error_squared}"
         )
+    residual = profile.closest_vector(family.selected.key, cochain).hodge_residual
+    disclosed = select_for_profile(
+        profile, cochain, [((0, 0), (1, 1), 0)], residual_coordinates=[(0, residual[1][0])]
+    )
+    assert disclosed is not None and disclosed.unique
+    print(f"Disclosing the first residual information coordinate leaves {disclosed.cardinality} witness.")

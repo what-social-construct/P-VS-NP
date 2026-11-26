@@ -1,6 +1,7 @@
 module
 
 public import HCP.CoupledSignResidual
+public import PvsNP.AffineDisclosure
 
 @[expose] public section
 
@@ -30,43 +31,4 @@ theorem distinct_messages_same_minimum
     (cost_at_message A d a orthogonal key masked).trans
       (cost_at_message A d a orthogonal other masked).symm⟩
 
-section Affine
-
-variable {R M N : Type*} [Ring R] [AddCommGroup M] [Module R M]
-  [AddCommGroup N] [Module R N] (Q : M →ₗ[R] N) (c : N)
-
-/-- A pair in one affine fiber is its first point and a homogeneous
-direction. This also applies when the fiber is empty. -/
-def collisionEquiv :
-    ({v : M // Q v = c} × {v : M // Q v = c}) ≃
-      ({v : M // Q v = c} × LinearMap.ker Q) where
-  toFun p := (p.1, ⟨p.2.val - p.1.val, by
-    simp [p.1.property, p.2.property]⟩)
-  invFun p := (p.1, ⟨p.1.val + p.2.val, by
-    simp [p.1.property, (LinearMap.mem_ker.mp p.2.property)]⟩)
-  left_inv p := by
-    refine Prod.ext ?_ ?_
-    · rfl
-    · apply Subtype.ext
-      change p.1.val + (p.2.val - p.1.val) = p.2.val
-      abel
-  right_inv p := by
-    refine Prod.ext ?_ ?_
-    · rfl
-    · apply Subtype.ext
-      change p.1.val + p.2.val - p.1.val = p.2.val
-      abel
-
-/-- The diagonal consists exactly of the pairs with zero direction. -/
-theorem collisionEquiv_diagonal (left right : {v : M // Q v = c}) :
-    (collisionEquiv Q c (left, right)).2 = 0 ↔ left = right := by
-  constructor
-  · intro h
-    have hzero : right.val - left.val = 0 := congrArg (fun v : LinearMap.ker Q ↦ v.val) h
-    exact Subtype.ext (sub_eq_zero.mp hzero).symm
-  · rintro rfl
-    apply Subtype.ext
-    exact sub_self _
-
-end Affine
 end PvsNP
