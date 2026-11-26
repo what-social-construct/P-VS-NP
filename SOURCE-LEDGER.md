@@ -212,6 +212,10 @@ records it as a surplus reduction because a new child would be at depth
 is already reduced by [PR #21167](https://github.com/open-goat/pequalnp-proofs/pull/21167)
 to the AND-last case `L-meta-17243` and the OR-last case
 [`L-meta-17245`](https://data.pequalnp.com/data/lemma/L-meta-17245.70e7330d99bd.json).
+The separate first-gate split [PR #24564](https://github.com/open-goat/pequalnp-proofs/pull/24564)
+passed its checker and was closed because the desk permits one case split
+per step. The [intake decision](https://github.com/open-goat/pequalnp-proofs/pull/24564#issuecomment-7193607202)
+explicitly leaves cuts from smaller statements eligible.
 
 The [parent-level draft](contributions/pequalnp/R_meta_1990_997.lean)
 uses the exact [posted `L-meta-1990` conclusion](https://data.pequalnp.com/data/lemma/L-meta-1990.307c700bb206.json).
