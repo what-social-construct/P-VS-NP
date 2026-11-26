@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from itertools import combinations, permutations
+from itertools import combinations, permutations, product
 
 import numpy as np
 import sympy as sp
@@ -15,6 +15,7 @@ from gct_permanent_extensions import (
     reduced_rows,
 )
 from gct_permanent_fiber import permanent_difference
+from gct_permanent_modular import unit_ideal_at_degree
 
 PRIME = 5
 PLUCKER_CUTS = (
@@ -33,6 +34,11 @@ EDGE_PIVOT_PAIRS = (
     ((0, 1), (1, 2)),
     ((0, 1), (2, 3)),
 )
+EDGE_GRAPH_PIVOTS = {
+    "star": ((0, 1), (0, 2), (0, 3)),
+    "triangle": ((0, 1), (0, 2), (1, 2)),
+    "path": ((0, 1), (1, 2), (2, 3)),
+}
 
 
 def cut_values(left, right):
@@ -103,7 +109,7 @@ def from_normal_coordinates(normal):
 
 
 def verify_chart_data():
-    """Check the coordinate change and the four pivot-pair orbits."""
+    """Check the coordinate change and the finite chart covers."""
     left = sp.symbols("a:9")
     right = sp.symbols("b:9")
     alpha, beta = cut_values(from_normal_coordinates(left), from_normal_coordinates(right))
@@ -119,6 +125,20 @@ def verify_chart_data():
     covered = {tuple(sorted(tuple(sorted((permutation[i], permutation[j]))) for i, j in pair))
                for pair in EDGE_PIVOT_PAIRS for permutation in permutations_fixing_edge}
     assert covered == set(combinations((slot for slot in OFF_DIAGONAL if slot != (1, 3)), 2))
+    graph_orbits = [
+        {tuple(sorted(tuple(sorted((permutation[i], permutation[j]))) for i, j in triple))
+         for permutation in PERMUTATIONS}
+        for triple in EDGE_GRAPH_PIVOTS.values()
+    ]
+    assert sorted(map(len, graph_orbits)) == [4, 4, 12]
+    assert set().union(*graph_orbits) == set(combinations(OFF_DIAGONAL, 3))
+    path_orbit = graph_orbits[2]
+    for triple in (EDGE_GRAPH_PIVOTS["star"], EDGE_GRAPH_PIVOTS["triangle"]):
+        outside = set(OFF_DIAGONAL) - set(triple)
+        for edge in outside:
+            for pivot in triple:
+                replacement = tuple(sorted((set(triple) - {pivot}) | {edge}))
+                assert (replacement in path_orbit) == bool(set(edge) & set(pivot))
 
 
 def pencil_coefficients(coefficient_ring, directions):
@@ -130,6 +150,34 @@ def pencil_coefficients(coefficient_ring, directions):
     permanent = sum((sp.prod(pencil[i][j] for i, j in enumerate(permutation))
                      for permutation in PERMUTATIONS), pencil_ring.zero)
     return {powers: coefficient for powers, coefficient in sorted(permanent.items()) if sum(powers)}
+
+
+def verify_opposite_edge_obstruction():
+    """Exclude a level pencil on two distinct pairs of opposite edges."""
+    matchings = (((0, 1), (2, 3)), ((0, 2), (1, 3)))
+    for field in (sp.QQ, sp.GF(PRIME)):
+        coefficients, h, x, y, inverse = ring("h,x,y,inverse", field, "grevlex")
+
+        def direction(matching, signs, multiplier):
+            values = {}
+            for (i, j), sign, scale in zip(matching, signs, (coefficients.one, multiplier)):
+                values[i, i] = scale * (-1 + sign*h)
+                values[j, j] = scale * (-1 - sign*h)
+                values[i, j] = scale
+            return tangent_direction(values.get(slot, coefficients.zero) for slot in COORDINATES)
+
+        for signs in product((1, -1), repeat=4):
+            a = direction(matchings[0], signs[:2], x)
+            b = direction(matchings[1], signs[2:], y)
+            mixed = [coefficient for powers, coefficient in
+                     pencil_coefficients(coefficients, (a, b)).items() if powers[0] and powers[1]]
+            generators = [h*h - 2, inverse*x*y - 1, *mixed]
+            if field == sp.QQ:
+                basis = sp.groebner([polynomial.as_expr() for polynomial in generators],
+                                    *coefficients.symbols, domain=field, order="grevlex")
+                assert list(basis) == [1]
+            else:
+                assert unit_ideal_at_degree(generators, 4, PRIME, degree_cap=7)
 
 
 def extension_chart(pivots, extension_slot):
@@ -156,6 +204,21 @@ def extension_chart(pivots, extension_slot):
     equations = list(coefficients.values())
     equations.extend(equation for equation in cut_values(*directions[:2]) if equation)
     return names, equations
+
+
+def edge_graph_chart(pivots):
+    """Return the full permanent equations for an off-diagonal pivot triple."""
+    remaining = tuple(slot for slot in COORDINATES if slot not in pivots)
+    names = tuple(f"{label}{i}{j}" for label in "abc" for i, j in remaining)
+    coefficient_ring, *variables = ring(names, sp.GF(PRIME), "grevlex")
+    entries = iter(variables)
+    directions = [tangent_direction(
+        coefficient_ring(int(slot == pivot)) if slot in pivots else next(entries)
+        for slot in COORDINATES
+    ) for pivot in pivots]
+    coefficients = pencil_coefficients(coefficient_ring, directions)
+    assert all(sum(powers) >= 2 for powers in coefficients)
+    return names, list(coefficients.values())
 
 
 def single_edge_chart(pivots):
@@ -220,6 +283,7 @@ def main():
                        help="emit a full cut system with pivot coordinates such as u P v")
     modes.add_argument("--single-edge", type=int, choices=range(len(EDGE_PIVOT_PAIRS)),
                        help="emit one of the four single-edge systems, numbered 0 to 3")
+    modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
     args = parser.parse_args()
     if args.chart:
         first, second, third = args.chart
@@ -229,11 +293,15 @@ def main():
             parser.error(str(error))
     elif args.single_edge is not None:
         system = single_edge_chart(EDGE_PIVOT_PAIRS[args.single_edge])
+    elif args.path:
+        system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
     else:
         verify_chart_data()
         print(f"No cut zeros among {verify_rational_rank_cut()} rational rank-drop two-planes over F5.")
         verify_extension_field_witness()
         print("Verified a rank-six point on the cuts over F25. Its only possible extension fails q2.")
+        verify_opposite_edge_obstruction()
+        print("Checked all 16 opposite-edge pencil cases over Q and F5. Every candidate has a path pivot.")
         return
     write_msolve_system(*system, sys.stdout)
 

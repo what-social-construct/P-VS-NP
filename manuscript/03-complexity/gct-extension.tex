@@ -181,3 +181,47 @@ and every such plane supplies a geometric point in some system.
 Unit ideals in all 24 systems would settle nonexistence over
 \(\mathbb C\) by proper specialization of the unrestricted
 three-plane locus. Those systems remain to be decided.
+
+\subsection{A single path chart}
+\label{sec:gct-path}
+
+The off-diagonal projection gives a smaller cover without a choice of
+two-plane. It is injective on every level three-plane. Hence some
+three distinct off-diagonal coordinate functionals give an invertible
+projection minor on the plane. Relabeling the four indices acts on
+the 20 triples of edges with three orbits, represented by a star, a
+triangle, and a path. The orbit sizes are four, four, and twelve.
+
+Suppose no path minor is nonzero. Choose a nonzero star or triangle
+minor and normalize its three rows to the identity. For each edge
+outside the pivot triple, its coefficient on a given pivot direction
+is, up to sign, the minor obtained by replacing that pivot with the
+outside edge. The replacement is a path whenever the two edges meet.
+Thus each outside edge is supported only on the direction of its
+opposite pivot edge. Each of the three directions has both of its
+opposite edges nonzero by the single-edge exclusion.
+
+Each such direction therefore has two disjoint \(2\times2\) blocks.
+The block calculation in Section~\ref{sec:gct-plucker} forces each
+block with edge entry \(r\ne0\) to have diagonal
+\(r(-1+h),r(-1-h)\), up to exchanging the entries, with \(h^2=2\).
+Take any two of the directions and relabel their distinct matchings
+as \((01),(23)\) and \((02),(13)\). Scale the first edge entry in
+each to one and let \(x,y\) be their other edge entries. For each of
+the sixteen sign choices of the four blocks, form the mixed
+coefficients of the permanent at \(J_4\) in these two directions.
+Together with \(h^2-2\) and \(rxy-1\), with \(r\) an auxiliary
+variable, these coefficients generate the unit ideal. Over
+\(\mathbb Q\) this is checked by exact Gr\"obner bases. Over
+\(\mathbb F_5\) it is checked directly by row operations and
+multiplication of the input polynomials through degree seven.
+This contradicts the existence of the two directions.
+
+Consequently every complex or \(\overline{\mathbb F}_5\) level
+three-plane has a path minor. Relabel it to the edges \(01,12,23\),
+and choose the frame whose projection onto these three entries is
+the identity. The remaining system has 18 variables and 31
+coefficients of degrees two through four. The executable emits this
+single chart over \(\mathbb F_5\). A unit ideal would settle
+nonexistence over \(\mathbb C\) by proper specialization. The
+unrestricted path system remains open.

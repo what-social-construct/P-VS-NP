@@ -60,11 +60,13 @@ The Plücker checker also exports exact input for msolve. Choose
 `--single-edge` from 0 through 3 to reproduce the four unit-ideal checks.
 The full systems use an ordered pivot pair from `PIVOT_PAIRS` and a
 different extension pivot from `PIVOT_COORDINATES`.
+The unrestricted search can also use the single path chart.
 
 ~~~sh
 python3 gct_permanent_plucker.py --single-edge 0 > /tmp/gct-edge.ms
 msolve -g 2 -l 2 -f /tmp/gct-edge.ms -o /tmp/gct-edge.out
 python3 gct_permanent_plucker.py --chart u P v > /tmp/gct-plucker.ms
+python3 gct_permanent_plucker.py --path > /tmp/gct-path.ms
 ~~~
 
 The quadratic-field check uses a C++17 compiler.

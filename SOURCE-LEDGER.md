@@ -208,6 +208,26 @@ then gives the single-edge exclusion over $\mathbb C$ and the 24-system
 cover at 5. The generator includes the full extension equations in
 those systems.
 
+The local Galois Obstruction Theory repository was reviewed at
+`cc62910fc1b817708be644fbe4486d19c710af9b`. The existing
+`OrbitMatrices.lean` source is unchanged from `ad5e755`. Its
+orbit-coordinate method informs the reduction of pivot triples to
+star, triangle, and path representatives. The [path reduction](manuscript/03-complexity/gct-extension.tex)
+and the 16 opposite-edge checks are new. The prime-field check replays
+unit-ideal membership by row operations and monomial multiplication
+through degree seven on the input polynomials. The unrestricted path
+system was exported for exact msolve and the run ended before a basis
+was produced.
+
+The Homotopical Encryption local repository was reviewed at
+`1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3
+`lean/Proximity/Core/PolynomialAgreement/Boundary.lean` supplies
+`coefficientSystem_fiber` and the normalized affine-kernel pattern.
+That file last changed at `8dcf71d23e0cbfc8c917f0106b6572efe4ce703c`.
+Monic substitutions in the older cut charts were checked locally.
+They save variables while raising degrees in some charts. The chosen
+path presentation keeps the original coefficient degrees.
+
 ## GODEL
 
 Balthasar Grabmayr,
@@ -219,6 +239,15 @@ Goldfarb's fixed-point lemma makes the numeral substitution and provable
 biconditional explicit. The [Lean tracking statement](lean/PvsNP/Compatibility.lean)
 assumes the substitution law for the chosen code. The diagonal lemma is
 cited in the [manuscript](manuscript/01-compatibility/section.tex).
+
+The local sequel files `research/sequel/GodelSquares.lean` and
+`research/sequel/RealizationChecking.lean` were reviewed at Galois
+Obstruction Theory `cc62910`, with their last revision `4d104436d1c9020612cb671aaf4945fdb69befb7`.
+They describe the coding comparisons and a proposed checker. The
+existing [Lean compatibility lemmas](lean/PvsNP/Compatibility.lean)
+check the descent and reflection principles. The path calculation
+checks the chart cover and replays its finite-field subsidiary
+certificates against the polynomial generators.
 
 ## LOGIC
 
