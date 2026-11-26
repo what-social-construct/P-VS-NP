@@ -109,7 +109,9 @@ has one matching partner for each nonzero direction in $K_J$.
 | Step | Exact scope | Evidence and status |
 | --- | --- | --- |
 | `L-meta-4211` | A monotone circuit with at most 62 gates cannot realize the posted incidence examples by OR-ing two selected wires. | Reviewed and returned to the desk. The [public reduction](SOURCE-LEDGER.md#peq) isolates the remaining lower bound for a circuit with at most 63 gates and a single output. |
-| `L-meta-19020` | Every pair of sparse point and line sets with no incidences in the order-three plane is covered by a relabeling of one of eight sample masks. | An independent Python enumeration covered all 12,234 eligible pairs. [Upstream PR #23821](https://github.com/open-goat/pequalnp-proofs/pull/23821) was opened by another contributor. |
+| `L-meta-19020` | Every pair of sparse point and line sets with no incidences in the order-three plane is covered by a relabeling of one of eight sample masks. | An independent Python enumeration covered all 12,234 eligible pairs. Another contributor's [Lean proof #23821](https://github.com/open-goat/pequalnp-proofs/pull/23821) merged. |
+| `R-meta-17715-1`, second hypothesis | An order-two incidence circuit with the specified first AND gate needs a second gate. | Lean checked the exact hypothesis in the public fork's pinned environment. Awaiting a child step ID for the [merged reduction #23858](https://github.com/open-goat/pequalnp-proofs/pull/23858). |
+| `R-meta-17918-2` and `R-meta-17920-2`, first hypotheses | An order-three incidence circuit cannot use a primary input as its output. A singleton input would make that output true without any incidence. | Lean checked both exact hypotheses in the public fork's pinned environment. Awaiting child step IDs for the [merged reductions #23852](https://github.com/open-goat/pequalnp-proofs/pull/23852) and [#23853](https://github.com/open-goat/pequalnp-proofs/pull/23853). |
 
 Run `python3 affine_witness_selector.py` to see the common squared CVP cost
 on two distinct witnesses and then reduce the fiber to one witness with a

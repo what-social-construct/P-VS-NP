@@ -143,3 +143,11 @@ line sets meeting each point in at most two lines. It rejected pairs with an
 incidence, then tested containment in the 468 distinct supports obtained by
 translating, scaling, and exchanging sides with negation as in the posted
 statement.
+
+At [upstream revision `efe70b48`](https://github.com/open-goat/pequalnp-proofs/tree/efe70b48),
+the merged reductions `R_meta_17715_1`, `R_meta_17918_2`, and
+`R_meta_17920_2` give the exact hypotheses used for three local Lean
+checks. The one-gate case uses two disjoint incident inputs. The
+primary-output cases use preservation of the initial wire list by
+circuit evaluation and a singleton input. These checks used only
+`PEqualNP.Defs` from the public fork.
