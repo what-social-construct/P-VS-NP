@@ -9,6 +9,7 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | --- | --- | --- | --- |
 | [HE-P1-Code](#he-p1-code) | Homotopical Encryption at `e619391` | Fresh-sign and residual Lean import closure | Copied source proofs and fixed-mask cost comparison |
 | [HE-P1-Text](#he-p1-text) | Homotopical Encryption Paper 1 at `62f20ff` | Fresh-sign normal form, explicit residual, cost gap, disclosure and oracle scope | Originating cochain and residual data |
+| [HE-P3](#he-p3) | Homotopical Encryption Paper 3 local §8 draft based on `62f20ff` | Normalized certificate coefficients, degree feasibility, completeness, and sharpness | Finite-field selector and certificate collision square |
 | [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 and proof spine | Tagged graph pullback, idempotent comparison, and first-colon quotient | Agreement square and affine residual calculation |
 | [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
 | [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
@@ -41,6 +42,34 @@ unconstrained sign keys. The update records the original recovery comparison
 in its fixed-oracle query model. The affine constraint and disclosure-kernel
 comparison in this repo specialize the witness family at the decoded cochain
 boundary. Probability claims here refer to uniform finite affine fibers.
+
+## HE-P3
+
+Paper 3, *Capacity-Radius Proximity for Smooth-Domain Reed–Solomon
+Codes*, local §8 working draft reviewed on 2026-11-26. The checked-out
+base was [`62f20ffd0dc8bf643fe72511dc80c04b8825883f`](https://github.com/what-social-construct/homotopical-encrypt/tree/62f20ffd0dc8bf643fe72511dc80c04b8825883f).
+The draft section and four agreement modules were local additions at
+that base. Their content hashes identify the source snapshot.
+
+| Source path | SHA-256 |
+| --- | --- |
+| `papers/paper3/sections/07a-polynomial-agreement.tex` | `33508eb5da1420bafcc340faf882af19c5813168568483e55fc567f192794610` |
+| `lean/Proximity/Core/PolynomialAgreement.lean` | `b54583df4e2c6a59c6b60d1d548a520fa6da2b95699b0a87d408ffca5ba6654e` |
+| `lean/Proximity/Core/PolynomialAgreement/Boundary.lean` | `c2368673020040713476b27dabdd8920d577814b9d7b2610275a46ad3a72bc66` |
+| `lean/Proximity/Core/PolynomialAgreement/Completeness.lean` | `79a4f6c76831f00c3969ecfee0c810874b1e8e577dbe8d42ca81f23832d90124` |
+| `lean/Proximity/Core/PolynomialAgreement/Sharpness.lean` | `1e4b365d299e474529d19eb33140778caa8534d5bb897d02cecd481e32772e63` |
+
+The 16 Lean files under [`lean/Proximity/`](lean/Proximity/) are the
+byte-identical import closure under the [MIT notice](lean/LICENSE).
+The other 12 files match the base commit. The closure's SHA-256 over
+lines `<file SHA-256>  <repo-relative path>` in ascending path order
+with a trailing newline per line is
+`591f59fb42003ca3aac0bd23e62f6fbfe0a9e805768cccb60410758274d2f874`.
+
+The local [Lean bridge](lean/PvsNP/AgreementCertificate.lean) applies
+the affine collision square to the imported coefficient map. The
+[prime-field executable](polynomial_agreement_selector.py) implements
+the draft's row-reduction and degree search for these equations.
 
 ## GOT
 

@@ -131,6 +131,42 @@ selected bits. At the other extreme, fibers of size zero and one both have
 empty off-diagonal residual. The promised satisfiability comparison between
 these two cases has a [randomized hardness result](SOURCE-LEDGER.md#vv).
 
+## Polynomial agreement certificates
+
+Fix the received Reed–Solomon pair $w$, the distinct evaluation sites
+$a_i$, the code degree bound $k$, a multiplier budget $t$, and a
+response degree $D$ with $k+t\le D<n$. Making the response monic
+gives an affine coefficient system $M_w c=b$, where the rows are
+
+$$
+\sum_{j=0}^1 w_{ij}\sum_{s=0}^t a_i^s h_{js}
+  - \sum_{s=0}^{D-1}a_i^s r_s = a_i^D .
+$$
+
+The selected witness is a certificate for an error-count lower bound.
+Write $e$ for the true whole-pair error count and $b(w)$ for the best
+certified count.
+For given $w$, solving the linear system gives the actual fiber,
+including inconsistency. With $w$ varying, consistency is the rank
+condition $\operatorname{rank} M_w=\operatorname{rank}[M_w\mid b]$.
+Eliminating the coefficients gives the Zariski closure of the projection.
+The zero specialization in the four-site example is in that closure
+and has an empty actual fiber.
+
+On the four nonzero sites of $\mathbb F_5$ with $k=1$, the received pair
+$(a,2a)$ gives five degree-one certificates. The first coefficient
+restriction $h_{00}=0$ leaves one certificate. The received pair
+$(1-1/a,0)$ has true error count three and strongest certified count
+one. These cases are checked by the executable example.
+
+| Realization | Notation | Semantic role | Evidence and scope |
+| --- | --- | --- | --- |
+| Normalized coefficients | $W_{w,t,D}=\{c:M_wc=b\}$ | A nonempty fiber is a translate of $\ker M_w$. A prefix adds coordinate equations. | [Paper 3 Lean boundary](lean/Proximity/Core/PolynomialAgreement/Boundary.lean) proves the coefficient equivalence and kernel description. The [Python selector](polynomial_agreement_selector.py) computes a particular solution and basis over an explicitly supplied prime field. |
+| Certificate disclosure | $W_{w,t,D}\times_\Lambda W_{w,t,D}$ | Two certificates with the same linear disclosure differ by a direction in $\ker M_w\cap\ker\Lambda$. The diagonal corresponds to zero direction. | [Lean bridge](lean/PvsNP/AgreementCertificate.lean) specializes the equivalence, square, and diagonal theorem over a field. |
+| Degree frontier | $D_{\min}$, $n-D_{\min}$ | At maximal budget $t=D-k$, feasible degrees form an upper interval. Binary search gives the strongest certified count. | Lean proves [upward closure](lean/Proximity/Core/PolynomialAgreement/Boundary.lean). The Python search uses unrestricted coefficient fibers at each candidate degree. |
+| Certificate strength | $\min(e,n-k+1-e)\le b(w)\le e$ | The best certificate is exact through the closed half-distance boundary. | [Soundness](lean/Proximity/Core/PolynomialAgreement.lean), [completeness](lean/Proximity/Core/PolynomialAgreement/Completeness.lean), and [sharpness on nonzero domains](lean/Proximity/Core/PolynomialAgreement/Sharpness.lean) are imported Lean results. |
+| Projection across inputs | $\operatorname{rank} M_w=\operatorname{rank}[M_w\mid b]$ | Equality of ranks characterizes actual feasibility. The Zariski closure also contains the zero specialization in the example. | Written derivation and [Paper 3 provenance](SOURCE-LEDGER.md#he-p3). |
+
 ## PEqualNP contribution status
 
 | Step | Exact scope | Evidence and status |
@@ -144,4 +180,6 @@ these two cases has a [randomized hardness result](SOURCE-LEDGER.md#vv).
 Run `python3 affine_witness_selector.py` to see the common squared CVP cost
 on two distinct witnesses and then reduce the fiber to one witness with a
 residual coordinate. Run `lake build` from `lean/` for the Lean declarations.
+Run `python3 polynomial_agreement_selector.py` for the four-site
+certificate and prefix examples.
 Run `latexmk -pdf -outdir=.build main.tex` from `manuscript/` to build the draft.

@@ -2,6 +2,7 @@ module
 
 public import HCP.CoupledSignResidual
 public import PvsNP.AffineDisclosure
+public import PvsNP.AgreementCertificate
 public import PvsNP.Compatibility
 
 @[expose] public section
@@ -9,6 +10,9 @@ public import PvsNP.Compatibility
 /-!
 The Paper 1 import closure is copied from homotopical-encrypt at revision
 e619391ec7d40c5349ebe31846e24461e0b49649 under the accompanying MIT license.
+The Paper 3 polynomial agreement sources come from the working tree at
+62f20ffd0dc8bf643fe72511dc80c04b8825883f under the same license. See the
+source ledger for the files and hashes.
 The bridge below uses the original fresh-sign objective and mask equivalence.
 -/
 
