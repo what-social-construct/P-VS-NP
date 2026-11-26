@@ -1,0 +1,45 @@
+\clearpage
+\section{Verification and provenance}
+\label{sec:verification}
+
+{\small\noindent
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
+  >{\raggedright\arraybackslash}X@{}}
+  \toprule
+  Claim & Evidence and scope \\
+  \midrule
+  Descent and equality reflection &
+  Lean proves the set-level descent criterion and equality reflection
+  from a supplied left inverse in \path{PvsNP/Compatibility.lean}. \\
+  \addlinespace
+  Coding and provability &
+  Lean checks tracked self-substitution from the coding law. The
+  diagonal lemma, arithmetic incompleteness, and first-order
+  completeness enter through the cited logic sources. \\
+  \addlinespace
+  Fixed-mask CVP costs &
+  The source Lean proofs in \path{HCP/CoupledSignResidual.lean} check
+  the cost and gap. Paper~1 gives the residual vector, which the Python
+  reference computes with exact arithmetic. \\
+  \addlinespace
+  Affine disclosure &
+  \path{PvsNP/AffineDisclosure.lean} checks the pointwise equivalences,
+  commuting identity, and diagonal. The coordinate rings, counts, and
+  choice of disclosure coordinates follow by the written arguments. \\
+  \addlinespace
+  Affine selection &
+  \path{affine_witness_selector.py} performs elimination with supplied
+  affine constraints and residual coordinates. Certifying the
+  implementation against the full-fiber specification remains a target. \\
+  \addlinespace
+  Finite Boolean agreement &
+  The projection formula is proved in Section~\ref{sec:boolean-agreement}.
+  \path{agreement_scheme.py} checks the two one-bit families by symbolic
+  elimination and exhaustive evaluation. \\
+  \addlinespace
+  Complexity comparisons &
+  Proof translation and polynomial boundedness use Cook--Reckhow.
+  The quotient \(B/R\) follows directly from the predicate definitions. \\
+  \bottomrule
+\end{tabularx}\par
+}

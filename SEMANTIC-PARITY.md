@@ -1,7 +1,7 @@
 # Semantic parity
 
 This register follows the [manuscript](manuscript/main.tex) from compatibility
-of presentations to the affine disclosure square. The
+of presentations through affine disclosure and finite Boolean agreement. The
 [source ledger](SOURCE-LEDGER.md) tracks reviewed revisions and the scope of
 each transfer.
 
@@ -97,9 +97,10 @@ has one matching partner for each nonzero direction in $K_J$.
 | Affine witnesses | $W=\{v:Qv=c\}$ | A particular solution and a kernel basis encode the whole witness family. | [Selector](affine_witness_selector.py); [affine fiber](lean/PvsNP/AffineDisclosure.lean) | Executable Gaussian elimination uses explicitly supplied binary affine constraints and decoded cochains. |
 | Disclosure collision | $C_J\cong W\times K_J$ | Equal disclosures correspond to unobserved homogeneous directions. | [`disclosureCollisionEquiv`, `disclosureCollision_square`](lean/PvsNP/AffineDisclosure.lean) | Lean proves the equivalence and commuting square for linear maps over a ring. The fresh-sign specialization uses the bit decoding above. |
 | Marked diagonal | $\Delta_W\subset C_J$, $W\times\{0\}$ | Equality of witnesses corresponds to a zero direction. | [`disclosureCollisionEquiv_diagonal`](lean/PvsNP/AffineDisclosure.lean) | Lean proves the pointwise comparison. The complementary subset follows by taking complements. |
-| Function algebra and finite split scheme | $A(C_J)$, $e_\Delta$, $1-e_\Delta$ | Transport preserves the two complementary idempotents and hence the product decomposition. | [Projector square above](#disclosure-collision-square); [source convention](SOURCE-LEDGER.md#got) | Derived in the finite split realization. The Lean square is presently at the level of points. |
-| Cardinality and selector | $|W_y|=2^{\dim K-\operatorname{rank}(D\vert_K)}$ | Counts the candidates after a specified disclosure. A one-point fiber gives exact recovery. | [Rank–nullity derivation](#disclosure-collision-square); [`residual_coordinates`, `cardinality`](affine_witness_selector.py) | Derived for attained disclosures. Executable selection supports inconsistent constraints and disclosures by returning an empty fiber. |
-| Bounded circuit agreement | $I_E=([x^\alpha](P_a-N_b))_\alpha$ | Coefficient equalities cut out agreement between candidate descriptions. Projection tests whether a target has any candidate. | [Symbolic example](agreement_scheme.py); [circuit-size definitions](SOURCE-LEDGER.md#peq) | Executable toy model. A comparison to the site’s general circuit predicate and a uniform complexity transfer are targets. |
+| Function algebra and finite split scheme | $A(C_J)$, $e_\Delta$, $1-e_\Delta$ | The change of coordinates $w=v'-v$ gives equations $Qw=Dw=0$ and takes the diagonal to $w=0$. The complementary idempotents give a product decomposition. | [Boolean coordinate derivation](manuscript/02-affine-disclosure/section.tex); [projector square](#disclosure-collision-square) | Derived in the finite split realization. The Lean square is at the level of points. |
+| Cardinality and selector | $\lvert W_y\rvert=2^{\dim K-\operatorname{rank}(D\vert_K)}$ | Counts the candidates after a specified disclosure. A one-point fiber gives exact recovery. | [Rank–nullity derivation](#disclosure-collision-square); [`residual_coordinates`, `cardinality`](affine_witness_selector.py) | Derived for attained disclosures. Executable selection supports inconsistent constraints and disclosures by returning an empty fiber. |
+| Minimum coordinate disclosure | $k=\dim K$ | A nonempty witness fiber needs at least $k$ coordinates for exact recovery. Independent rows of a kernel basis select $k$ sufficient coordinates. | [Row-rank argument](manuscript/02-affine-disclosure/section.tex) | Derived. The Python selector consumes supplied coordinates. |
+| Bounded circuit agreement | $I_E=([x^\alpha](P_a-N_b))_\alpha$ | Coefficient equations cut out exact Boolean agreement. Contracting the ideal to target parameters gives the represented targets. | [Projection and example](manuscript/03-complexity/section.tex); [symbolic check](agreement_scheme.py) | Derived for finite Boolean families. Executable for constant and affine one-bit candidates. A comparison to the site’s general circuit predicate and a uniform complexity transfer are targets. |
 
 ## PEqualNP contribution status
 

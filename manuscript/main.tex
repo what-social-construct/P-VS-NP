@@ -8,7 +8,7 @@
 \usepackage{microtype}
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \usepackage[hidelinks]{hyperref}
-\hypersetup{pdftitle={Compatibility and Affine Witness Disclosure}}
+\hypersetup{pdftitle={Affine Witness Collisions and Boolean Agreement}}
 \addbibresource{references.bib}
 
 \newtheorem{proposition}{Proposition}[section]
@@ -21,25 +21,26 @@
 
 \begin{document}
 \begin{center}
-  {\LARGE Compatibility and Affine Witness Disclosure\par}
-  \smallskip
-  \textit{A study of collision squares and their realizations}
+  {\LARGE Affine Witness Collisions and Boolean Agreement\par}
 \end{center}
 
 \begin{abstract}
-A comparison map defines a collision relation on its source. An operation
-descends through a surjective comparison exactly when it preserves that
-relation. We distinguish exact coding identities, provable equivalence,
-semantic quotients, and proof translations with resource bounds. For the
-fresh-sign Harmonic Cochain Problem, we identify the collision space after
-an affine disclosure with an affine witness fiber times a kernel. This
-comparison preserves the diagonal projector and gives an exact count of
-the surviving witnesses.
+For an explicitly presented affine witness family \(W=\{v:Qv=c\}\) and
+a linear disclosure \(D\), we identify pairs of witnesses with equal
+disclosures with \(W\times(\ker Q\cap\ker D)\). Boolean coordinates give a
+scheme realization in which the diagonal and its complement split by
+idempotents. Each attained disclosure has exactly
+\(2^{\dim(\ker Q\cap\ker D)}\) witnesses, and row reduction selects a
+representative in polynomial time. The fresh-sign Harmonic Cochain
+Problem supplies a family with equal closest-vector costs and different
+residual vectors. A separate finite example uses coefficient equations to
+project candidate--target agreement onto the represented targets.
 \end{abstract}
 
 \input{01-compatibility/section}
 \input{02-affine-disclosure/section}
 \input{03-complexity/section}
+\input{04-verification/section}
 
 \printbibliography
 \end{document}

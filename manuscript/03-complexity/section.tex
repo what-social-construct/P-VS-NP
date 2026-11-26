@@ -1,4 +1,55 @@
-\section{Resource bounds on comparisons}
+\section{Boolean agreement and resource bounds}
+
+\subsection{Agreement of finite Boolean families}
+\label{sec:boolean-agreement}
+
+Let \(U\) and \(V\) be finite Boolean parameter spaces for candidate and
+target polynomial families \(P_u(x)\) and \(N_v(x)\). Reduction modulo
+the Boolean equations on the input bits writes the difference uniquely as
+\[
+ \Delta(u,v,x)=P_u(x)-N_v(x)
+   =\sum_{\alpha\in\{0,1\}^n} d_\alpha(u,v)x^\alpha ,
+ \qquad d_\alpha\in\mathcal A(U\times V).
+\]
+By the evaluation isomorphism in Section~\ref{sec:boolean-disclosure},
+\(P_u\) and \(N_v\) agree on every Boolean input precisely when all
+coefficients \(d_\alpha(u,v)\) vanish. The agreement locus \(E\) is the
+pullback of the two evaluation maps into the space of Boolean functions.
+Its coordinate ring is \(\mathcal A(U\times V)/I_E\), where
+\(I_E=(d_\alpha)_\alpha\). The indicator
+\[
+ e_E(u,v)=\prod_{x\in\Ftwo^n}\bigl(1-\Delta(u,v,x)\bigr)
+\]
+is one on this locus and zero elsewhere.
+
+Let \(\pi\colon U\times V\to V\) project to the target parameters. The
+contraction of \(I_E\) along \(\pi^*\) is the ideal of functions on \(V\)
+vanishing on \(\pi(E)\), since \(f\circ\pi\) vanishes on \(E\) exactly
+when \(f\) vanishes on \(\pi(E)\). Its generator
+\[
+ e_{\mathrm{miss}}(v)=\prod_{u\in U}\bigl(1-e_E(u,v)\bigr)
+\]
+marks the targets with no representing candidate. These formulas give
+an exact image for the fixed finite families. Their products range over
+all inputs or all candidate parameters, and can grow exponentially in
+the number of bits.
+
+\paragraph{One-bit example.}
+For target parameters \(a,b\in\Ftwo\), take the verifier polynomial
+\(V_{a,b}(x,y)=axy+b(1-x)(1-y)\). Existential acceptance over the witness
+bit \(y\) is the Boolean OR of the two verifier values, so
+\[
+ N_{a,b}(x)
+   =1-\prod_{y\in\Ftwo}(1-V_{a,b}(x,y))
+   =b+(a+b)x
+\]
+in the Boolean quotient. With constant candidates \(P_c(x)=c\), the
+agreement equations are \(c=b\) and \(a+b=0\). The projected image
+consists of the two targets with \(a=b\), and \(e_{\mathrm{miss}}=a+b\).
+
+With affine candidates \(P_{c,d}(x)=c+dx\), the equations are \(c=b\)
+and \(d=a+b\). Every target has one candidate, and
+\(e_{\mathrm{miss}}=0\).
 
 \subsection{Translation of proof strings}
 
@@ -43,14 +94,3 @@ a specified map and a comparison theorem. The finite disclosure result
 applies to an explicitly presented affine system. Any extension to
 general NP witness families would need a uniform construction that
 preserves membership and controls the cost of producing a witness.
-
-\subsection{Proof and execution}
-
-The local Lean development proves abstract descent, equality reflection,
-tracked substitution, and the pointwise disclosure square. Its tracked
-substitution statement assumes a coding and the substitution law.
-The logical theorems and the resource bounds for
-\eqref{eq:proof-translation} enter through the cited sources. The Python
-reference computes with exact cochain coordinates. An execution
-refinement would certify that a row-reduction result represents the
-entire affine fiber, including the inconsistency case.

@@ -100,7 +100,10 @@ The Stacks Project, [Chinese remainder](https://stacks.math.columbia.edu/tag/00D
 and [open and closed subsets of spectra](https://stacks.math.columbia.edu/tag/04PN).
 The reviewed statements concern comaximal factors and the
 idempotent–clopen correspondence. In the finite product of copies of
-$\mathbb F_2$, every subset has its characteristic idempotent.
+$\mathbb F_2$, every subset has its characteristic idempotent. The
+[manuscript](manuscript/02-affine-disclosure/section.tex) obtains that
+product directly from the Boolean equations and cites Tag 04PN for the
+clopen splitting.
 
 ## PEQ
 
