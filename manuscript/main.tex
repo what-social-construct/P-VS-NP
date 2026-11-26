@@ -4,7 +4,7 @@
 \usepackage{lmodern}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amscd,amsthm}
-\usepackage{booktabs,tabularx}
+\usepackage{booktabs,longtable,tabularx}
 \usepackage{microtype}
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \usepackage[hidelinks]{hyperref}
@@ -39,12 +39,16 @@ residual vectors. Normalized polynomial agreement certificates for
 Reed--Solomon pairs give further affine fibers. A four-site example
 exhibits a received word in the Zariski closure of the feasible locus
 with an empty certificate fiber. A finite Boolean example projects
-candidate--target agreement onto the represented targets.
+candidate--target agreement onto the represented targets. In geometric
+complexity we compare graded orbit-closure multiplicities, realize a
+finite permutation commutant by orbit coordinates, and compute a
+symmetric constant-permanent level space.
 \end{abstract}
 
 \input{01-compatibility/section}
 \input{02-affine-disclosure/section}
 \input{03-complexity/section}
+\input{03-complexity/gct}
 \input{04-verification/section}
 
 \printbibliography

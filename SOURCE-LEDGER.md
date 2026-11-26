@@ -11,6 +11,7 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | [HE-P1-Text](#he-p1-text) | Homotopical Encryption Paper 1 at `62f20ff` | Fresh-sign normal form, explicit residual, cost gap, disclosure and oracle scope | Originating cochain and residual data |
 | [HE-P3](#he-p3) | Homotopical Encryption Paper 3 local §8 draft based on `62f20ff` | Normalized certificate coefficients, degree feasibility, completeness, and sharpness | Finite-field selector and certificate collision square |
 | [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 and proof spine | Tagged graph pullback, idempotent comparison, and first-colon quotient | Agreement square and affine residual calculation |
+| [GCT](#gct) | Galois Obstruction Theory at `ad5e755`, published geometric complexity results, and PEqualNP GCT rows | Orbit coordinates, polynomial separation, multiplicity comparison, and permanent level spaces | Finite symmetry and geometric complexity in Section 4 |
 | [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
 | [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
 | [CR](#cr) | Cook and Reckhow, JSL 44 (1979) | Proof systems, p-simulation, polynomial boundedness | Resource-bounded comparison |
@@ -97,6 +98,39 @@ The reviewed local files are pinned by SHA-256.
 | --- | --- |
 | `GaloisObstructionTheory/Hodge/Collision/Agreement.lean` | `24df316a759740f09287950f0c2130ed72aec382ead208273608aada4005d0dc` |
 | `GaloisObstructionTheory/Jacobian/General/GenericFiber/ResidualBaseChange.lean` | `1cdd25cb5d1eef0f5bb576c58b316df5a2e6b6b7a07b649d1b5e4cb207233bcc` |
+
+## GCT
+
+The committed Galois Obstruction Theory
+[`OrbitMatrices.lean`](https://github.com/what-social-construct/galois-obstruction-theory/blob/ad5e75521550e4a1dbcbe47150305e9624001915/GaloisObstructionTheory/Hodge/LinearAlgebra/OrbitMatrices.lean)
+is copied byte-for-byte to [the local orbit-coordinate module](lean/PvsNP/GaloisOrbitMatrices.lean).
+Its SHA-256 is `07349c8b74bdba9a3d305561e79d79719c5aaa1a8fa959bba096a6a0d1347619`.
+Both projects pin Lean 4.35.0 and Mathlib `56a0058`.
+The [local Lean bridge](lean/PvsNP/FiniteSymmetry.lean) adds the inverse
+pullback action on coefficient functions, the commutation equivalence,
+and the dimension formula. The separate [closure criterion](lean/PvsNP/OrbitClosureSeparation.lean)
+uses Mathlib's `MvPolynomial.vanishingIdeal` and `zeroLocus`.
+
+[Bürgisser, Ikenmeyer, and Panova, Theorem 1.4](https://arxiv.org/html/1604.06431v3)
+supplies the occurrence-support barrier for padded permanent versus
+determinant when $n\ge m^{25}$. The coordinate-ring multiplicity argument
+is the graded version of their restriction comparison. [Dörfler,
+Ikenmeyer, and Panova](https://arxiv.org/abs/1901.04576) give a separate
+setting where multiplicities separate the varieties.
+
+PEqualNP's [`L-gct-086`](https://data.pequalnp.com/data/lemma/L-gct-086.ab79638c0716.json)
+asks for a uniform linear bound on the dimension of a constant-permanent
+level space at the all-ones matrix. Its checked
+[`L-gct-077`](https://data.pequalnp.com/data/lemma/L-gct-077.7d7a761736dd.json)
+gives the conditional border determinantal lower bound from a dimension
+bound. [`L-gct-231`](https://data.pequalnp.com/data/lemma/L-gct-231.c93684f58e76.json)
+asks for a symmetric three-dimensional level space at $J_4$. The
+[written derivation](manuscript/03-complexity/gct.tex) and
+[executable check](gct_permanent_fiber.py) give an exact two-dimensional
+example and the support-specific upper bound. The three-dimensional
+question is recorded as a conjecture. The written Hessian argument gives
+an overall upper bound of four in the symmetric order-four problem, with
+the rank-nine calculation checked by the executable.
 
 ## GODEL
 
@@ -250,3 +284,14 @@ states the conjectural 59-gate AND/OR lower bound for the deletion of line
 zero, with the surviving lines relabeled by negation. The local 59- and
 48-gate constructions supply upper bounds for
 the two restrictions.
+
+For [`L-meta-23645`](https://pequalnp-desk.pequalnp.workers.dev/desk/row?gap=L-meta-23645),
+the eight-gate witness uses the posted mask and index convention
+$6\min(i,j)+\max(i,j)$. Python independently checked all 36 ordered pairs.
+The one-file proof passed the import guard and built in PEqualNP at
+[`3e40e23`](https://github.com/open-goat/pequalnp-proofs/tree/3e40e235a483fecb6e978ad624645d8f7ada48be)
+with the pinned Lean 4.36.0 and Mathlib `fc4f59e` environment.
+The source at [fork commit `43991a8`](https://github.com/what-social-construct/pequalnp-proofs/commit/43991a848dfb227f87792a3576b34217619f02bd)
+has SHA-256 `9728dc71a3fed98fbf20a378302114cf21f5c04fa957ac6c2b5b00f4e4a034b6`.
+[PR #33168](https://github.com/open-goat/pequalnp-proofs/pull/33168) was
+opened on 2026-11-26, and the desk recorded the reservation as submitted.

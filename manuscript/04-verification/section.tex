@@ -1,12 +1,19 @@
 \section{Verification and provenance}
 \label{sec:verification}
 
-{\small\noindent
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
-  >{\raggedright\arraybackslash}X@{}}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}
+  >{\raggedright\arraybackslash}p{\dimexpr0.73\textwidth-2\tabcolsep\relax}@{}}
   \toprule
   Claim & Evidence and scope \\
   \midrule
+  \endfirsthead
+  \toprule
+  Claim & Evidence and scope \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
   Compatibility and logic &
   \path{PvsNP/Compatibility.lean} checks descent, equality reflection
   from a left inverse, and tracked substitution from its coding law.
@@ -34,9 +41,18 @@
   \path{agreement_scheme.py} checks the two one-bit families by symbolic
   elimination and exhaustive evaluation. \\
   \addlinespace
+  Orbit closures and finite symmetry &
+  \path{PvsNP/OrbitClosureSeparation.lean} checks the rank-one separator.
+  \path{PvsNP/FiniteSymmetry.lean} checks the finite commutant and its
+  dimension. The graded comparison uses complete reducibility. \\
+  \addlinespace
+  Permanent level spaces &
+  Section~\ref{sec:gct} gives the coefficient pullback and the tangent
+  Hessian bound. \path{gct_permanent_fiber.py} checks the symmetric
+  rank-two pencil, its support bound, and the Hessian rank at \(J_4\). \\
+  \addlinespace
   Complexity comparisons &
   Proof translation and polynomial boundedness use Cook--Reckhow.
   The quotient \(B/R\) follows directly from the predicate definitions. \\
-  \bottomrule
-\end{tabularx}\par
+\end{longtable}
 }

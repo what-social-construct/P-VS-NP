@@ -1,0 +1,102 @@
+\section{Geometric complexity and orbit closures}
+\label{sec:gct}
+
+Let \(V=\operatorname{Mat}_n(\mathbb C)\), put
+\(U=\operatorname{Sym}^n(V^*)\), and let \(G=\operatorname{GL}(V)\)
+act on forms by \((g\cdot f)(x)=f(g^{-1}x)\). For \(m<n\), embed
+\(\operatorname{per}_m\) using \(m^2\) coordinates and choose a further
+coordinate \(z\). The two affine orbit closures are
+\begin{equation*}
+  D_n=\overline{G\cdot\det_n},\qquad
+  P_{m,n}=\overline{G\cdot(z^{n-m}\operatorname{per}_m)}.
+\end{equation*}
+A coefficient polynomial that vanishes on the determinant orbit and
+evaluates to a nonzero value on the padded permanent certifies
+\(P_{m,n}\nsubseteq D_n\).
+
+Both closures are cones. If \(P_{m,n}\subseteq D_n\), the homogeneous
+degree-\(d\) pieces of their
+coordinate rings admit a surjective \(G\)-equivariant map
+\begin{equation*}
+  \mathbb C[D_n]_d \longrightarrow \mathbb C[P_{m,n}]_d.
+\end{equation*}
+These are finite-dimensional rational representations of a reductive
+group over \(\mathbb C\). Complete reducibility gives
+\(m_{\lambda,d}(P_{m,n})\le m_{\lambda,d}(D_n)\) for each irreducible
+\(L_\lambda\). A strict reverse inequality certifies noncontainment.
+B\"urgisser, Ikenmeyer, and Panova show that the occurrence supports cannot
+separate these closures in the padded regime \(n\ge m^{25}\) studied in
+their theorem~\cite{gctnooccurrence}. A multiplicity comparison can use
+unequal positive multiplicities. D\"orfler, Ikenmeyer, and Panova exhibit
+such a distinction for a separate orbit-closure problem~\cite{gctmultiplicity}.
+
+\paragraph{Finite symmetry and a polynomial separator.}
+On a finite permutation set \(S\), the commutant on \(\mathbb Q^S\)
+consists of matrices constant on ordered-pair orbits. Their indicators
+give a basis, reused here from Galois Obstruction Theory. The graded
+\(G\)-representations above require their own multiplicity calculation.
+
+For the left-right orbit of the \(2\times2\) matrix \(E_{00}\), every
+\(LE_{00}R\) is an outer product. The determinant vanishes on the closure
+and takes the value one at the identity. Lean checks both the general
+separation criterion and this example.
+
+\paragraph{Permanent level spaces.}
+The PEqualNP desk asks for a linear bound on the dimension of a linear
+space \(L\) with \(\operatorname{per}(J_n+B)=n!\) for every \(B\in L\),
+where \(J_n\) is the all-ones matrix. Its finite symmetric test asks for
+dimension three at \(n=4\)~\cite{gctlevelbound,gctfour}.
+The checked implication \texttt{L-gct-077} converts a dimension bound
+\(D\) at \(J_n\) into \(N+D\ge n^2\) for a size-\(N\) border determinantal
+expression of \(\operatorname{per}_{n+1}\)~\cite{gctlevelbridge}.
+For an anchor \(A\), represent a proposed \(r\)-plane by an independent
+frame \(B=(B_1,\ldots,B_r)\). Define \(C_A(B)\) to be the vector of
+nonconstant coefficients of
+\begin{equation*}
+  \operatorname{per}\!\left(A+\sum_{i=1}^r t_i B_i\right).
+\end{equation*}
+The frame condition is open, given by the rank of the matrix with
+columns \(\operatorname{vec}(B_i)\). A constant level is the fiber cut
+out by \(C_A(B)=0\). The coefficient comparison gives the pullback
+\begin{equation*}
+\begin{CD}
+ C_A^{-1}(0) @>>> \operatorname{Fr}_r(V) \\
+ @VVV @VV{C_A}V \\
+ \{0\} @>>> \mathbb A^M,
+\end{CD}
+\end{equation*}
+where \(M\) counts the monomials in the parameters of total degree
+between one and \(n\). Every coefficient is required. Keeping only the
+linear terms gives the tangent condition.
+
+For \(n\ge 2\), take a symmetric perturbation supported on the first row and column.
+Write \(d\) for the perturbation at \((0,0)\) and \(u_j\) for the
+mirrored off-diagonal entries, with \(s=\sum_{j>0}u_j\). Splitting the
+permanent into permutations that fix index zero and those that do not
+gives
+\begin{equation*}
+  \operatorname{per}(J_n+tB)
+   =(n-1)!(1+td)+(n-2)!(n-1+ts)^2.
+\end{equation*}
+Over \(\mathbb C\), the quadratic coefficient forces \(s=0\), and the
+linear coefficient then forces \(d=0\). The constant directions within
+this support therefore form an \((n-2)\)-plane. At \(n=4\), the choice
+\(u=(a,b,-a-b)\) gives a symmetric two-plane in the fiber at \(24\).
+The three-dimensional desk problem requires directions beyond this support.
+
+There is also an upper bound on the entire symmetric fiber. For the
+Frobenius bilinear pairing \(\langle B,C\rangle=\sum_{i,j}B_{ij}C_{ij}\),
+put \(K=J_n-I_n\). The Hessian is
+\begin{equation*}
+  \mathrm d^2\!\operatorname{per}_{J_n}(B,C)
+    =(n-2)!\,\langle B,KCK\rangle.
+\end{equation*}
+Two selected entries require distinct rows and columns and have
+\((n-2)!\) completions. The first derivative is proportional to the
+entry sum, so the symmetric tangent space is \(J_n^\perp\). The Frobenius
+pairing on it is nondegenerate since \(\langle J_n,J_n\rangle=n^2\).
+The self-adjoint operator \(C\mapsto KCK\) is invertible and preserves
+this tangent space by \(KJ_nK=(n-1)^2J_n\). Hence the restricted Hessian
+is nondegenerate. A linear level space satisfies \(L\subseteq L^\perp\)
+for this Hessian. At \(n=4\) the tangent dimension is nine, so together
+with the explicit two-plane we have \(2\le \max\dim L\le 4\).

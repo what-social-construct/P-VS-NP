@@ -167,6 +167,16 @@ one. These cases are checked by the executable example.
 | Certificate strength | $\min(e,n-k+1-e)\le b(w)\le e$ | The best certificate is exact through the closed half-distance boundary. | [Soundness](lean/Proximity/Core/PolynomialAgreement.lean), [completeness](lean/Proximity/Core/PolynomialAgreement/Completeness.lean), and [sharpness on nonzero domains](lean/Proximity/Core/PolynomialAgreement/Sharpness.lean) are imported Lean results. |
 | Projection across inputs | $\operatorname{rank} M_w=\operatorname{rank}[M_w\mid b]$ | Equality of ranks characterizes actual feasibility. The Zariski closure also contains the zero specialization in the example. | Written derivation and [Paper 3 provenance](SOURCE-LEDGER.md#he-p3). |
 
+## Geometric complexity and orbit closures
+
+| Realization | Exact scope | Evidence |
+| --- | --- | --- |
+| Polynomial orbit-closure separation | A polynomial that vanishes on the source and has nonzero value at a target excludes that target from the zero locus of the source's vanishing ideal. The two-by-two determinant excludes the identity from the closure of the rank-one orbit. | [Lean](lean/PvsNP/OrbitClosureSeparation.lean) checks the criterion, the determinant evaluation, and inclusion of all left-right transforms of $E_{00}$ in the outer-product family. |
+| Finite permutation symmetry | Simultaneous invariance of matrix entries is exactly commutation with the permutation action on coefficient functions. The dimension is the number of ordered-pair orbits. | [Copied orbit coordinates](lean/PvsNP/GaloisOrbitMatrices.lean) and [Lean bridge](lean/PvsNP/FiniteSymmetry.lean). |
+| Graded multiplicity comparison | Containment of the padded permanent orbit closure in the determinant orbit closure gives surjective equivariant restriction in each degree. A larger multiplicity on the padded permanent side certifies noncontainment. | [Written argument and cited occurrence barrier](manuscript/03-complexity/gct.tex). The finite permutation calculation concerns a different group action. |
+| Constant permanent level | The nonconstant coefficients of the permanent pencil cut out the level fiber inside the independent-frame locus. For $n\ge2$ and symmetric perturbations supported on one row and its column, the dimension at $J_n$ is $n-2$. | [Written coefficient formula](manuscript/03-complexity/gct.tex) and [exact SymPy check at $J_4$](gct_permanent_fiber.py). The desk's dimension-three question concerns unrestricted symmetric directions. |
+| Symmetric tangent Hessian | The Hessian at $J_n$ is nondegenerate on the symmetric tangent space. Its rank at $J_4$ is nine, so a symmetric constant-level subspace has dimension at most four. | [Written Hessian argument](manuscript/03-complexity/gct.tex) and [exact rank check](gct_permanent_fiber.py). |
+
 ## PEqualNP contribution status
 
 | Step | Exact scope | Evidence and status |
@@ -177,6 +187,7 @@ one. These cases are checked by the executable example.
 | `R-meta-17918-2` and `R-meta-17920-2`, first hypotheses | An order-three incidence circuit cannot use a primary input as its output. A singleton input would make that output true without any incidence. | Lean checked both exact hypotheses in the public fork's pinned environment. The desk recorded [merged PR #23852](https://github.com/open-goat/pequalnp-proofs/pull/23852) and [#23853](https://github.com/open-goat/pequalnp-proofs/pull/23853) as surplus reductions. |
 | `R-meta-17243-1` | Reduces the AND-last case under `L-meta-1990` to one generated output wire or two distinct generated output wires. | The Lean build, import guards, and compiled declaration check passed locally. [PR #24293](https://github.com/open-goat/pequalnp-proofs/pull/24293) merged on 2026-11-26. The desk recorded it as surplus because the new cases would be at depth 3. |
 | `L-meta-1990`, parent-level draft | Trim the circuit after its latest selected generated wire. The 63-gate lower bound follows from the two existing AND-last obligations and an OR-last obligation with a nonempty list of distinct generated outputs that includes the last wire. | The [Lean draft](contributions/pequalnp/R_meta_1990_997.lean) compiled in the public project's pinned environment. The parent is at depth 1. The [intake decision on a separate contribution](https://github.com/open-goat/pequalnp-proofs/pull/24564#issuecomment-7193607202) confirms that the existing case split fills the case-split slot. |
+| `L-meta-23645` | An eight-gate circuit computes the posted mask 34612 on six shared inputs, with the input marking an ordered pair and allowing repeated indices. | The concrete AND/OR witness passed all 36 ordered pairs independently and in the pinned Lean build. [PR #33168](https://github.com/open-goat/pequalnp-proofs/pull/33168) adds the one proof file, and the desk recorded it as submitted. |
 
 ### Restricting the order-three incidence circuit
 
@@ -219,4 +230,6 @@ Run `python3 polynomial_agreement_selector.py` for the four-site
 certificate and prefix examples.
 Run `python3 contributions/pequalnp/incidence_gate_elimination.py` for the
 incidence restriction and pruning experiment.
+Run `python3 gct_permanent_fiber.py` for the symmetric permanent level
+plane and the exact coefficient check at order four.
 Run `latexmk -pdf -outdir=.build main.tex` from `manuscript/` to build the draft.
