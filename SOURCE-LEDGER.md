@@ -141,6 +141,19 @@ star plane, the rank-one expansion, and the coefficient identities
 in all four character spaces. The general star maximality proof uses
 the block permanent identity over $\mathbb C$ for every $n\ge3$.
 
+Chloe van der Vlugt's [Jacobian collision Paper I](https://github.com/what-social-construct/jacobian-collision-geometry/blob/e3b8a200de998e808a61ed2b76bd36db5d0156b8/paper/paper1.tex)
+and its [canonical Lean theorem](https://github.com/what-social-construct/jacobian-collision-geometry/blob/e3b8a200de998e808a61ed2b76bd36db5d0156b8/CollisionIdeals/ComplexThree/Cubic/Canonical.lean)
+were reviewed at `e3b8a200de998e808a61ed2b76bd36db5d0156b8`.
+The theorem takes the three-dimensional Keller condition, generic degree
+three, and the explicit Keller–Galois rigidity input. It identifies the
+generic collision algebra with $L\times N$, with first projection the
+diagonal map and $\operatorname{Gal}(N/K)\cong S_3$. For the permanent problem
+we adopt the method of isolating the equations left by an exact
+reduction. The Witt charts and the zero-row-sum exclusion are local
+derivations from permanent coefficients. The [executable](gct_permanent_fiber.py)
+generates the four remaining systems and checks the finite-field rank
+certificate used in the zero-row-sum argument.
+
 ## GODEL
 
 Balthasar Grabmayr,

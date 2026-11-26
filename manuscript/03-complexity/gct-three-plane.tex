@@ -92,5 +92,102 @@ coefficient is then \(8(a^2+c^2)\) and the quartic reduces to
 \(-8a^4\) modulo \(a^2+c^2\), forcing the zero direction. Thus the
 only stable level space for this simultaneous Klein four action is
 zero. The exact coefficient checks in \path{gct_permanent_fiber.py}
-cover all four characters. The unrestricted three-plane problem remains
-a question about spaces without this symmetry.
+cover all four characters.
+
+\paragraph{Coefficient charts.}
+Paper~I of the Jacobian collision project isolates the residual factor
+in the generic collision algebra of a cubic Keller map~\cite{jc3collision}.
+Here the corresponding reduction is to impose the quadratic coefficient
+identically, then examine the cubic and quartic coefficients on that locus.
+Write \(q_j(B)=[t^j]\operatorname{per}(J_4+tB)\). In the orthonormal
+Hadamard basis consisting of half the all-ones vector and half the
+three nontrivial Klein characters, write the tangent matrix as
+\(\left(\begin{smallmatrix}0&b^T\\b&C\end{smallmatrix}\right)\).
+For \(\{i,j,k\}=\{1,2,3\}\), use the coordinate vectors \(d_i,c_i,b_i\)
+for \(C_{ii}, C_{jk}=C_{kj}\), and the \(i\)-th arm entry. The Hessian
+formula gives \(q_2=\sum_i(C_{ii}^2+2C_{jk}^2-6b_i^2)\), with each
+opposite entry \(C_{jk}\) counted once. For its polar form
+\(\beta(u,v)=(q_2(u+v)-q_2(u)-q_2(v))/2\), a Witt basis over
+\(\mathbb Q(\mathrm i)\) is
+\begin{align*}
+ e_i &= 2d_i+c_i+b_i,& f_i &= (2d_i-c_i-b_i)/8,& w_i &=3c_i+b_i
+    && (1\le i\le 3),\\
+ e_4 &= w_1+\mathrm i w_2,& f_4 &= (w_1-\mathrm i w_2)/24,& h &= w_3.
+\end{align*}
+The four pairs have \(\beta(e_i,f_i)=1\) and zero self-pairings.
+Distinct pairs are orthogonal, and \(h\) is orthogonal to them with
+\(q_2(h)=12\).
+
+Every totally isotropic three-plane has a nonzero projection minor
+onto three coordinate lines chosen from distinct pairs. To see this,
+scale the two lines of each pair by opposite powers of a parameter
+\(\lambda\), with weights \(1,2,3,4\) on the \(e_i\), and fix \(h\).
+As \(\lambda\to0\), the lowest-weight terms in the plane's Pl\"ucker
+coordinates give a limit point of the closed isotropic Grassmannian.
+The limit is fixed under this scaling, hence is a coordinate plane
+since all nine weights are distinct. Isotropy excludes \(h\) and excludes
+selecting both lines of any pair. A nonzero minor of the limit was
+already nonzero on the original plane. This gives 32 projection charts.
+
+On each chart, split the coordinates into the selected lines, their
+dual lines, and the remaining three-dimensional orthogonal complement.
+The normalized frame is \((I_3,A,M)^T\) in these blocks. With \(Q\) the
+Gram matrix on the complement, isotropy is equivalent to
+\(A+A^T+M^TQM=0\). Thus \(A=S-M^TQM/2\), where \(S\) is skew-symmetric,
+parametrizes the chart by 12 variables. For the frame \(B_1,B_2,B_3\),
+the residual equations are the ten coefficients of
+\(q_3(\sum_i t_i B_i)\) and the fifteen of \(q_4(\sum_i t_i B_i)\).
+
+For the existence question it suffices to use the four pivot triples
+\((e_2,e_3,e_4)\), \((e_1,e_2,e_4)\), \((e_1,e_2,e_3)\), and
+\((f_1,e_2,e_3)\). Klein translations change the signs of \(c_i,b_i\)
+for an even set of \(i\le3\), interchanging the corresponding \(e_i,f_i\)
+up to scale. They preserve or swap the fourth pair up to scale.
+Complex conjugation independently swaps the fourth pair. If a pair
+among the first three is omitted, these operations allow all orientations
+on the selected pairs. The index permutation interchanging the first two
+characters also identifies omissions one and two. If the fourth pair
+is omitted, even swaps leave two orientation parity classes.
+All these operations preserve the permanent coefficient locus.
+A common zero on any representative chart constructs a three-plane.
+Unit ideals on all four would certify emptiness over \(\mathbb C\).
+The executable checks the basis and chart symmetries and generates
+the residual systems.
+
+\paragraph{Excluding planes with zero row sums.}
+If every direction has zero row sums, the arm \(b\) is zero. Let \(H\)
+denote the three nontrivial columns of the normalized Hadamard matrix,
+so \(B=HCH^T\). On this slice, \(q_2(B)=\operatorname{tr}(C^2)\) and
+\(q_3(B)=\operatorname{per}(C)\). Indeed, \(q_3\) is one sixth the sum of
+products of three entries in distinct rows and columns. The indicator
+of distinct rows is one minus the sum of the three pairwise equality
+indicators plus twice the all-equal indicator, and likewise for columns.
+A term with a singleton row or column index sums to zero. This leaves
+\(q_3(B)=\tfrac23\sum_{ij}B_{ij}^3\). The sum of a product of three
+columns of \(H\) over the four indices is \(1/2\) for three distinct
+characters and zero otherwise. Hence \(\sum_{ij}B_{ij}^3=\tfrac32
+\operatorname{per}(C)\).
+
+Write \(x_i=C_{ii}\) and \(y_i=C_{jk}\) for opposite \(j,k\). Fix
+\(\kappa^2=-1/2\). The same projection-minor argument gives eight charts
+for a totally isotropic three-plane in \(\sum_i(x_i^2+2y_i^2)=0\).
+For signs \(\epsilon_i=\pm1\), set \(y_i=\kappa\epsilon_i z_i\).
+The pivot projection is onto \((x+z)/2\), so the chart is
+\(x=(I_3+S)t\), \(z=(I_3-S)t\) for a skew-symmetric \(S\) with three
+entries above the diagonal. Then
+\begin{equation*}
+ 2\operatorname{per}(C)=2x_1x_2x_3-\sum_i x_i z_i^2
+             -2\kappa(\epsilon_1\epsilon_2\epsilon_3)z_1z_2z_3.
+\end{equation*}
+It suffices to check sign product \(+1\) by conjugation. Take the ten
+coefficients in \(t\) of the displayed cubic, and multiply each by
+the monomials in the three skew entries that keep the product at
+degree at most four. In the basis of all 35 monomials of degree at most
+four, the resulting \(46\times35\) coefficient matrix has rank 35
+under reduction to \(\mathbb F_{11}\) with \(\kappa\mapsto4\). The
+executable checks this rank. The reduction respects \(2\kappa^2=-1\),
+so the nonzero minor also proves rank 35 over \(\mathbb Q(\kappa)\).
+In particular the row span contains the constant one, making the cubic
+coefficient ideal the unit ideal. Thus any level three-plane must
+contain a direction with nonzero row sums. The unrestricted four chart
+systems still require a common zero or an emptiness certificate.

@@ -4,9 +4,11 @@ Run with python3 gct_permanent_fiber.py. Requires SymPy. The identities
 are checked with exact coefficients and hold over the complex numbers.
 """
 
-from itertools import combinations, combinations_with_replacement
+from collections import defaultdict
+from itertools import combinations, combinations_with_replacement, permutations, product
 
 import sympy as sp
+from sympy.polys.matrices import DomainMatrix
 
 
 def permanent_difference(base, directions):
@@ -45,6 +47,172 @@ def symmetric_tangent_hessian(order):
         [(direction.T * image).trace() for image in images]
         for direction in basis
     ])
+
+
+def hadamard_basis():
+    """An orthonormal basis beginning with half the all-ones vector."""
+    return sp.Matrix([[1, 1, 1, 1], [1, 1, -1, -1],
+                      [1, -1, 1, -1], [1, -1, -1, 1]]) / 2
+
+
+def witt_basis():
+    """Four hyperbolic pairs and a norm-12 direction for the quadratic coefficient."""
+    columns = hadamard_basis()
+    one = columns[:, 0]
+    characters = [columns[:, index] for index in range(1, 4)]
+    pairs, perpendicular = [], []
+    for index, character in enumerate(characters):
+        left, right = (vector for j, vector in enumerate(characters) if j != index)
+        diagonal = character * character.T
+        opposite = left * right.T + right * left.T
+        arm = one * character.T + character * one.T
+        pairs.append((2 * diagonal + opposite + arm, (2 * diagonal - opposite - arm) / 8))
+        perpendicular.append(3 * opposite + arm)
+    u, v, h = perpendicular
+    pairs.append((u + sp.I * v, (u - sp.I * v) / 24))
+    return tuple(pairs), h
+
+
+WITT_CHART_REPRESENTATIVES = (
+    ((1, 0), (2, 0), (3, 0)),
+    ((0, 0), (1, 0), (3, 0)),
+    ((0, 0), (1, 0), (2, 0)),
+    ((0, 1), (1, 0), (2, 0)),
+)
+
+
+def witt_chart(pivots):
+    """Normalize a projection onto three Witt lines, using (pair, side) pivots."""
+    pairs, h = witt_basis()
+    pivot_basis = [pairs[pair][side] for pair, side in pivots]
+    dual_basis = [pairs[pair][1 - side] for pair, side in pivots]
+    (omitted,) = set(range(4)) - {pair for pair, _ in pivots}
+    residual_basis = [*pairs[omitted], h]
+    gram = sp.Matrix([[0, 1, 0], [1, 0, 0], [0, 0, 12]])
+    entries = sp.symbols("m:9")
+    skew_entries = s01, s02, s12 = sp.symbols("s01 s02 s12")
+    matrix = sp.Matrix(3, 3, entries)
+    skew = sp.Matrix([[0, s01, s02], [-s01, 0, s12], [-s02, -s12, 0]])
+    dual_coordinates = skew - matrix.T * gram * matrix / 2
+    directions = tuple(
+        pivot + sum((dual_coordinates[i, j] * dual_basis[i] + matrix[i, j] * residual_basis[i]
+                     for i in range(3)), sp.zeros(4))
+        for j, pivot in enumerate(pivot_basis)
+    )
+    return (*entries, *skew_entries), directions
+
+
+def witt_chart_equations(pivots):
+    """Return parameters and the cubic and quartic coefficient equations by multidegree."""
+    parameters, directions = witt_chart(pivots)
+    terms = defaultdict(list)
+    for perm in permutations(range(4)):
+        for degree in (3, 4):
+            for rows in combinations(range(4), degree):
+                for indices in product(range(3), repeat=degree):
+                    powers = tuple(indices.count(index) for index in range(3))
+                    terms[powers].append(sp.prod(directions[index][row, perm[row]]
+                                                  for row, index in zip(rows, indices)))
+    return parameters, {powers: sp.Add(*summands) for powers, summands in sorted(terms.items())}
+
+
+def verify_witt_charts(base):
+    pairs, h = witt_basis()
+    vectors = [direction for pair in pairs for direction in pair] + [h]
+    assert all(direction.is_symmetric() and sum(direction) == 0 for direction in vectors)
+    off_diagonal = base - sp.eye(4)
+    gram = sp.Matrix([[(left * off_diagonal * right * off_diagonal).trace()
+                       for right in vectors] for left in vectors]).applyfunc(sp.expand)
+    assert gram == sp.diag(*([sp.Matrix([[0, 1], [1, 0]])] * 4), 12)
+
+    def permute(direction, permutation):
+        return direction.extract(permutation, permutation)
+
+    operations = (
+        lambda direction: permute(direction, [1, 0, 3, 2]),
+        lambda direction: permute(direction, [2, 3, 0, 1]),
+        lambda direction: permute(direction, [0, 2, 1, 3]),
+        lambda direction: direction.conjugate(),
+    )
+    line_maps = []
+    flat_basis = sp.Matrix.hstack(*(direction.reshape(16, 1) for direction in vectors))
+    inverse = (flat_basis.T * flat_basis).inv() * flat_basis.T
+    for operation in operations:
+        line_map = {}
+        for index, direction in enumerate(vectors):
+            image = operation(direction).reshape(16, 1)
+            coordinates = (inverse * image).applyfunc(sp.expand)
+            (target,) = [j for j, coefficient in enumerate(coordinates) if coefficient != 0]
+            assert (flat_basis * coordinates - image).applyfunc(sp.expand).is_zero_matrix
+            if index < 8:
+                line_map[divmod(index, 2)] = divmod(target, 2)
+            else:
+                assert target == 8
+        line_maps.append(line_map)
+
+    charts = {tuple(zip(pairs, sides)) for pairs in combinations(range(4), 3)
+              for sides in product(range(2), repeat=3)}
+    covered = set(WITT_CHART_REPRESENTATIVES)
+    pending = list(covered)
+    while pending:
+        pivots = pending.pop()
+        for line_map in line_maps:
+            transformed = tuple(sorted(line_map[line] for line in pivots))
+            if transformed not in covered:
+                covered.add(transformed)
+                pending.append(transformed)
+    assert covered == charts and len(charts) == 32
+
+    for pivots in WITT_CHART_REPRESENTATIVES:
+        parameters, directions = witt_chart(pivots)
+        _, equations = witt_chart_equations(pivots)
+        assert len(parameters) == 12 and len(equations) == 25
+        values = dict(zip(parameters, range(1, 13)))
+        sample = tuple(direction.xreplace(values).applyfunc(sp.expand) for direction in directions)
+        difference = permanent_difference(base, sample)
+        coefficients = sp.Poly.from_dict(
+            {powers: sp.expand(equation.xreplace(values)) for powers, equation in equations.items()},
+            difference.gens,
+        )
+        assert coefficients == difference
+
+
+def verify_row_sum_zero_exclusion(base):
+    """Check the cubic identity and degree-four unit-ideal certificate on this slice."""
+    x0, x1, x2 = sp.symbols("x:3")
+    y0, y1, y2 = sp.symbols("y:3")
+    small = sp.Matrix([[x0, y2, y1], [y2, x1, y0], [y1, y0, x2]])
+    characters = hadamard_basis()[:, 1:]
+    difference = permanent_difference(base, (characters * small * characters.T,))
+    assert difference.nth(1) == 0
+    assert sp.expand(difference.nth(2) - (small**2).trace()) == 0
+    assert sp.expand(difference.nth(3) - small.per()) == 0
+
+    a, b, c = variables = sp.symbols("a b c")
+    skew = sp.Matrix([[0, a, b], [-a, 0, c], [-b, -c, 0]])
+    coordinates = sp.Matrix(sp.symbols("t:3"))
+    x = (sp.eye(3) + skew) * coordinates
+    z = (sp.eye(3) - skew) * coordinates
+    kappa = sp.Symbol("kappa")
+    cubic = 2 * sp.prod(x) - sum(u * v**2 for u, v in zip(x, z)) - 2 * kappa * sp.prod(z)
+
+    def monomials(degree):
+        return [sp.prod(factors) for order in range(degree + 1)
+                for factors in combinations_with_replacement(variables, order)]
+
+    # Reduce the coefficient matrix over Z[1/2, kappa], with 2*kappa**2 = -1.
+    # Full column rank after reduction implies full rank before reduction.
+    prime, root = 11, 4
+    assert (2 * root**2 + 1) % prime == 0
+    products = []
+    for coefficient in sp.Poly(cubic, *coordinates).coeffs():
+        degree = sp.Poly(coefficient, *variables).total_degree()
+        products.extend(sp.Poly(coefficient.subs(kappa, root) * multiplier, *variables, modulus=prime)
+                        for multiplier in monomials(4 - degree))
+    matrix = sp.Matrix([[polynomial.coeff_monomial(term) for term in monomials(4)]
+                        for polynomial in products])
+    assert matrix.shape == (46, 35)
+    assert DomainMatrix.from_Matrix(matrix).convert_to(sp.GF(prime)).rank() == 35
 
 
 def verify_star_maximality_at_j4(base, directions):
@@ -149,6 +317,8 @@ def main():
 
     hessian = symmetric_tangent_hessian(base.rows)
     assert hessian.shape == (9, 9) and hessian.rank() == 9
+    verify_witt_charts(base)
+    verify_row_sum_zero_exclusion(base)
 
     print(f"Permanent difference for t times a symmetric star: {expected}")
     print("A rank-two pencil has constant permanent 24.")
@@ -156,6 +326,8 @@ def main():
     print("The symmetric star plane is maximal by inclusion in the full level fiber.")
     print("Checked the rank-one identity and all four Klein-four character spaces.")
     print("The symmetric tangent Hessian has rank 9, giving an upper bound of 4.")
+    print("Four representative Witt-chart systems cover all 32 projection charts.")
+    print("The row-sum-zero slice has no level three-plane (coefficient rank 35 modulo 11).")
 
 
 if __name__ == "__main__":
