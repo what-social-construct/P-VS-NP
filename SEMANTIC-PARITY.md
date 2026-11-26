@@ -178,9 +178,45 @@ one. These cases are checked by the executable example.
 | `R-meta-17243-1` | Reduces the AND-last case under `L-meta-1990` to one generated output wire or two distinct generated output wires. | The Lean build, import guards, and compiled declaration check passed locally. [PR #24293](https://github.com/open-goat/pequalnp-proofs/pull/24293) merged on 2026-11-26. The desk recorded it as surplus because the new cases would be at depth 3. |
 | `L-meta-1990`, parent-level draft | Trim the circuit after its latest selected generated wire. The 63-gate lower bound follows from the two existing AND-last obligations and an OR-last obligation with a nonempty list of distinct generated outputs that includes the last wire. | The [Lean draft](contributions/pequalnp/R_meta_1990_997.lean) compiled in the public project's pinned environment. The parent is at depth 1. |
 
+### Restricting the order-three incidence circuit
+
+| Step | Exact scope | Evidence |
+| --- | --- | --- |
+| Sparse observations determine the full function | An incidence-free pair has at most three vertices on one side. A monotone scan satisfying the posted singleton positives and sparse negatives computes the entire incidence function. | [Lean](lean/PvsNP/IncidenceObservations.lean) checks all 715 four-point subsets and proves the observation equivalence. Appending an OR gate to the scan gives the comparison between the parent budget of 63 and the full-function budget of 64. |
+| Restriction to zero | Delete the fixed vertex. The remaining graph has 48 edges and a 59-gate vertex-cover construction. On either 64-gate star circuit, fixing a vertex on the side used for factoring saves five gates, including three private gates. Fixing on the other side saves four. | The [Python experiment](contributions/pequalnp/incidence_gate_elimination.py) constructs and checks the restricted circuits exactly. The 59-gate lower bound is the open [L-meta-9738](https://data.pequalnp.com/data/lemma/L-meta-9738.7288f9095344.json). |
+| Restriction to one | The four neighbors contribute singleton terms. The graph outside the closed neighborhood has 36 edges. Together they admit a 48-gate construction. On either 64-gate star circuit, fixing a vertex on the opposite side saves sixteen gates, and fixing on the factored side saves one. | [Lean](lean/PvsNP/IncidenceObservations.lean) proves the decomposition. The Python experiment checks all 104 restrictions of the two explicit circuits and verifies the 48-gate construction. |
+
+There is a sufficient condition for a five-gate saving in a smallest
+AND/OR circuit for the full incidence function. Suppose a point input $p$
+has just one reader $g=p\land w$, and the gate cone for $w$ has consumers
+only within that cone or at $g$. The wire $w$ is independent of $p$ and
+must accept each of the four neighboring line singletons. Comparing the
+positive input $(p,\ell)$ with the negative input $\ell$ forces this
+because only $g$ reads $p$. At the empty input $w$ must be false, since an
+always-true $w$ would make $g$ a removable copy of $p$. Thus $w$ depends on
+at least four inputs and needs at least three gates, since a cone with $s$
+fan-in-two gates depends on at most $s+1$ input wires. Setting $p=0$ makes
+$g$ constant and deletes its private cone. The restricted output remains
+nonconstant, so $g$ is an interior gate, and minimality gives it a later
+reader. That reader also simplifies, saving at least five gates in total.
+This is a written argument using the
+deletion pattern certified in [L-meta-18649](SOURCE-LEDGER.md#peq).
+
+An induction through these restrictions would need a five- or sixteen-gate
+saving for some vertex of every candidate smallest circuit, together with
+the corresponding restricted lower bound. The 48-gate target can in turn
+be reduced to a 44-gate lower bound on the 36-edge graph. Each of the four
+essential singleton inputs can be fixed to zero in turn, simplifying at
+least one direct reader while leaving the graph term nonconstant. These
+size claims concern AND/OR circuits. The published pruning theorem is stated
+with AND/OR/NOT outputs, so a general use of its construction in this
+induction would need a proof that it preserves the monotone gate set.
+
 Run `python3 affine_witness_selector.py` to see the common squared CVP cost
 on two distinct witnesses and then reduce the fiber to one witness with a
 residual coordinate. Run `lake build` from `lean/` for the Lean declarations.
 Run `python3 polynomial_agreement_selector.py` for the four-site
 certificate and prefix examples.
+Run `python3 contributions/pequalnp/incidence_gate_elimination.py` for the
+incidence restriction and pruning experiment.
 Run `latexmk -pdf -outdir=.build main.tex` from `manuscript/` to build the draft.

@@ -225,3 +225,24 @@ OR-last branch restricts `L-meta-17245` to normalized output lists that
 include the circuit's last wire. The draft imports only `PEqualNP.Defs`
 and compiled in the public fork at `df9266f`, with the Lean and Mathlib pins
 above.
+
+The [merged sparse-to-full reduction #9384](https://github.com/open-goat/pequalnp-proofs/pull/9384)
+uses three hypotheses. Its second hypothesis says that every incidence-free
+pair has at most three vertices on one side. The local
+[Lean incidence module](lean/PvsNP/IncidenceObservations.lean) proves that
+finite implication with kernel-checked `decide` and proves the observation
+equivalence for monotone scans. Its cyclic incidence relation and example
+rows are those of [`L-meta-1990`](https://data.pequalnp.com/data/lemma/L-meta-1990.307c700bb206.json)
+and the full-function target [`L-meta-972`](https://data.pequalnp.com/data/lemma/L-meta-972.9ae53fe249f7.json).
+
+The local [gate-elimination experiment](contributions/pequalnp/incidence_gate_elimination.py)
+uses the constant-wire and reader conditions in the upstream
+[Lean proof of `L-meta-18649`](https://github.com/open-goat/pequalnp-proofs/blob/da164f9fce46e9d5fdbf7fd03514b202643e82ed/lean/PEqualNP/Outside/L_meta_18649.lean).
+It independently builds shortened AND/OR circuits for the two explicit
+star factorizations and verifies their semantics by equality of minimal
+true sets. The published theorem allows NOT gates in its conclusion.
+[`L-meta-9738`](https://data.pequalnp.com/data/lemma/L-meta-9738.7288f9095344.json)
+states the conjectural 59-gate AND/OR lower bound for the deletion of line
+zero, with the surviving lines relabeled by negation. The local 59- and
+48-gate constructions supply upper bounds for
+the two restrictions.

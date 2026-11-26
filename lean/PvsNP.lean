@@ -4,6 +4,7 @@ public import HCP.CoupledSignResidual
 public import PvsNP.AffineDisclosure
 public import PvsNP.AgreementCertificate
 public import PvsNP.Compatibility
+public import PvsNP.IncidenceObservations
 
 @[expose] public section
 
