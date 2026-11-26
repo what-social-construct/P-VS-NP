@@ -191,6 +191,10 @@ checks. The one-gate case uses two disjoint incident inputs. The
 primary-output cases use preservation of the initial wire list by
 circuit evaluation and a singleton input. These checks used only
 `PEqualNP.Defs` from the public fork.
+The public records for [`L-meta-17715`](https://data.pequalnp.com/data/lemma/L-meta-17715.f395b591f5b1.json),
+[`L-meta-17918`](https://data.pequalnp.com/data/lemma/L-meta-17918.6648ce2ba458.json),
+and [`L-meta-17920`](https://data.pequalnp.com/data/lemma/L-meta-17920.c6f1d5548070.json)
+record these as surplus reductions.
 
 The [merged reduction for `L-meta-17243`](https://github.com/open-goat/pequalnp-proofs/pull/24293)
 uses the two empty-set rejection tests to exclude primary output wires.
@@ -202,3 +206,22 @@ wires. The public row allowed reductions, and the desk issued a
 prove-only reservation. The desk recorded the reservation as submitted
 after the one-file PR opened. It merged on 2026-11-26 as
 [`8ecc5c6`](https://github.com/open-goat/pequalnp-proofs/commit/8ecc5c65716ed002115ddf8fb07fc0c9cd43511e).
+The [public lemma record](https://data.pequalnp.com/data/lemma/L-meta-17243.2cb64b4c8004.json)
+records it as a surplus reduction because a new child would be at depth
+3. At depth 1, [`L-meta-1990`](https://pequalnp-desk.pequalnp.workers.dev/desk/row?gap=L-meta-1990)
+is already reduced by [PR #21167](https://github.com/open-goat/pequalnp-proofs/pull/21167)
+to the AND-last case `L-meta-17243` and the OR-last case
+[`L-meta-17245`](https://data.pequalnp.com/data/lemma/L-meta-17245.70e7330d99bd.json).
+
+The [parent-level draft](contributions/pequalnp/R_meta_1990_997.lean)
+uses the exact [posted `L-meta-1990` conclusion](https://data.pequalnp.com/data/lemma/L-meta-1990.307c700bb206.json).
+The statement text has SHA-256
+`2442775baf0d3a6e9b75afaa8ffedbd36889b06870286f38eb1cd61123e03166`.
+The proof reuses the output normalization from PR #24293, then takes the
+gate-list prefix through the latest selected wire. The prefix preserves
+every selected wire's evaluation and weakly decreases the circuit size.
+The AND-last branches take the same two hypotheses as PR #24293. The
+OR-last branch restricts `L-meta-17245` to normalized output lists that
+include the circuit's last wire. The draft imports only `PEqualNP.Defs`
+and compiled in the public fork at `df9266f`, with the Lean and Mathlib pins
+above.
