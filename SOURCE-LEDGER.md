@@ -167,13 +167,22 @@ and global arithmetic restrictions via the valuative criterion.
 
 The [three-cycle calculation](manuscript/03-complexity/gct-three-plane.tex)
 uses simultaneous index relabeling. The [permanent checker](gct_permanent_fiber.py)
-computes the fixed-sector ideals over $\mathbb Q$, $\mathbb F_5$, and
-$\mathbb F_7$ and the eigencubic by exact expansion. The point count for
+computes the fixed-sector ideals over $\mathbb Q$, $\mathbb F_5$,
+$\mathbb F_7$, and $\mathbb F_{11}$ and the eigencubic by exact expansion. The point count for
 the nonnormal cubic case is a written application of commuting relabeling
 and arithmetic actions, conditional on the candidate's cubic field of
 definition. [Sutherland, Section 2.1](https://math.mit.edu/~drew/ArithmeticEquivalenceLectureNotes.pdf)
 supplies the unramified Frobenius cycle interpretation. The JC3 Paper I
 result concerns the generic extension of a degree-three Keller map.
+
+The [involution chart checks](gct_permanent_involutions.py) establish
+geometric emptiness of the relevant invariant-plane loci in
+characteristic 11. The written proof applies the same projective
+specialization as the rank exclusions. The [quadratic-field checker](gct_permanent_f25.cpp)
+uses an explicit Witt basis over $\mathbb F_{25}$ and exhausts the
+three representative charts by necessary column and pair tests.
+The ordinary-diagonal classification and its extension kernels
+are local derivations verified by [the coefficient checker](gct_permanent_fiber.py).
 
 ## GODEL
 

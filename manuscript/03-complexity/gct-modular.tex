@@ -39,6 +39,88 @@ must have no residue-degree-one prime above either 5 or 7. This also
 excludes \(\mathbb Q(\mathrm i)\) as a field of definition, since 5 splits
 there. The computation concerns points over the prime fields.
 
+\paragraph{Quadratic fields of definition.}
+Over \(\mathbb F_{25}\) choose \(\omega^2+\omega+1=0\). The rational
+Witt pairs remain, and on the span of \(w_1,w_2,w_3\) take
+\begin{equation*}
+ e_4=w_1+\omega w_2+\omega^2w_3,\qquad
+ f_4=(w_1+\omega^2w_2+\omega w_3)/36,\qquad h=w_1+w_2+w_3.
+\end{equation*}
+This gives a hyperbolic pair and a perpendicular norm-36 direction.
+If a plane projects invertibly onto one line from each of the first
+three pairs, even sign changes and permutations of the Klein
+characters give the two pivot triples \((e_1,e_2,e_3)\) and
+\((f_1,e_2,e_3)\). Otherwise choose a chart using two of the first
+three pairs and the fourth pair. The line in the plane annihilated by
+the first two pivot coordinates has zero coordinates in the omitted
+pair, since either nonzero coordinate there would give a chart using
+only the first three pairs. Its component in the first three pairs
+is thus isotropic. The remaining component is nonzero and isotropic.
+After moving the two selected lines to \(e_1,e_2\) by relabeling,
+this component still has at least one nonzero coordinate in the
+fourth pair, since \(h\) has nonzero norm. Swapping character labels
+1 and 2 interchanges \(e_4\) and \(f_4\) up to scale and preserves
+the pair of pivot lines \(e_1,e_2\). This gives just one more pivot
+triple \((e_1,e_2,e_4)\).
+
+In each of these three charts the exact extension-field checker
+applies the same column and pair tests over \(\mathbb F_{25}\) and
+finds no triangles. Thus the locus has no point over
+\(\mathbb F_{25}\), which contains \(\mathbb F_5\). Any field of
+definition must have every residue degree above 5 at least three,
+by properness. In particular a candidate cannot be defined over
+any quadratic number field.
+
+\paragraph{Simultaneous involutions.}
+Invariance under either conjugacy class of involutions in \(S_4\)
+forces a decomposition into the \(+1\) and \(-1\) tangent
+eigenspaces. For a double transposition an invariant three-plane
+would contain a level two-plane in one of these eigenspaces.
+Both level two-plane loci are closed in their Grassmannians.
+
+For a transposition, take \((01)\). Its negative eigenspace is
+parametrized by
+\begin{equation*}
+ B=(1,-1,0,0)^T\odot(a,a,b,c)^T,
+\end{equation*}
+where \(x\odot y=xy^T+yx^T\). Here \(q_2=-8(a^2+2ab+2ac+bc)\)
+and \(q_4=4b^2c^2\). A nonzero level vector must belong to one of
+four lines. Up to exchanging indices 2 and 3, they have
+\((a,b,c)=(0,0,1)\) or \((-2,0,1)\).
+A three-plane invariant under \((01)\) is either pointwise fixed or
+is the sum of one of these lines and a positive-eigenspace two-plane.
+In the latter case let \(B\) generate the negative line. The
+positive-eigenspace two-plane lies in the kernel of
+\(C\mapsto[s^2t]q_3(sB+tC)\). Its incidence, including all coefficients
+on the extended plane, is closed in the Grassmannian of positive
+two-planes. The checker can impose this linear kernel before choosing
+the Witt coordinates of its special fiber.
+
+The resulting chart ideals contain one in all cases below. The
+projection-minor argument of Section~\ref{sec:gct-three-plane}
+applies over the algebraic closures of the specified fields.
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Case & Prime & Plane dimension in the chart & Charts\\
+\midrule
+Double transposition, positive sector & 11 & 2 & 4\\
+Double transposition, negative sector & 11 & 2 & 4\\
+Transposition, pointwise fixed & 11 & 3 & 8\\
+Transposition, first negative line & 11 & 2 & 4\\
+Transposition, second negative line & 11 & 2 & 4\\
+\bottomrule
+\end{tabular}
+\end{center}
+The five loci are geometrically empty in characteristic 11, and
+proper specialization excludes all five cases over \(\mathbb C\).
+Together with the three-cycle exclusion this rules out every
+nonidentity stabilizer: the square of a 4-cycle is a double
+transposition. Over \(\mathbb C\) and \(\overline{\mathbb F}_{11}\),
+every level three-plane has 24 distinct simultaneous relabelings.
+If the locus is finite its number of geometric points is divisible
+by 24.
+
 \paragraph{Cubic fields of definition.}
 Suppose a level three-plane is defined over a cubic number field \(K\).
 For \(p=5,7\), each prime over \(p\) has residue degree at least two.
@@ -56,10 +138,9 @@ this action. A relabeling that preserves this orbit as a set induces
 a permutation centralizing \(S_3\) on three letters, hence fixes all
 three planes. Conversely a relabeling fixing one plane fixes all its
 conjugates. The stabilizer of the arithmetic orbit is therefore the
-stabilizer of one plane, which has index at least six in the relabeling
-\(S_4\) by Section~\ref{sec:gct-three-plane}. The nonnormal cubic
-case forces at least six disjoint orbits of three conjugate planes,
-for a total of at least 18 distinct geometric points.
+stabilizer of one plane, which has index 24 in the relabeling
+\(S_4\). The nonnormal cubic case forces 24 disjoint orbits of three
+conjugate planes, for a total of at least 72 distinct geometric points.
 
 \paragraph{Rank of the row-sum map.}
 A three-plane on which \(B\mapsto B\mathbf1\) has rank at most one

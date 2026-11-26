@@ -315,7 +315,7 @@ def verify_three_cycle_coefficients(base):
 
     fixed = pencil((1, 1, 1))
     equations = [32 * fixed.nth(degree) for degree in (2, 3, 4)]
-    for field in (sp.QQ, sp.GF(5), sp.GF(7)):
+    for field in (sp.QQ, sp.GF(5), sp.GF(7), sp.GF(11)):
         assert list(sp.groebner([equation.subs(b, 1) for equation in equations], c, d, domain=field)) == [1]
         assert list(sp.groebner([equation.subs({b: 0, c: 1}) for equation in equations], d, domain=field)) == [1]
     assert fixed.nth(2).subs({b: 0, c: 0}) == 3 * d**2
@@ -335,6 +335,61 @@ def verify_three_cycle_coefficients(base):
     assert sp.expand(4 * standard.nth(4) - ((b-c)**2 - d**2)**2 * norm**2) == 0
     star = hadamard_direction(profile, [2*entry for entry in profile], [-entry for entry in profile])
     assert star == symmetric_star(0, [2*entry for entry in profile])
+
+
+def verify_actual_diagonal_exclusion(base):
+    """Verify the equal-diagonal syzygy and maximality of its level two-planes."""
+    diagonal = sp.symbols("d:3")
+    opposite = sp.symbols("c:3")
+    arm = sp.symbols("b:3")
+    variables = (*diagonal, *opposite, *arm)
+    direction = hadamard_direction(arm, diagonal, opposite)
+    trace = sum(diagonal)
+    uniform = {entry: -row for entry, row in zip(opposite, arm)}
+    assert all(sp.expand(entry.subs(uniform) - trace/4) == 0 for entry in direction.diagonal())
+    difference = permanent_difference(base, (direction,))
+    coefficients = [sp.expand(difference.nth(j)) for j in (2, 3, 4)]
+    quadratic, cubic, quartic = coefficients
+    arm_square_sum = sum(entry**2 for entry in arm)
+    assert sp.expand(quadratic.subs(uniform) - sum(entry**2 for entry in diagonal) + 4*arm_square_sum) == 0
+    assert sp.expand(cubic.subs(uniform) - sp.prod(diagonal) - 2*trace*arm_square_sum + 8*sp.prod(arm)) == 0
+    syzygy = 32*quartic + trace**4 - 2*quadratic**2 - 2*trace**2*quadratic - 8*trace*cubic
+    assert sp.expand(syzygy.subs(uniform)) == 0
+
+    gradients = [sp.Matrix([coefficient]).jacobian(variables) for coefficient in coefficients]
+    s, t = sp.symbols("s t")
+    plane_diagonal = (s, t, -s-t)
+    common = sp.Matrix([1, 1, 1, 1, 1, 1, 0, 0, 0])
+    first = sp.Matrix([1, -1, -1, -1, 0, 0, 1, 0, 0])
+    second = sp.Matrix([-1, 1, -1, -1, 0, 0, 1, 0, 0])
+    cases = (((0, 1, 2), (common, first)), ((1, 0, 2), (common, second)), ((1, 2, 0), (second,)))
+    for permutation, complement in cases:
+        plane_arm = tuple(plane_diagonal[i]/2 for i in permutation)
+        plane = sp.Matrix([*plane_diagonal, *(-entry for entry in plane_arm), *plane_arm])
+        plane_substitution = dict(zip(variables, plane))
+        assert all(sp.expand(coefficient.xreplace(plane_substitution)) == 0 for coefficient in coefficients)
+        # Vanishing at first order in any new direction is a linear system.
+        rows = []
+        for gradient in gradients:
+            polynomials = [sp.Poly(entry.xreplace(plane_substitution), s, t) for entry in gradient]
+            powers = set().union(*(polynomial.monoms() for polynomial in polynomials))
+            rows.extend([polynomial.coeff_monomial(power) for polynomial in polynomials]
+                        for power in sorted(powers))
+        constraints = sp.Matrix(rows)
+        kernel = sp.Matrix.hstack(plane.jacobian((s, t)), *complement)
+        assert kernel.rank() == 2 + len(complement) == 9 - constraints.rank()
+        assert (constraints * kernel).is_zero_matrix
+
+        u, v = sp.symbols("u v")
+        if len(complement) == 1:
+            assert sp.expand(quadratic.xreplace(dict(zip(variables, u*complement[0])))) == -u**2
+        else:
+            substitution = dict(zip(variables, u*complement[0] + v*complement[1]))
+            quadratic_restriction = sp.expand(quadratic.xreplace(substitution))
+            cubic_restriction = sp.expand(cubic.xreplace(substitution))
+            assert quadratic_restriction == 9*u**2 - 6*u*v - v**2
+            assert cubic_restriction == sp.expand((u-v)*(6*u**2 - 6*u*v + v**2))
+            assert sp.gcd(quadratic_restriction, cubic_restriction) == 1
 
 
 def main():
@@ -363,6 +418,7 @@ def main():
     verify_rank_one_expansion(base)
     verify_klein_four_coefficients(base)
     verify_three_cycle_coefficients(base)
+    verify_actual_diagonal_exclusion(base)
 
     hessian = symmetric_tangent_hessian(base.rows)
     assert hessian.shape == (9, 9) and hessian.rank() == 9
@@ -375,6 +431,7 @@ def main():
     print("The symmetric star plane is maximal by inclusion in the full level fiber.")
     print("Checked the rank-one identity and all four Klein-four character spaces.")
     print("Checked the fixed and nontrivial sectors for a simultaneous three-cycle.")
+    print("Checked that each level two-plane with zero diagonal is maximal.")
     print("The symmetric tangent Hessian has rank 9, giving an upper bound of 4.")
     print("Four representative Witt-chart systems cover all 32 projection charts.")
     print("The row-sum-zero slice has no level three-plane (coefficient rank 35 modulo 11).")

@@ -199,8 +199,8 @@ triples \(b,c,d\). A three-cycle has one fixed sector and two nontrivial
 eigenspaces. In the fixed sector the three triples are each constant,
 with respective entries \(b,c,d\). The coefficient ideal
 \((q_2,q_3,q_4)\) is the unit ideal on the charts \(b=1\) and
-\(b=0,c=1\), as checked over \(\mathbb Q\), \(\mathbb F_5\), and
-\(\mathbb F_7\). The remaining projective direction with \(b=c=0\)
+\(b=0,c=1\), as checked over \(\mathbb Q\), \(\mathbb F_5\),
+\(\mathbb F_7\), and \(\mathbb F_{11}\). The remaining direction with \(b=c=0\)
 has \(q_2=3d^2\). Thus no nonzero fixed direction is level.
 
 In a nontrivial eigenspace the three triples are scalar multiples of
@@ -215,7 +215,7 @@ A singular point of this cubic would satisfy
 If \(u=0\) these force all coordinates to vanish. If \(u\ne0\)
 normalize \(u=1\). Then \(d=4c-3\) and \(c^2=1/2\), so
 \(d^2=-1\) forces \(c=3/4\), which contradicts \(c^2=1/2\).
-This also holds in characteristics 5 and 7. A smooth projective
+This also holds in characteristics 5, 7, and 11. A smooth projective
 plane cubic contains no line, since a linear component would meet
 the residual conic at a singular point. Hence a level subspace in
 either nontrivial eigenspace has dimension at most one.
@@ -239,10 +239,47 @@ The last identity gives \(d=\pm(b-c)\). The first then gives
 Normalizing \(b=1\), the cubic vanishes only at \((c,d)=(-1,2)\).
 This gives the star plane at index zero.
 
-For any level three-plane, its stabilizer in the simultaneous
-\(S_4\) contains no element of order three. A subgroup of order
-eight would contain the regular Klein four, which is also excluded.
-Thus the stabilizer has order one, two, or four. Every candidate
-has an orbit of 24, 12, or six distinct relabelings. In particular,
-a finite level three-plane locus has a number of geometric points
-divisible by six.
+\paragraph{Ordinary diagonals.}
+Let \(D(B)=(B_{00},B_{11},B_{22},B_{33})\) and consider its projection
+modulo the constant vectors. Any level three-plane has rank at least
+two under this projection. To see this, write \(S=\sum_i d_i\) in
+Hadamard coordinates. In the original basis the diagonal of \(B\) is
+the sum of the constant vector \(S/4\) and the nontrivial Klein
+characters with coefficients \((c_i+b_i)/2\). If the diagonal is
+constant then \(c=-b\), and on this slice the checker verifies
+\begin{equation*}
+ 32q_4+S^4=2q_2^2+2S^2q_2+8S q_3.
+\end{equation*}
+A level direction in that slice thus has \(S=0\) and zero diagonal.
+There the quadratic and cubic conditions become
+\(\sum_i d_i^2-4\sum_i b_i^2=0\) and
+\(\prod_i d_i-8\prod_i b_i=0\).
+
+A level two-plane in the zero-diagonal slice cannot have any \(d_i\)
+identically zero. The cubic would force some \(b_j\) identically zero,
+and with \(\sum_i d_i=0\) the quadratic form on the remaining ambient
+three-space is nondegenerate. Otherwise unique factorization on the
+two-plane gives \(b_i=(k_i/2)d_{\sigma(i)}\) with \(\prod_i k_i=1\).
+Projection onto the \(d\) coordinates is injective, so these
+coordinates range over the whole trace-zero two-space. The
+three squares \(d_i^2\) are linearly independent as forms on it.
+The quadratic constraint therefore gives \(k_i^2=1\). Conversely
+these profiles give level planes by the same coefficient identities.
+There are exactly 24, indexed by \(\sigma\) and the even sign choices.
+
+All 24 are maximal by inclusion in the full symmetric level fiber.
+Klein translations remove the signs, and permutations of the three
+characters conjugate \(\sigma\), leaving three cycle types. In each
+case a new direction \(B\) must satisfy
+\(\mathrm d q_j|_A(B)=0\) for every \(A\) in the plane and
+\(j=2,3,4\). Taking coefficients in the two plane parameters gives
+linear constraints. The checker computes their kernels in the exact
+Hadamard coordinates. Modulo the plane, the kernel is two-dimensional
+for the identity and the transposition. In the checked complements
+the remaining quadratic and cubic forms restrict to
+\(9u^2-6uv-v^2\) and \((u-v)(6u^2-6uv+v^2)\), which have no common
+projective zero. For a 3-cycle the kernel modulo the plane is
+one-dimensional with quadratic \(-u^2\). Thus every extension lies in
+the original two-plane. A three-plane with ordinary diagonal
+projection of rank at most one modulo constant vectors would contain
+one of these maximal two-planes.

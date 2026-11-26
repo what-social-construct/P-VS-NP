@@ -51,6 +51,14 @@ for exact integer arithmetic.
 ~~~sh
 python3 gct_permanent_fiber.py
 python3 gct_permanent_modular.py
+python3 gct_permanent_involutions.py
+~~~
+
+The quadratic-field check uses a C++17 compiler.
+
+~~~sh
+c++ -O3 -std=c++17 gct_permanent_f25.cpp -o /tmp/gct_permanent_f25
+/tmp/gct_permanent_f25
 ~~~
 
 The imported Homotopical Encryption Lean sources retain their

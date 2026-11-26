@@ -57,13 +57,17 @@
   charts. Python checks the existing order-four identities and chart
   coordinates, the modular rank certificate for the zero-row-sum
   exclusion, and the three-cycle eigenspace coefficients and fixed
-  sector. \\
+  sector. It also verifies the ordinary-diagonal identities and
+  extension kernels. \\
   \addlinespace
   Modular obstructions &
   Section~\ref{sec:gct-modular} gives the written specialization and
   chart reductions. \path{gct_permanent_modular.py} checks rational
   points at 5 and 7 and the unit ideals for the two rank exclusions
-  at 11 and 23. The cubic-field orbit bound is a written argument. \\
+  at 11 and 23. \path{gct_permanent_involutions.py} checks the
+  involution chart ideals at 11, and \path{gct_permanent_f25.cpp} checks
+  the three extension-field charts. The cubic-field orbit bound is a
+  written argument. \\
   \addlinespace
   Complexity comparisons &
   Proof translation and polynomial boundedness use Cook--Reckhow.
