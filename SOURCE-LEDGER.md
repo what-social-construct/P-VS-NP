@@ -338,3 +338,7 @@ The source at [fork commit `43991a8`](https://github.com/what-social-construct/p
 has SHA-256 `9728dc71a3fed98fbf20a378302114cf21f5c04fa957ac6c2b5b00f4e4a034b6`.
 [PR #33168](https://github.com/open-goat/pequalnp-proofs/pull/33168) was
 opened on 2026-11-26, and the desk recorded the reservation as submitted.
+The desk subsequently marked the step proved after
+[PR #32240](https://github.com/open-goat/pequalnp-proofs/pull/32240)
+merged the proof file at
+[`4211944`](https://github.com/open-goat/pequalnp-proofs/commit/4211944feb4bb0c0ca21f6b62a901dbfbbfc493b).
