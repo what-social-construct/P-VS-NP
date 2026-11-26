@@ -9,7 +9,7 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | --- | --- | --- | --- |
 | [HE-P1-Code](#he-p1-code) | Homotopical Encryption at `e619391` | Fresh-sign and residual Lean import closure | Copied source proofs and fixed-mask cost comparison |
 | [HE-P1-Text](#he-p1-text) | Homotopical Encryption Paper 1 at `62f20ff` | Fresh-sign normal form, explicit residual, cost gap, disclosure and oracle scope | Originating cochain and residual data |
-| [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 | Agreement pullback and idempotent comparison | Diagram and parity conventions |
+| [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 and proof spine | Tagged graph pullback, idempotent comparison, and first-colon quotient | Agreement square and affine residual calculation |
 | [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
 | [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
 | [CR](#cr) | Cook and Reckhow, JSL 44 (1979) | Proof systems, p-simulation, polynomial boundedness | Resource-bounded comparison |
@@ -52,6 +52,21 @@ graph pullback with the equalizer. Its semantic-parity register also records
 the tracked substitution diagram and the provable fixed point as separate
 rows under arithmetized syntax. This repository uses those comparison
 conventions with affine witness fibers and finite split schemes.
+
+The local proof spine's first-colon comparison identifies the colon
+quotient with the collision algebra modulo the annihilator of the diagonal
+ideal. The [Boolean calculation](manuscript/02-affine-disclosure/section.tex)
+identifies that annihilator with the diagonal factor. The
+[agreement square](manuscript/03-complexity/section.tex) specializes the
+tagged graph pullback to the two Boolean evaluations on the common
+parameter space.
+
+The reviewed local files are pinned by SHA-256.
+
+| File in the local Galois tree | SHA-256 |
+| --- | --- |
+| `GaloisObstructionTheory/Hodge/Collision/Agreement.lean` | `24df316a759740f09287950f0c2130ed72aec382ead208273608aada4005d0dc` |
+| `GaloisObstructionTheory/Jacobian/General/GenericFiber/ResidualBaseChange.lean` | `1cdd25cb5d1eef0f5bb576c58b316df5a2e6b6b7a07b649d1b5e4cb207233bcc` |
 
 ## GODEL
 

@@ -1,4 +1,3 @@
-\clearpage
 \section{Verification and provenance}
 \label{sec:verification}
 
@@ -8,32 +7,25 @@
   \toprule
   Claim & Evidence and scope \\
   \midrule
-  Descent and equality reflection &
-  Lean proves the set-level descent criterion and equality reflection
-  from a supplied left inverse in \path{PvsNP/Compatibility.lean}. \\
+  Compatibility and logic &
+  \path{PvsNP/Compatibility.lean} checks descent, equality reflection
+  from a left inverse, and tracked substitution from its coding law.
+  The diagonal lemma, incompleteness, and completeness are cited. \\
   \addlinespace
-  Coding and provability &
-  Lean checks tracked self-substitution from the coding law. The
-  diagonal lemma, arithmetic incompleteness, and first-order
-  completeness enter through the cited logic sources. \\
-  \addlinespace
-  Fixed-mask CVP costs &
-  The source Lean proofs in \path{HCP/CoupledSignResidual.lean} check
-  the cost and gap. Paper~1 gives the residual vector, which the Python
-  reference computes with exact arithmetic. \\
+  CVP and affine selection &
+  \path{HCP/CoupledSignResidual.lean} checks the cost and gap.
+  Python computes the Paper~1 residual and selects from the explicit
+  affine system. A proof of the implementation's full-fiber
+  specification remains a target. \\
   \addlinespace
   Affine disclosure &
   \path{PvsNP/AffineDisclosure.lean} checks the pointwise equivalences,
-  commuting identity, and diagonal. The coordinate rings, counts, and
-  choice of disclosure coordinates follow by the written arguments. \\
-  \addlinespace
-  Affine selection &
-  \path{affine_witness_selector.py} performs elimination with supplied
-  affine constraints and residual coordinates. Certifying the
-  implementation against the full-fiber specification remains a target. \\
+  commuting identity, and diagonal. The coordinate rings, first-colon
+  quotient, counts, and choice of coordinates follow by the written arguments. \\
   \addlinespace
   Finite Boolean agreement &
-  The projection formula is proved in Section~\ref{sec:boolean-agreement}.
+  Section~\ref{sec:boolean-agreement} proves the projection formula and
+  identifies agreement with the tagged cross component.
   \path{agreement_scheme.py} checks the two one-bit families by symbolic
   elimination and exhaustive evaluation. \\
   \addlinespace

@@ -25,14 +25,35 @@ is one on this locus and zero elsewhere.
 Let \(\pi\colon U\times V\to V\) project to the target parameters. The
 contraction of \(I_E\) along \(\pi^*\) is the ideal of functions on \(V\)
 vanishing on \(\pi(E)\), since \(f\circ\pi\) vanishes on \(E\) exactly
-when \(f\) vanishes on \(\pi(E)\). Its generator
+when \(f\) vanishes on \(\pi(E)\). Its generator is the indicator of
+unrepresented targets,
 \[
- e_{\mathrm{miss}}(v)=\prod_{u\in U}\bigl(1-e_E(u,v)\bigr)
+ e_{\mathrm{miss}}(v)=\prod_{u\in U}\bigl(1-e_E(u,v)\bigr).
 \]
-marks the targets with no representing candidate. These formulas give
-an exact image for the fixed finite families. Their products range over
-all inputs or all candidate parameters, and can grow exponentially in
-the number of bits.
+These formulas give an exact image for the fixed finite families.
+Their products range over all inputs or all candidate parameters, and
+can grow exponentially in the number of bits.
+
+\paragraph{Tagged graph realization.}
+Put \(Z=U\times V\) and let \(\mathcal B\) be the set of Boolean functions
+on \(\Ftwo^n\). The maps \(a,b\colon Z\to\mathcal B\) send
+\((u,v)\) to the evaluations of \(P_u,N_v\), respectively. Their graphs
+have pullback
+\begin{equation}\label{eq:agreement-graphs}
+\begin{CD}
+ E @>>> Z \\
+ @VVV @VV{(\mathrm{id},b)}V \\
+ Z @>{(\mathrm{id},a)}>> Z\times\mathcal B .
+\end{CD}
+\end{equation}
+Equality of the first coordinates enforces one common pair of
+parameters. Equality of the second coordinates imposes agreement.
+Using the two graphs as the restrictions of a single map on tagged
+copies of \(Z\), the two same-tag components of its self-collision are
+copies of \(Z\), and the two ordered cross components are copies of
+\(E\). The cross components give the off-diagonal residual of this
+tagged map. The idempotent \(e_{\mathrm{miss}}\) lives on the target
+space \(V\) and records the complement of the projected agreement.
 
 \paragraph{One-bit example.}
 For target parameters \(a,b\in\Ftwo\), take the verifier polynomial
