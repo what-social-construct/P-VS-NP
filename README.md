@@ -53,6 +53,18 @@ python3 gct_permanent_fiber.py
 python3 gct_permanent_modular.py
 python3 gct_permanent_involutions.py
 python3 gct_permanent_extensions.py
+python3 gct_permanent_plucker.py
+~~~
+
+The Plücker checker also exports exact input for msolve. Choose
+`--single-edge` from 0 through 3 to reproduce the four unit-ideal checks.
+The full systems use an ordered pivot pair from `PIVOT_PAIRS` and a
+different extension pivot from `PIVOT_COORDINATES`.
+
+~~~sh
+python3 gct_permanent_plucker.py --single-edge 0 > /tmp/gct-edge.ms
+msolve -g 2 -l 2 -f /tmp/gct-edge.ms -o /tmp/gct-edge.out
+python3 gct_permanent_plucker.py --chart u P v > /tmp/gct-plucker.ms
 ~~~
 
 The quadratic-field check uses a C++17 compiler.

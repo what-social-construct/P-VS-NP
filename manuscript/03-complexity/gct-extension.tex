@@ -77,3 +77,107 @@ The incidence of level three-planes containing that integral
 two-plane is projective. Its geometric special fiber is empty by
 the checker, so its complex fiber is empty. In particular a complex
 candidate can contain at most one independent rational direction.
+
+\subsection{Two Pl\"ucker cuts and the full extension equations}
+\label{sec:gct-plucker}
+
+For a two-plane with basis \(A,B\), write
+\(p_{ij,kl}=A_{ij}B_{kl}-A_{kl}B_{ij}\). Consider the two linear
+forms in Pl\"ucker coordinates
+\begin{align*}
+ \alpha&=-p_{12,13}+p_{01,23}+p_{13,23},\\
+ \beta&=-p_{12,23}-p_{03,12}+p_{01,02}.
+\end{align*}
+In any proposed level three-plane \(L\), the two-planes form the full
+projective plane \(\mathbb P(\bigwedge^2L)\) in Pl\"ucker coordinates.
+Thus at least one of them satisfies both cuts.
+
+The 112 rank-deficient two-planes defined over \(\mathbb F_5\) contain
+no point satisfying both cuts. There is such a point over
+\(\mathbb F_{25}=\mathbb F_5[w]/(w^2-2)\), with basis
+\begin{equation*}
+ A=\begin{pmatrix}1&0&1&2\\0&2&0&3\\1&0&1&2\\2&3&2&0\end{pmatrix},
+ \qquad
+ B=\begin{pmatrix}4+w&0&1&0\\0&0&0&0\\1&0&4-w&0\\0&0&0&0\end{pmatrix}.
+\end{equation*}
+The checker verifies both cuts and the permanent pencil identity.
+It computes a six-row minor of the first-variation map with
+determinant \(2w-1\ne0\). Its kernel contains \(A,B\) and the
+independent direction
+\begin{equation*}
+ C=\begin{pmatrix}-2w-1&1&0&0\\1&4&1&4\\0&1&2w+4&0\\0&4&0&1\end{pmatrix}.
+\end{equation*}
+Thus the rank is exactly six, and \(C\) represents the unique
+projective extension direction. The full pencil difference is
+\(-s^2z^2+sz^2-2z^4+z^3-z^2\), so the quadratic coefficient
+already excludes this direction. The example shows that the
+first-order equations on the cut cannot certify its emptiness.
+The higher extension coefficients remove this point.
+
+\paragraph{Excluding a direction supported off the diagonal on one edge.}
+For a symmetric block-diagonal matrix with two \(2\times2\)
+blocks \(U,V\), write \(\ell,-\ell\) for their entry sums and \(p,q\)
+for their permanents. In the pencil at \(J_4\), the terms with no
+crossing between the blocks give the product of the two order-two
+pencils. The terms with one crossing in each direction give
+\((4+t\ell)(4-t\ell)\), and the terms with two crossings in each
+direction give four. The positive-degree coefficients therefore are
+\begin{equation*}
+ q_2=2(p+q-\ell^2),\qquad q_3=\ell(q-p),\qquad q_4=pq.
+\end{equation*}
+Their simultaneous vanishing forces \(p=q=\ell=0\). For one
+nonzero off-diagonal pair, scale its entry to one and relabel the
+pair as \((1,3)\). The other block is diagonal with zero sum and
+zero product, hence zero. The active diagonal entries are
+\(-1+h,-1-h\) with \(h^2=2\).
+
+Projection onto the six off-diagonal entries is injective on any
+level subspace in characteristic zero or five. Indeed a diagonal
+direction has coefficients \((4-j)!e_j\) in terms of the elementary
+symmetric functions of the diagonal entries. If they all vanish,
+the entries are all zero. If a three-plane contains the normalized
+one-edge direction \(C_h\), choose a basis \(A,B\) of its kernel
+under the \((1,3)\) entry. Their projection onto the five remaining
+off-diagonal slots is injective, so some pair of those slots is
+a pivot. Relabelings preserving the edge, with \(h\mapsto-h\) when
+its endpoints swap, reduce the ten pairs to
+\[
+ ((01),(02)),\quad ((01),(03)),\quad ((01),(12)),\quad ((01),(23)).
+\]
+The quadratic polar equations with \(C_h\) eliminate the \((3,3)\)
+entry of each direction using the unit \(1-h\). The four remaining
+systems include \(h^2=2\) and all pencil coefficients. Exact
+Gr\"obner bases modulo 5 are \([1]\) in all four charts. Thus no
+geometric three-plane at 5 contains such a direction. The incidence
+of three-planes containing \(C_h\) is projective over the finite
+base defined by \(h^2=2\) over \(\mathbb Z_{(5)}\). Proper
+specialization gives the same exclusion over \(\mathbb C\).
+
+\paragraph{The remaining charts.}
+Write the six off-diagonal coordinates in row order as
+\((x,y,z,b,c,e)=(P,R,v+S,Q,u-P,v-Q)\). In these coordinates the
+alternating forms are \(u\wedge v-P\wedge Q\) and
+\(P\wedge R+Q\wedge S\). By the single-edge exclusion, projection
+of a level three-plane to \((u,v,P,Q,S)\) is injective. The kernel
+of the projection consists of diagonal directions and directions
+with only the \((0,2)\) off-diagonal entry available.
+
+The projection of a cut two-plane is a two-plane in these five
+coordinates that is isotropic for \(u\wedge v-P\wedge Q\). Scale
+the five coordinates with respective weights \((3,-2,0,1,6)\).
+The two terms of the alternating form have the same weight.
+The lowest-weight projective limit therefore remains isotropic
+and is fixed by the scaling, so it is a coordinate two-plane.
+Its pivot pair cannot be \((u,v)\) or \((P,Q)\), and its nonzero
+minor was nonzero on the original projected plane. This gives
+eight possible pairs. Normalize the two pivot rows of \(A,B\),
+set those entries of \(C\) to zero modulo their span, and
+normalize one of the three remaining projected entries of
+\(C\). No candidate extension vanishes at all three, by injectivity.
+The resulting 24 affine systems impose both cuts and all
+permanent coefficients of the full three-variable pencil.
+A geometric point in any system gives a level three-plane at 5,
+and every such plane supplies a geometric point in some system.
+Unit ideals in all 24 systems would settle nonexistence over
+\(\mathbb C\) by proper specialization of the unrestricted
+three-plane locus. Those systems remain to be decided.

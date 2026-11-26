@@ -198,6 +198,16 @@ of this check fixes the given rational two-plane before specializing.
 was posted on 2026-11-26. It asks for a helper step on the hyperplane
 section and first-variation bound for `L-gct-231`.
 
+The [Plücker-cut generator and checks](gct_permanent_plucker.py) use the
+same permanent coefficients as the extension checker. The finite-field
+counterexample to first-order cut emptiness is verified by direct
+expansion and a rank minor. The four one-edge extension systems were
+checked using [msolve v0.11.0](https://msolve.lip6.fr/) in exact
+prime-field Gröbner mode. The [written specialization and chart proof](manuscript/03-complexity/gct-extension.tex)
+then gives the single-edge exclusion over $\mathbb C$ and the 24-system
+cover at 5. The generator includes the full extension equations in
+those systems.
+
 ## GODEL
 
 Balthasar Grabmayr,
