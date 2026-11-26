@@ -101,6 +101,13 @@ has one matching partner for each nonzero direction in $K_J$.
 | Cardinality and selector | $|W_y|=2^{\dim K-\operatorname{rank}(D\vert_K)}$ | Counts the candidates after a specified disclosure. A one-point fiber gives exact recovery. | [Rank–nullity derivation](#disclosure-collision-square); [`residual_coordinates`, `cardinality`](affine_witness_selector.py) | Derived for attained disclosures. Executable selection supports inconsistent constraints and disclosures by returning an empty fiber. |
 | Bounded circuit agreement | $I_E=([x^\alpha](P_a-N_b))_\alpha$ | Coefficient equalities cut out agreement between candidate descriptions. Projection tests whether a target has any candidate. | [Symbolic example](agreement_scheme.py); [circuit-size definitions](SOURCE-LEDGER.md#peq) | Executable toy model. A comparison to the site’s general circuit predicate and a uniform complexity transfer are targets. |
 
+## PEqualNP contribution status
+
+| Step | Exact scope | Evidence and status |
+| --- | --- | --- |
+| `L-meta-4211` | A monotone circuit with at most 62 gates cannot realize the posted incidence examples by OR-ing two selected wires. | Reviewed and returned to the desk. The [public reduction](SOURCE-LEDGER.md#peq) isolates the remaining lower bound for a circuit with at most 63 gates and a single output. |
+| `L-meta-19020` | Every pair of sparse point and line sets with no incidences in the order-three plane is covered by a relabeling of one of eight sample masks. | An independent Python enumeration covered all 12,234 eligible pairs. [Upstream PR #23821](https://github.com/open-goat/pequalnp-proofs/pull/23821) was opened by another contributor. |
+
 Run `python3 affine_witness_selector.py` to see the common squared CVP cost
 on two distinct witnesses and then reduce the fiber to one witness with a
 residual coordinate. Run `lake build` from `lean/` for the Lean declarations.

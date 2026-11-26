@@ -110,3 +110,18 @@ were reviewed as the external comparison surface. `HasCircuitSize` supplies
 a candidate bounded circuit predicate for comparing the projected agreement
 locus with the public repository's definitions. The affine witness square
 has its own definitions and proof in this repository.
+
+The [public contribution fork](https://github.com/what-social-construct/pequalnp-proofs)
+was set up against [upstream revision `36665a9`](https://github.com/open-goat/pequalnp-proofs/tree/36665a9146d4653d38f068739425e4f50bc52f54)
+with Lean 4.36.0 and Mathlib revision `fc4f59e577feb1a4956671bc04ac18aaaf8cd842`.
+The reviewed [reduction `R_meta_4211_1`](https://github.com/open-goat/pequalnp-proofs/blob/36665a9146d4653d38f068739425e4f50bc52f54/lean/PEqualNP/Outside/R_meta_4211_1.lean)
+separates the construction of an extra OR gate from the lower bound for the
+resulting single-output circuit.
+
+The [posted finite covering statement `L-meta-19020`](https://data.pequalnp.com/data/lemma/L-meta-19020.cdb60ec996e9.json)
+uses cyclic incidence offsets \(\{0,1,3,9\}\) modulo 13. The Python check
+enumerated 560 point sets meeting each line in at most two points and 560
+line sets meeting each point in at most two lines. It rejected pairs with an
+incidence, then tested containment in the 468 distinct supports obtained by
+translating, scaling, and exchanging sides with negation as in the posted
+statement.
