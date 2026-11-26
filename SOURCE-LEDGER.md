@@ -132,6 +132,15 @@ question is recorded as a conjecture. The written Hessian argument gives
 an overall upper bound of four in the symmetric order-four problem, with
 the rank-nine calculation checked by the executable.
 
+The [three-plane constraints](manuscript/03-complexity/gct-three-plane.tex)
+are local written derivations from permanent coefficients, the
+rank-two Schur complement, and simultaneous regular Klein four
+permutations. The exact executable checks the order-four transverse
+coefficient constraints for an arbitrary symmetric extension of the
+star plane, the rank-one expansion, and the coefficient identities
+in all four character spaces. The general star maximality proof uses
+the block permanent identity over $\mathbb C$ for every $n\ge3$.
+
 ## GODEL
 
 Balthasar Grabmayr,

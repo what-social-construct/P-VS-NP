@@ -1,0 +1,96 @@
+\subsection{Constraints on a symmetric three-plane}
+\label{sec:gct-three-plane}
+
+\paragraph{Maximality of the star plane.}
+In fact the first-row-and-column level space is maximal by inclusion in
+the full symmetric level fiber for every \(n\ge3\). Put \(m=n-1\), let
+\(e\) be the all-ones vector of length \(m\), and write a proposed
+extension direction as \(B=\bigl(\begin{smallmatrix}d&b^T\\ b&C\end{smallmatrix}\bigr)\).
+On adding the star direction with arm \(u\in e^\perp\), the pencil matrix
+has top-left entry \(1+td\), arm \(w=e+tb+u\), and lower block
+\(M=J_m+tC\). Its permanent is
+\begin{equation*}
+  (1+td)\operatorname{per}(M)+w^T D(t)w,
+  \qquad D_{ij}(t)=\operatorname{per}\bigl(M_{\widehat i,\widehat j}\bigr).
+\end{equation*}
+The quadratic and linear coefficients in \(u\) require the bilinear
+form of \(D(t)\) to vanish on \(e^\perp\times e^\perp\) and between
+\(e^\perp\) and \(e+tb\). Here \(D(t)\) is symmetric. Since
+\(e^T(e+tb)\ne0\) except possibly at one \(t\), this forces
+\(D(t)e^\perp=0\). The identity holds for all \(t\) by polynomiality,
+so \(D(t)\) has constant entries for every \(t\).
+
+Let \(r_i\) be the row sums of \(C\) and \(T=\sum_i r_i\).
+Differentiation gives
+\(D'_{ij}(0)=(m-2)!(T-r_i-r_j+C_{ij})\).
+Its row sums are proportional to \(T-r_i\), so constancy forces equal
+\(r_i\) and then \(C=cJ_m\). If \(c\ne0\), setting \(t=-1/c\) zeros
+\(M\) and its permanental cofactors, making the permanent zero. Thus
+\(C=0\). The quadratic coefficient in \(t\) now forces \(e^Tb=0\), and
+the linear one forces \(d=0\). The proposed direction belongs to the
+original star plane.
+
+\paragraph{Matrix rank.}
+Every candidate three-plane at \(J_4\) must contain a direction of
+matrix rank at least three. First, a symmetric rank-one direction is
+\(aa^T\) for some nonzero \(a\in\mathbb C^4\). The coefficient of \(t^k\)
+in \(\operatorname{per}(J_4+taa^T)\) is
+\(k!(4-k)!e_k(a)^2\), where \(e_k\) is the elementary symmetric
+polynomial. Selecting the \(k\) rows and \(k\) columns contributes
+the two factors of \(e_k\). If all four positive-degree coefficients
+vanish, the entries of \(a\) are roots of \(z^4\), forcing \(a=0\).
+
+Suppose all matrices in a level three-plane have rank at most two.
+By congruence bring one rank-two matrix to \(\operatorname{diag}(I_2,0)\)
+and write every other matrix in blocks \(\bigl(\begin{smallmatrix}A&C\\C^T&D\end{smallmatrix}\bigr)\).
+The Schur complement of \(I_2+tA\) must vanish in the combined pencil.
+Expanding \(tD-t^2C^T(I_2+tA)^{-1}C\) gives
+\(D=0\), \(C^TC=0\), and \(C^TAC=0\). If every \(C\) is zero, the
+three-plane is all symmetric \(2\times2\) matrices in the top block
+and contains a rank-one matrix. Otherwise the linear space of \(C\)'s
+has image in one common isotropic line \(\mathbb Cp\) in \(\mathbb C^2\).
+Indeed, \(C^TC=0\) places each image in one of two isotropic lines,
+and a linear space contained in the union of two subspaces lies in one.
+The equality \(C^TAC=0\) forces \(p^TAp=0\) whenever \(C\ne0\), hence
+for every matrix by linearity. These \(A\)'s have the form
+\(px^T+xp^T\), since this two-dimensional image lies in the kernel of
+the nonzero linear functional \(A\mapsto p^TAp\). Undoing the
+congruence, every direction is therefore \(av^T+va^T\) for a common
+vector \(a\ne0\) and \(v\) in a three-dimensional space \(U_0\). The
+map from \(v\) is injective by considering a coordinate where \(a_i\ne0\).
+
+Write \(K=J_4-I_4\) and \(q(v)=v^TKv\). The linear coefficient forces
+\((\sum a_i)(\sum v_i)=0\), and the Hessian forces
+\begin{equation*}
+  q(a)q(v)+(a^TKv)^2=0\qquad(v\in U_0).
+\end{equation*}
+If \(\sum a_i\ne0\), then \(U_0=\mathbf1^\perp\), where \(q\) has
+rank three. The equation forces \(q(a)=0\) by comparison with a form
+of rank at most one. It then forces \(a\) to be proportional to
+\(\mathbf1\), contradicting \(q(a)=0\). If \(\sum a_i=0\) and
+\(q(a)\ne0\), the displayed form on \(\mathbb C^4\) is nondegenerate.
+In fact a kernel vector satisfies \(q(a)v+a(a^TKv)=0\), which first
+gives \(a^TKv=0\), then \(v=0\). A three-dimensional totally isotropic
+space is impossible in this four-dimensional form. If \(q(a)=0\),
+then \(U_0=\{v:a^TKv=0\}\) contains \(a\), producing the prohibited
+rank-one matrix \(2aa^T\).
+
+\paragraph{A finite symmetry obstruction.}
+Let the Klein four group act on the four indices by its regular
+permutations, simultaneously on rows and columns. A stable level space
+decomposes by the four character projectors. For a nontrivial character
+\(\chi\), the symmetric matrix space of that character has basis
+\(\mathbf1\odot\chi,\ \psi\odot\phi\), where \(x\odot y=xy^T+yx^T\)
+and \(\psi,\phi\) are the other nontrivial characters. For coefficients
+\(u,v\), the quadratic and quartic permanent coefficients are
+\(32(v^2-3u^2)\) and \(64(u^2+v^2)^2\). They force \(u=v=0\).
+The trivial-character matrices have first row \((d,a,b,c)\) with the
+others given by translations. The linear coefficient forces
+\(d=-a-b-c\), and the cubic coefficient is \(-8(a+b)(a+c)(b+c)\).
+Relabeling the nonzero group elements allows \(b=-a\). The quadratic
+coefficient is then \(8(a^2+c^2)\) and the quartic reduces to
+\(-8a^4\) modulo \(a^2+c^2\), forcing the zero direction. Thus the
+only stable level space for this simultaneous Klein four action is
+zero. The exact coefficient checks in \path{gct_permanent_fiber.py}
+cover all four characters. The unrestricted three-plane problem remains
+a question about spaces without this symmetry.
