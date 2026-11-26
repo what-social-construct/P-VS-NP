@@ -192,7 +192,7 @@ primary-output cases use preservation of the initial wire list by
 circuit evaluation and a singleton input. These checks used only
 `PEqualNP.Defs` from the public fork.
 
-The [submitted reduction for `L-meta-17243`](https://github.com/open-goat/pequalnp-proofs/pull/24293)
+The [merged reduction for `L-meta-17243`](https://github.com/open-goat/pequalnp-proofs/pull/24293)
 uses the two empty-set rejection tests to exclude primary output wires.
 It removes missing wires and repeated indices from the selected list,
 preserving the OR of its values on every input. A positive incidence
@@ -200,4 +200,5 @@ test makes the resulting list nonempty. The lower bound then has two
 cases, according to whether the list has one or two distinct generated
 wires. The public row allowed reductions, and the desk issued a
 prove-only reservation. The desk recorded the reservation as submitted
-after the one-file PR opened.
+after the one-file PR opened. It merged on 2026-11-26 as
+[`8ecc5c6`](https://github.com/open-goat/pequalnp-proofs/commit/8ecc5c65716ed002115ddf8fb07fc0c9cd43511e).
