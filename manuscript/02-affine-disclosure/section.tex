@@ -1,0 +1,81 @@
+\section{Affine witness disclosure}
+\label{sec:disclosure}
+
+In Paper~1's fresh-sign family, fix an integer matrix \(A\) with
+\(A^{\mathsf T}A=dI\), \(d>0\), a public integer \(a\), and a sign mask
+\(\tau\). The observed cochain and the orthogonal residual for message
+signs \(s\) are
+\[
+ b=(a,0,(d+1)A\tau),\qquad
+ r_s=(a,-ds,A\tau)
+ \qquad\text{\cite{paperone}}.
+\]
+For key and message bits \(u,v\), with sign \(2v_j-1\) for \(v_j\),
+compatibility is \(u+v=m\) in \(\Ftwo^n\), where \(m_j=1\) for a
+negative mask sign. Adding explicitly given affine constraints
+\(H_u u+H_v v=c_0\) and substituting \(u=m+v\) gives the witness space
+\[
+ Q=H_u+H_v,\qquad c=c_0+H_um,\qquad
+ W=\{v\in\Ftwo^n:Qv=c\},\qquad K=\ker Q .
+\]
+Every \(v\in W\) determines one compatible key. Disclosing information
+coordinates \(J\) of the residual reveals the corresponding message bits
+since \(r_{s,j}=d(1-2v_j)\) in that block. The disclosed bits define the
+projection \(D\colon\Ftwo^n\to\Ftwo^J\).
+
+\begin{proposition}[Disclosure collision square]\label{prop:disclosure}
+Put \(K_J=K\cap\ker D\). The maps \(\Psi\) and \(\Psi_J\) are bijections
+and the square is a pullback. Both take \((v,v')\) to \((v,v'-v)\), marking
+the diagonal by zero direction.
+\begin{equation}\label{eq:disclosure}
+\begin{CD}
+  W\times_D W @>{\Psi_J}>> W\times K_J\\
+  @VVV @VVV\\
+  W\times W @>{\Psi}>> W\times K .
+\end{CD}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The difference of two solutions of \(Qv=c\) lies in \(K\). Adding a
+direction in \(K\) to a solution gives a solution, which gives the inverse
+of \(\Psi\). Since \(D(v'-v)=D(v')-D(v)\), the equality of disclosures
+cuts out exactly the preimage of \(W\times K_J\). Equal witnesses have
+zero difference, and a zero difference forces equality.
+\end{proof}
+
+For an attained disclosure \(y\), let \(W_y=\{v\in W:Dv=y\}\). Translation
+by any \(v_0\in W_y\) identifies \(K_J\) with \(W_y\). Rank--nullity for
+\(D|_K\) then gives the exact count
+\[
+  |W_y|=2^{\dim K-\rank(D|_K)} .
+\]
+
+On a finite set \(X\), the function algebra \(\Ftwo^X\) realizes each
+subset by its characteristic idempotent. The map
+\(f\mapsto f\circ\Psi_J^{-1}\) takes the diagonal indicator to the
+indicator of \(W\times\{0\}\), and so intertwines multiplication by those
+idempotents. Taking spectra realizes the marked equality and residual
+pieces as complementary clopen subschemes in this finite split setting.
+
+The full vector \(r_s\) reflects equality of messages since its
+information block recovers \(v\). The squared norm
+\(\|r_s\|^2=a^2+d(d+1)n\) is constant across \(W\), so the norm descends
+through every disclosure and adds no constraint to the fiber. Under a
+uniform choice from \(W\), conditioning on an attained \(y\) is uniform on
+\(W_y\), and the optimal exact recovery probability is \(1/|W_y|\).
+
+\paragraph{Two-bit example.}
+Take \(A=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)\),
+\(d=2\), \(a=3\) and \(\tau=(-1,-1)\). On the public cochain
+\(b=(3,0,0,-6,0)\), the side condition \(v_1+v_2=1\) leaves messages
+\((1,0)\) and \((0,1)\). Their respective residuals are
+\((3,-2,2,-2,0)\) and \((3,2,-2,-2,0)\), each of squared norm \(21\).
+Here \(K\) is the span of \((1,1)\). The first information coordinate
+distinguishes those two messages and leaves a single witness.
+
+The executable reference solves the affine constraints and any disclosed
+coordinate constraints by elimination over \(\Ftwo\), returning a
+particular solution and a kernel basis or reporting inconsistency. This
+uses polynomial time in the explicit input size. The pointwise square
+and the diagonal comparison are checked in Lean.

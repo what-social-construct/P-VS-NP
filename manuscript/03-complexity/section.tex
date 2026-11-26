@@ -1,0 +1,56 @@
+\section{Resource bounds on comparisons}
+
+\subsection{Translation of proof strings}
+
+A Cook--Reckhow proof system for propositional tautologies is a
+polynomial-time computable surjection onto \(\TAUT\) from proof strings.
+For two such systems \(f_i\colon \Pi_i\to\TAUT\), a polynomial-time
+translation \(\tau\colon\Pi_1\to\Pi_2\) with \(f_2\tau=f_1\) gives
+\begin{equation}\label{eq:proof-translation}
+\begin{CD}
+  \Pi_1 @>{\tau}>> \Pi_2\\
+  @V{f_1}VV @VV{f_2}V\\
+  \TAUT @>{\mathrm{id}}>> \TAUT .
+\end{CD}
+\end{equation}
+The target retains the formula proved. Cook and Reckhow call this
+\emph{p-simulation} and show that it transfers a polynomial bound on
+proof lengths \cite[Definitions 1.3 and 1.5, Proposition 1.6]{cookreckhow}.
+Indeed, polynomial-time translation has polynomial output length.
+
+A polynomially bounded proof system for \(\TAUT\) exists exactly when
+\(\NP=\coNP\). Short proof strings give polynomial certificates for
+membership in \(\TAUT\). Conversely, when \(\TAUT\) is in \(\NP\), its
+verifier defines a proof system by outputting the verified formula and
+using a fixed tautology on failed inputs. A bound on the length of an
+existing proof leaves the time to find it as a separate question
+\cite{cookreckhow}.
+
+\subsection{The quotient by polynomial-time predicates}
+
+Let \(S=\{0,1\}^{*}\), let \(R\subseteq\Ftwo^S\) be the ring of
+characteristic functions of \(\PT\) languages, and let \(B\) be the
+\(\Ftwo\)-span of the characteristic functions of \(\NP\) languages.
+Pointwise conjunction stays in \(\NP\), so \(B\) is a ring and contains
+\(R\). The quotient \(B/R\) is an \(R\)-module. The class of
+\(\chi_L\), for \(L\in\NP\), vanishes exactly when \(L\in\PT\), and the
+whole module vanishes exactly when \(\PT=\NP\).
+
+The semantic comparison in Section~\ref{sec:compatibility} is a
+surjection with a kernel ideal. The complexity comparison is an
+inclusion with a module cokernel. Relating those two objects requires
+a specified map and a comparison theorem. The finite disclosure result
+applies to an explicitly presented affine system. Any extension to
+general NP witness families would need a uniform construction that
+preserves membership and controls the cost of producing a witness.
+
+\subsection{Proof and execution}
+
+The local Lean development proves abstract descent, equality reflection,
+tracked substitution, and the pointwise disclosure square. Its tracked
+substitution statement assumes a coding and the substitution law.
+The logical theorems and the resource bounds for
+\eqref{eq:proof-translation} enter through the cited sources. The Python
+reference computes with exact cochain coordinates. An execution
+refinement would certify that a row-reduction result represents the
+entire affine fiber, including the inconsistency case.

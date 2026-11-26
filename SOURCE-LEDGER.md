@@ -2,13 +2,17 @@
 
 Reviewed 2026-11-26. Source IDs refer to a specific text, code revision, or
 external definition. The [parity register](SEMANTIC-PARITY.md) records the
-local statements and their proof or execution status.
+local statements and their proof or execution status. Full entries for cited
+manuscript sources are in the [bibliography](manuscript/references.bib).
 
 | Source ID | Source and version | Reviewed material | Role here |
 | --- | --- | --- | --- |
 | [HE-P1-Code](#he-p1-code) | Homotopical Encryption at `e619391` | Fresh-sign and residual Lean import closure | Copied source proofs and fixed-mask cost comparison |
 | [HE-P1-Text](#he-p1-text) | Homotopical Encryption Paper 1 at `62f20ff` | Fresh-sign normal form, explicit residual, cost gap, disclosure and oracle scope | Originating cochain and residual data |
 | [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 | Agreement pullback and idempotent comparison | Diagram and parity conventions |
+| [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
+| [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
+| [CR](#cr) | Cook and Reckhow, JSL 44 (1979) | Proof systems, p-simulation, polynomial boundedness | Resource-bounded comparison |
 | [ML](#ml) | Mathlib at `56a0058` | Linear-map kernels, finite-dimensional rank–nullity | Lean algebra and the cardinality derivation |
 | [ST](#st) | Stacks Project, Tags 00DT and 04PN | Chinese remainder and idempotents of spectra | Background for the finite split scheme realization |
 | [PEQ](#peq) | PEqualNP public `MetaComplexity.lean` | Bounded circuit semantics | External comparison target |
@@ -44,8 +48,41 @@ Galois Obstruction Theory, local manuscript §4,
 pullback and the square carrying multiplication by the diagonal idempotent
 to multiplication by the equal-pair indicator. The local source
 `GaloisObstructionTheory/Hodge/Collision/Agreement.lean` also identifies a
-graph pullback with the equalizer. This repository uses those comparison
+graph pullback with the equalizer. Its semantic-parity register also records
+the tracked substitution diagram and the provable fixed point as separate
+rows under arithmetized syntax. This repository uses those comparison
 conventions with affine witness fibers and finite split schemes.
+
+## GODEL
+
+Balthasar Grabmayr,
+[*On the Invariance of Gödel's Second Theorem with Regard to Numberings*](https://arxiv.org/abs/1803.08392),
+and Warren Goldfarb,
+[*Notes on Metamathematics*](https://people.math.harvard.edu/~wboney/spring19/Goldfarb_NotesonMetamath.pdf).
+Grabmayr supplies the coding conventions used by the local Galois register.
+Goldfarb's fixed-point lemma makes the numeral substitution and provable
+biconditional explicit. The [Lean tracking statement](lean/PvsNP/Compatibility.lean)
+assumes the substitution law for the chosen code. The diagonal lemma is
+cited in the [manuscript](manuscript/01-compatibility/section.tex).
+
+## LOGIC
+
+[*The Open Logic Text*](https://builds.openlogicproject.org/open-logic-complete.pdf),
+release `2e19d09`. Reviewed the all-model consequence formulation of first-order
+completeness and Chapter 37's fixed-point and incompleteness arguments for
+computably axiomatized extensions of Robinson arithmetic. The manuscript
+uses these results to distinguish the kernel for the standard-model comparison
+from the kernel for the comparison over all models.
+
+## CR
+
+Stephen A. Cook and Robert A. Reckhow,
+[*The Relative Efficiency of Propositional Proof Systems*](https://doi.org/10.2307/2273702).
+Reviewed [the paper](https://www.cs.toronto.edu/~sacook/homepage/cook_reckhow.pdf),
+especially the definition of p-simulation and Proposition 1.6. The manuscript
+uses the exact identity on the proved formula and the polynomial bound on
+the translator as separate hypotheses. The polynomial proof length result
+belongs to the `NP = coNP` comparison.
 
 ## ML
 

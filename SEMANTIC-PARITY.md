@@ -1,13 +1,26 @@
 # Semantic parity
 
-This register compares the Paper 1 residual vector, the affine witness fiber,
-and its collision decomposition. [Source ledger](SOURCE-LEDGER.md) tracks
-origin, reviewed revisions, and the scope of each transfer.
+This register follows the [manuscript](manuscript/main.tex) from compatibility
+of presentations to the affine disclosure square. The
+[source ledger](SOURCE-LEDGER.md) tracks reviewed revisions and the scope of
+each transfer.
 
 **Lean** marks a checked declaration with its stated hypotheses. **Executable**
 marks the Python realization at the decoded cochain boundary. **Derived**
-marks a mathematical consequence explained here. **Target** marks a comparison
-still to be established in this repository.
+marks a written mathematical consequence. **Cited** marks an external
+theorem. **Target** marks a comparison still to be established here.
+
+## Compatibility, descent, and faithful realization
+
+| Realization | Notation | Semantic role | Declaration or source | Status and scope |
+| --- | --- | --- | --- | --- |
+| Descent of a map | $\bar f q=f$, $A\times_Q A$ | A map descends uniquely along a surjection when it is constant on its fibers. For an operation $D$, apply the criterion to $qD$. | [`existsUnique_descend_iff`, `endomorphism_descends_iff`](lean/PvsNP/Compatibility.lean) | Lean proves the set-level criterion. The construction uses choice of representatives. An effective or polynomial-time descent needs additional data. |
+| Faithful evaluation | $JE=\mathrm{id}$ | A left inverse recovers the original element and therefore reflects equality. | [`evaluation_eq_iff_of_leftInverse`](lean/PvsNP/Compatibility.lean) | Lean proves the implication from a supplied left inverse. The full Hodge residual supplies a left inverse on its image by reading the message block. |
+| Gödel coding | $d_g g_1=g_0\delta_g$ | The exact syntax-to-code identity specializes tracked numeral substitution to the formula's own code. | [`selfSubstitution_square`](lean/PvsNP/Compatibility.lean), [coding sources](SOURCE-LEDGER.md#godel) | Lean proves the tracked-operation interface from a supplied coding and tracking law. Concrete arithmetization and descent through provable equivalence are separate targets. |
+| Provable fixed point | $q_T(G)=[\theta(\overline{g_0(G)})]_T$ | A proved biconditional becomes equality in the Lindenbaum algebra at the constructed sentence. | [Manuscript section](manuscript/01-compatibility/section.tex), [diagonal lemma sources](SOURCE-LEDGER.md#godel) | Cited. The literal coding square holds throughout its domain. The provability equality concerns the fixed point. |
+| Selected semantics | $c_{\mathcal M}:H_T\twoheadrightarrow Q_{\mathcal M}$, $\ker c_{\mathcal M}$ | The residual records distinct provability classes with equal selected semantics. The difference of the two classes lies in the kernel ideal. | [Manuscript section](manuscript/01-compatibility/section.tex), [logic sources](SOURCE-LEDGER.md#logic) | Derived from soundness and the cited logical theorems. The standard-model collision uses a sound, computably axiomatized extension of Robinson arithmetic. All models give injectivity by completeness. |
+| Propositional proof translation | $f_2\tau=f_1$, $\mathrm{TAUT}$ | A polynomial-time translator preserves the formula proved and transfers polynomial bounds on proof length. | [Cook–Reckhow](SOURCE-LEDGER.md#cr), [manuscript section](manuscript/03-complexity/section.tex) | Cited. Polynomially bounded proof systems for tautologies characterize $\mathsf{NP}=\mathsf{coNP}$. A bound on proof search is a separate condition. |
+| Polynomial-time predicates | $R\hookrightarrow B$, $B/R$ | The class of an NP predicate vanishes exactly when the language has a polynomial-time decider. | [Manuscript section](manuscript/03-complexity/section.tex) | Defined and derived as a module cokernel in the manuscript. A comparison with the logical kernel or a uniform complexity result is a target. |
 
 ## Originating object
 
@@ -91,3 +104,4 @@ has one matching partner for each nonzero direction in $K_J$.
 Run `python3 affine_witness_selector.py` to see the common squared CVP cost
 on two distinct witnesses and then reduce the fiber to one witness with a
 residual coordinate. Run `lake build` from `lean/` for the Lean declarations.
+Run `latexmk -pdf -outdir=.build main.tex` from `manuscript/` to build the draft.

@@ -1,2 +1,4 @@
 __pycache__/
 lean/.lake/
+manuscript/.build/
+output/pdf/

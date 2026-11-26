@@ -1,0 +1,95 @@
+\section{Compatibility, descent, and faithful realization}
+\label{sec:compatibility}
+
+For a map \(q\colon A\to Q\), a collision is a pair \((a,a')\) with
+\(q(a)=q(a')\). The collision space \(A\times_Q A\) is the pullback of the
+diagonal of \(Q\) along \((q,q)\). The diagonal of \(A\) is its distinguished
+subset, and the residual consists of the distinct pairs with equal images.
+Every comparison below specifies the equality being imposed and the objects
+on which it is imposed.
+
+\begin{proposition}[Descent along a comparison]\label{prop:descent}
+Let \(q\colon A\twoheadrightarrow Q\) be surjective and \(f\colon A\to Z\).
+There is a unique \(\bar f\colon Q\to Z\) with \(\bar f q=f\) if and only if
+\[
+  q(a)=q(a')\quad\Longrightarrow\quad f(a)=f(a').
+\]
+In particular, \(D\colon A\to A\) descends to an endomorphism of \(Q\)
+exactly when \((D,D)\) preserves \(A\times_Q A\).
+\end{proposition}
+
+\begin{proof}
+If \(\bar f q=f\), apply \(\bar f\) to the equality of images.
+Conversely, define \(\bar f(x)=f(a)\) using a representative \(a\) with
+\(q(a)=x\). The collision condition makes the value independent of the
+representative. Surjectivity gives uniqueness. For the endomorphism
+statement, take \(f=qD\).
+\end{proof}
+
+A realization \(E\colon V\to Z\) with a left inverse \(J\) reflects
+equality. Applying \(J\) to \(E(v)=E(v')\) gives \(v=v'\). If \(V\) is
+itself a quotient, this detects equality of its classes. The descent
+condition concerns an operation on presentations, while the left inverse
+concerns the information retained by a realization.
+
+\subsection{The coding and provability squares}
+
+Fix a G\"odel coding \(g\) with tracked numeral substitution. Let
+\(\mathrm{Form}_1\) consist of formulas with at most one free variable,
+designated \(x\), and let \(\mathrm{Sent}\) be the sentences. The restrictions
+\(g_1\) and \(g_0\) take values in their respective images
+\(\mathrm{Code}_1\) and \(\mathrm{Code}_0\). With \(\overline n\) the numeral
+for \(n\), define
+\[
+  \delta_g(\varphi)=\varphi[\overline{g_1(\varphi)}/x],
+  \qquad d_g(n)=\operatorname{sub}_g(n,n).
+\]
+The numeral substitution law gives the exact identity
+\(d_g g_1=g_0\delta_g\) \cite{grabmayr,goldfarb}.
+\begin{equation}\label{eq:coding}
+\begin{CD}
+  \mathrm{Form}_1 @>{\delta_g}>> \mathrm{Sent}\\
+  @V{g_1}VV @VV{g_0}V\\
+  \mathrm{Code}_1 @>{d_g}>> \mathrm{Code}_0 .
+\end{CD}
+\end{equation}
+
+For a theory \(T\) with sufficient arithmetic and a unary formula
+\(\theta(z)\), the diagonal lemma supplies a sentence \(G\) with
+\[
+  T\vdash G\leftrightarrow\theta(\overline{g_0(G)})
+  \qquad\text{\cite{goldfarb,openlogic}}.
+\]
+Writing \(q_T\colon\mathrm{Sent}\to H_T\) for the quotient by provable
+equivalence and \(h_\theta(n)=[\theta(\overline n)]_T\), this is the equality
+\(q_T(G)=h_\theta(g_0(G))\) in \(H_T\). It is an agreement at the
+constructed sentence \(G\). The coding square \eqref{eq:coding} instead
+holds for every formula in its domain. To descend own-code substitution
+through an equivalence on formulas, one must also show that equivalent
+formula presentations yield equivalent output sentences, as in
+Proposition~\ref{prop:descent}.
+
+\subsection{Provability and selected semantics}
+
+For a family \(\mathcal M\) of models of \(T\), let \(Q_{\mathcal M}\)
+be the quotient of sentences by equivalence in every model in the family.
+Soundness gives a surjective Boolean ring homomorphism
+\(c_{\mathcal M}\colon H_T\to Q_{\mathcal M}\), with
+\[
+ Q_{\mathcal M}\cong H_T/\ker c_{\mathcal M}.
+\]
+Writing \(I_{\mathcal M}=\ker c_{\mathcal M}\), the map
+\((x,y)\mapsto (x,y-x)\) gives a bijection
+\[
+ H_T\times_{Q_{\mathcal M}}H_T\;\cong\; H_T\times I_{\mathcal M}.
+\]
+Its inverse adds the difference to the first class, and equal pairs
+correspond to the zero element of the ideal.
+
+For a sound, computably axiomatized extension of Robinson arithmetic,
+take \(\mathcal M=\{\mathbb N\}\). A true unprovable G\"odel sentence
+gives distinct classes \([G]_T\) and \([\top]_T\) with equal semantic image.
+In the corresponding ideal, \([\neg G]_T\) is nonzero. When
+\(\mathcal M\) contains all models of \(T\), first-order completeness
+makes the comparison injective and the residual empty
+\cite[Chapters 23 and 37]{openlogic}.

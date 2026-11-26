@@ -2,6 +2,7 @@ module
 
 public import HCP.CoupledSignResidual
 public import PvsNP.AffineDisclosure
+public import PvsNP.Compatibility
 
 @[expose] public section
 
