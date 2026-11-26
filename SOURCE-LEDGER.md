@@ -184,6 +184,16 @@ three representative charts by necessary column and pair tests.
 The ordinary-diagonal classification and its extension kernels
 are local derivations verified by [the coefficient checker](gct_permanent_fiber.py).
 
+The [two-plane extension reduction](manuscript/03-complexity/gct-extension.tex)
+uses [Stacks Project, Tag 0D4I](https://stacks.math.columbia.edu/tag/0D4I)
+for upper semicontinuity of geometric fiber dimension of the proper
+rank locus. [Lean](lean/PvsNP/LevelSetExtension.lean) checks linearity
+of the first coefficient, the kernel dimension argument, and the
+hyperplane reduction for a downward-closed level predicate. The
+[executable](gct_permanent_extensions.py) checks all prime-field
+two-planes and the residual polynomials modulo 5. The geometric lift
+of this check fixes the given rational two-plane before specializing.
+
 ## GODEL
 
 Balthasar Grabmayr,

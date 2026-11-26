@@ -1,0 +1,79 @@
+\subsection{Extension from a two-plane}
+\label{sec:gct-extension}
+
+Let \(V\) be the nine-dimensional symmetric tangent space at \(J_4\).
+A three-plane \(L\) intersects any hyperplane \(H\subset V\) in
+dimension at least two. Thus the search for \(L\) can start with
+level two-planes \(W\subset H\). Fix a basis \(A,B\) of \(W\) and
+let
+\begin{equation*}
+  E_W(C)=
+  \left([z]q_j(sA+tB+zC)\right)_{j=2,3,4}.
+\end{equation*}
+This is a linear map with nine scalar rows, two from the quadratic,
+three from the cubic, and four from the quartic. It kills \(W\).
+If \(W\subset L\) for a level three-plane, then \(E_W\) kills all of
+\(L\), so \(\operatorname{rank}E_W\le6\).
+For a polynomial family on a coordinate space over an infinite
+field, Lean verifies linearity of the first coefficient, its vanishing
+along a containing level space, and the rank-nullity bound.
+
+The quadratic rows cut out \(W^\perp\) for the nondegenerate Hessian.
+Equivalently the cubic and quartic rows act on the five-dimensional
+space \(W^\perp/W\), with seven rows and rank at most four needed for
+extension. A full-rank map there excludes an extension immediately.
+Rank four leaves one possible projective extension direction.
+
+More generally put \(K_W=\ker E_W\) and choose a complement
+\(K_W=W\oplus C_W\). A three-plane through \(W\) is level precisely
+when one can choose a nonzero \(C\in C_W\) such that
+\begin{equation*}
+  [s^a t^b z^c]q_j(sA+tB+zC)=0
+  \qquad(j=2,3,4,\ c\ge2,\ a+b+c=j).
+\end{equation*}
+There are ten remaining coefficients and each is homogeneous in
+the coordinates of \(C\). The condition is independent of the chosen
+complement, since adding an element of \(W\) to \(C\) changes the pencil
+by a linear substitution in \(s,t\). The known zero-diagonal
+two-planes demonstrate the role of these higher coefficients. Their
+first-order maps have rank below seven, and the higher equations
+exclude every extension.
+
+There is also an obstruction using only the first-order map. On the
+projective locus of level two-planes let \(\mathcal D\) be the closed
+locus defined by \(\operatorname{rank}E_W\le6\). The rank condition
+is given by minors on Grassmannian charts and is independent of the
+choice of frame. Any level three-plane would place the entire
+\(\operatorname{Gr}(2,L)\cong\mathbb P^2\) inside \(\mathcal D\).
+Consequently an upper bound of one on the geometric dimension of
+\(\mathcal D\) excludes every complex three-plane. The same bound on
+a geometric special fiber of the projective model over
+\(\mathbb Z_{(p)}\) suffices by upper semicontinuity of fiber
+dimension~\cite{stacksfiberdimension}.
+
+\paragraph{Two-planes defined over the prime field.}
+Over \(\mathbb F_5\) the executable normalizes each projective tangent
+direction by its first nonzero coordinate and enumerates 3918 level
+directions. There are 2340 unordered pairs of distinct directions
+spanning level two-planes. To check a pair, the mixed quadratic
+coefficient must vanish. The cubic and quartic already vanish on
+the two coordinate directions. On a pencil with relative scalar
+\(t\), the remaining terms divided by \(t\) have degree at most two.
+Evaluating at \(t=1,2,3\) therefore checks all their coefficients.
+Row reduction on each pair gives 156 distinct two-planes.
+
+Of these, 44 have \(K_W/W\) of dimension zero, 96 have dimension
+one, and 16 have dimension two. In each one-dimensional case a
+nonzero homogeneous coefficient excludes the unique projective
+point. In each two-dimensional case the residual coefficients
+have greatest common divisor one on the affine coordinate chart
+and a nonzero value in the remaining direction. Hence none of the
+156 planes extends over \(\overline{\mathbb F}_5\).
+
+This also excludes any complex level three-plane containing a
+rational level two-plane. For each fixed rational \(W\), extend it
+over \(\mathbb Z_{(5)}\) by properness of its Grassmannian.
+The incidence of level three-planes containing that integral
+two-plane is projective. Its geometric special fiber is empty by
+the checker, so its complex fiber is empty. In particular a complex
+candidate can contain at most one independent rational direction.

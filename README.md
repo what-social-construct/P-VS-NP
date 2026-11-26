@@ -52,6 +52,7 @@ for exact integer arithmetic.
 python3 gct_permanent_fiber.py
 python3 gct_permanent_modular.py
 python3 gct_permanent_involutions.py
+python3 gct_permanent_extensions.py
 ~~~
 
 The quadratic-field check uses a C++17 compiler.

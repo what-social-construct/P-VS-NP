@@ -6,6 +6,7 @@ public import PvsNP.AgreementCertificate
 public import PvsNP.Compatibility
 public import PvsNP.FiniteSymmetry
 public import PvsNP.IncidenceObservations
+public import PvsNP.LevelSetExtension
 public import PvsNP.OrbitClosureSeparation
 
 @[expose] public section
