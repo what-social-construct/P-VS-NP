@@ -191,3 +191,58 @@ In particular the row span contains the constant one, making the cubic
 coefficient ideal the unit ideal. Thus any level three-plane must
 contain a direction with nonzero row sums. The unrestricted four chart
 systems still require a common zero or an emptiness certificate.
+
+\paragraph{A three-cycle and its eigenspaces.}
+A simultaneous index permutation fixing index zero permutes the three
+Klein characters and thus permutes each of the three coordinate
+triples \(b,c,d\). A three-cycle has one fixed sector and two nontrivial
+eigenspaces. In the fixed sector the three triples are each constant,
+with respective entries \(b,c,d\). The coefficient ideal
+\((q_2,q_3,q_4)\) is the unit ideal on the charts \(b=1\) and
+\(b=0,c=1\), as checked over \(\mathbb Q\), \(\mathbb F_5\), and
+\(\mathbb F_7\). The remaining projective direction with \(b=c=0\)
+has \(q_2=3d^2\). Thus no nonzero fixed direction is level.
+
+In a nontrivial eigenspace the three triples are scalar multiples of
+\((1,\omega,\omega^2)\), or of its conjugate, with
+\(\omega^2+\omega+1=0\). Invariance forces \(q_2=q_4=0\) there.
+The cubic coefficient with \(u=b+c\) is
+\begin{equation*}
+ F(b,c,d)=d^3+3u^2d+8c^3-12cu^2+6u^3.
+\end{equation*}
+A singular point of this cubic would satisfy
+\(d^2+u^2=0\), \(2c^2-u^2=0\) and \(u(d-4c+3u)=0\).
+If \(u=0\) these force all coordinates to vanish. If \(u\ne0\)
+normalize \(u=1\). Then \(d=4c-3\) and \(c^2=1/2\), so
+\(d^2=-1\) forces \(c=3/4\), which contradicts \(c^2=1/2\).
+This also holds in characteristics 5 and 7. A smooth projective
+plane cubic contains no line, since a linear component would meet
+the residual conic at a singular point. Hence a level subspace in
+either nontrivial eigenspace has dimension at most one.
+A level subspace invariant under a three-cycle therefore has
+dimension at most two.
+
+The simultaneous \(S_3\) fixing index zero has only one invariant
+level two-plane over \(\mathbb C\). Indeed the tangent representation
+is three copies of the three-point permutation representation. A
+stable level two-plane has no fixed vectors and is a standard copy.
+Consequently its triples are \(br,cr,dr\) for a common vector \(r\)
+with \(r_1+r_2+r_3=0\) and scalar profile \((b,c,d)\). Let
+\(N=r_1^2+r_1r_2+r_2^2\). The exact coefficient identities are
+\begin{equation*}
+ q_2=2(d^2+2c^2-6b^2)N,\qquad
+ q_3=r_1r_2r_3 F,\qquad
+ 4q_4=((b-c)^2-d^2)^2 N^2.
+\end{equation*}
+The last identity gives \(d=\pm(b-c)\). The first then gives
+\((c+b)(3c-5b)=0\), with \(b\ne0\) for a nonzero profile.
+Normalizing \(b=1\), the cubic vanishes only at \((c,d)=(-1,2)\).
+This gives the star plane at index zero.
+
+For any level three-plane, its stabilizer in the simultaneous
+\(S_4\) contains no element of order three. A subgroup of order
+eight would contain the regular Klein four, which is also excluded.
+Thus the stabilizer has order one, two, or four. Every candidate
+has an orbit of 24, 12, or six distinct relabelings. In particular,
+a finite level three-plane locus has a number of geometric points
+divisible by six.

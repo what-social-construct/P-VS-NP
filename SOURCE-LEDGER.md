@@ -165,6 +165,16 @@ fields. It also checks absence of rational points at 5 and 7 by exact
 enumeration and compatibility. The latter two checks supply the local
 and global arithmetic restrictions via the valuative criterion.
 
+The [three-cycle calculation](manuscript/03-complexity/gct-three-plane.tex)
+uses simultaneous index relabeling. The [permanent checker](gct_permanent_fiber.py)
+computes the fixed-sector ideals over $\mathbb Q$, $\mathbb F_5$, and
+$\mathbb F_7$ and the eigencubic by exact expansion. The point count for
+the nonnormal cubic case is a written application of commuting relabeling
+and arithmetic actions, conditional on the candidate's cubic field of
+definition. [Sutherland, Section 2.1](https://math.mit.edu/~drew/ArithmeticEquivalenceLectureNotes.pdf)
+supplies the unramified Frobenius cycle interpretation. The JC3 Paper I
+result concerns the generic extension of a degree-three Keller map.
+
 ## GODEL
 
 Balthasar Grabmayr,

@@ -303,6 +303,40 @@ def verify_klein_four_coefficients(base):
     assert sp.rem(difference.nth(4).subs(b, -a), a**2 + c**2, c) == -8 * a**4
 
 
+def verify_three_cycle_coefficients(base):
+    """Check the fixed sector, nontrivial eigencubic, and standard two-plane profiles."""
+    b, c, d = sp.symbols("b c d")
+
+    def pencil(profile):
+        return permanent_difference(base, (hadamard_direction(
+            [b * entry for entry in profile], [d * entry for entry in profile],
+            [c * entry for entry in profile],
+        ),))
+
+    fixed = pencil((1, 1, 1))
+    equations = [32 * fixed.nth(degree) for degree in (2, 3, 4)]
+    for field in (sp.QQ, sp.GF(5), sp.GF(7)):
+        assert list(sp.groebner([equation.subs(b, 1) for equation in equations], c, d, domain=field)) == [1]
+        assert list(sp.groebner([equation.subs({b: 0, c: 1}) for equation in equations], d, domain=field)) == [1]
+    assert fixed.nth(2).subs({b: 0, c: 0}) == 3 * d**2
+
+    cubic = d**3 + 3 * (b+c)**2 * d + 8*c**3 - 12*c*(b+c)**2 + 6*(b+c)**3
+    omega = sp.Symbol("omega")
+    eigen = pencil((1, omega, omega**2))
+    for degree, expected in ((2, 0), (3, cubic), (4, 0)):
+        assert sp.rem(eigen.nth(degree) - expected, omega**2 + omega + 1, omega) == 0
+
+    r, s = sp.symbols("r s")
+    profile = (r, s, -r-s)
+    norm = r**2 + r*s + s**2
+    standard = pencil(profile)
+    assert sp.expand(standard.nth(2) - 2 * (d**2 + 2*c**2 - 6*b**2) * norm) == 0
+    assert sp.expand(standard.nth(3) + r*s*(r+s)*cubic) == 0
+    assert sp.expand(4 * standard.nth(4) - ((b-c)**2 - d**2)**2 * norm**2) == 0
+    star = hadamard_direction(profile, [2*entry for entry in profile], [-entry for entry in profile])
+    assert star == symmetric_star(0, [2*entry for entry in profile])
+
+
 def main():
     base = sp.ones(4)
     assert base.per() == 24
@@ -328,6 +362,7 @@ def main():
     verify_star_maximality_at_j4(base, directions)
     verify_rank_one_expansion(base)
     verify_klein_four_coefficients(base)
+    verify_three_cycle_coefficients(base)
 
     hessian = symmetric_tangent_hessian(base.rows)
     assert hessian.shape == (9, 9) and hessian.rank() == 9
@@ -339,6 +374,7 @@ def main():
     print(f"Maximum level-space dimension within the symmetric star support: {support_bound}")
     print("The symmetric star plane is maximal by inclusion in the full level fiber.")
     print("Checked the rank-one identity and all four Klein-four character spaces.")
+    print("Checked the fixed and nontrivial sectors for a simultaneous three-cycle.")
     print("The symmetric tangent Hessian has rank 9, giving an upper bound of 4.")
     print("Four representative Witt-chart systems cover all 32 projection charts.")
     print("The row-sum-zero slice has no level three-plane (coefficient rank 35 modulo 11).")
