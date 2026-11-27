@@ -189,6 +189,7 @@ python3 python/gct_collision_line_divisor_slopes.py
 python3 python/gct_collision_resultant_square.py
 python3 python/gct_collision_polar_extension.py
 python3 python/gct_collision_residual_candidate.py
+python3 python/gct_collision_slope_closure.py
 python3 python/gct_collision_ordering_fibers.py
 python3 python/gct_common_line_witness.py
 python3 python/gct_collision_normalization.py
@@ -231,8 +232,11 @@ the incident cubic as well requires relative degree $\operatorname{lcm}(d,e)$,
 where $e$ is its splitting degree. On the actual face, a degree-six
 closed point is a simple zero of the residual equation. Its unique
 $Q_2$ candidate fails $Q_3$ and $Q_4$. Removing this point lowers the
-bound on the degree of the common-line image to 1,338. Which remaining
-candidates support a line is open. [Decomposition and excess point](manuscript/03-complexity/common-line-decomposition.tex) · [Degree-six check](python/gct_collision_residual_candidate.py) · [Ordered witness recovery](python/gct_collision_incidence_descent.py)
+bound on the degree of the common-line image to 1,338. The other two
+closed points above its slope, of degrees 24 and 42, have nonzero
+resultant. Taking the schematic closure after removing that slope
+therefore removes precisely the degree-six factor. Which remaining
+candidates support a line is open. [Decomposition and closure](manuscript/03-complexity/common-line-decomposition.tex) · [Slope check](python/gct_collision_slope_closure.py) · [Ordered witness recovery](python/gct_collision_incidence_descent.py)
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options

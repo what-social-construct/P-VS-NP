@@ -367,3 +367,62 @@ All seven other values are units. This proves
 projection is projective, so \(s\) is outside the image. Removing
 this one closed point subtracts six from the degree bound 1344.
 \end{proof}
+
+\paragraph{Closing the candidate locus after deleting the slope.}
+The slope of \(s\) has minimal polynomial
+\[
+      m(T)=T^6-2T^5+T^3-T^2+T-2\quad\text{over }\mathbb F_5.
+\]
+Write \(D_j=V(j)\) on \(U\). The scheme-theoretic closure in \(U\) of
+the restriction of \(D_j\) to \(m(v)\ne0\) has ideal sheaf
+\[
+    \mathcal I_{\rm cl}=(j):m(v)^\infty=(j):m(v).
+\]
+It gives the disjoint union \(D_j=s\amalg V(\mathcal I_{\rm cl})\),
+with the entire common-line image in the second summand.
+
+Indeed, eliminating \(v\) from the quotient plane equation and
+\(m(v)\) gives a squarefree polynomial of degree 72 in \(u\). Its
+irreducible factors have degrees \(6,24,42\). The linear subresultant
+recovers \(v\) on all three, and the pure equations and open
+conditions verify each lift to \(U\). Thus over the slope field the
+degrees are \(1,4,7\). The first point is \(s\). At the other two,
+the polar sextic has an inverse on the entire \(D=1,H=0\) section
+and there is no point at infinity. Hence \(R\), and therefore \(j\),
+is a unit at both. In particular the rational function \(j/m(v)\)
+has poles there.
+
+On an affine open the ideal of the schematic closure is the contraction
+of \((j)\) after localization at \(m(v)\), which gives the saturation
+above \cite{stacksSchemeImage}. At \(s\), \((j)\) is the maximal ideal
+by Proposition~\ref{prop:common-line-excess-point}, and \(m(v)\) lies
+in it. One colon already gives the unit ideal. Away from \(s\), either
+\(j\) or \(m(v)\) is a unit. Consequently \((j,m(v))=\mathcal I_s\)
+and the two summands retain their scheme structures. The projection
+of the line incidence is projective with closed image and has empty
+fibers on this whole slope. Its scheme-theoretic image is therefore
+unchanged by the deletion.
+
+\paragraph{Computing the closed witness image on the transverse open.}
+At a closed base point \(s'\) with transverse section and \(B_D\ne0\), let
+\(A=\mathcal O_{U,s'}\) and let \(B\) be the finite étale section
+algebra of rank eight over \(A\). In the chart \(D(x)=1\), the
+cofactor spans the other direction of the polar kernel modulo \(x\).
+With local frames put \(a_i=Q_i(c_D)\) in \(B\), for \(i=2,3,4\).
+By the inverse construction of Proposition~\ref{prop:common-line-extension}
+the line algebra is \(B/(a_2,a_3,a_4)\). The ideal of its image is
+the kernel of the map from \(A\) to this algebra, equivalently its
+annihilator as an \(A\)-module \cite{stacksSchemeImage}.
+This gives a matrix formula keeping the image multiplicity. Present
+the module by \(M:B^3\to B\), \((z_i)\mapsto\sum_i a_i z_i\), and
+write \(I_k(M)\) for the ideal of its \(k\)-rowed minors over \(A\).
+Then \(\mathcal I_{Z,s'}= I_8(M):I_7(M)\).
+Indeed \(M\) has generic rank eight since the candidate divisor is
+finite. In Smith form over this discrete valuation ring its eight
+diagonal entries have orders \(b_1\le\cdots\le b_8\).
+The two determinantal orders are \(\sum_{i=1}^8b_i\) and
+\(\sum_{i=1}^7b_i\). Their difference \(b_8\) is the annihilator order
+of the cokernel. At the degree-six excess point \(a_3\) is a unit
+in the section algebra, so \(M\) is surjective there and the image
+ideal is the unit ideal. Outside this open the Grassmannian chart
+kernels still define the image.

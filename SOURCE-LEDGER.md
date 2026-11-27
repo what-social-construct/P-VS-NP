@@ -720,6 +720,15 @@ of the one vanishing factor. The multiplicity and the improved bound use
 the preceding resultant product and field-of-definition propositions.
 [Degree-six replay](python/gct_collision_residual_candidate.py) · [Derivation](manuscript/03-complexity/common-line-decomposition.tex)
 
+The full slope check starts with the minimal polynomial of the previously
+verified degree-six slope. It eliminates that slope from the same plane
+equation, recovers the three closed points by the linear subresultant,
+and checks the original polar sextic on the two further factors.
+The closure computation contracts the localized ideal. The transverse
+image computation takes the annihilator of the joint polar quotient,
+using Smith form over the local ring of the smooth base curve.
+[Slope replay](python/gct_collision_slope_closure.py) · [Stacks, scheme-theoretic image](https://stacks.math.columbia.edu/tag/01R5)
+
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
 It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)
