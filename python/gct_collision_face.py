@@ -137,6 +137,26 @@ def residual_system():
     return symbols, equations
 
 
+def ordered_kernel(roots, u, v):
+    """Recover B after ordering the incident cubic roots at vertices 0, 1, 3."""
+    x, y, z = roots
+    opposite = [u+v*r+r**2 for r in roots]
+    return kernel_from_edges((opposite[2], x, opposite[1], y, opposite[0], z))
+
+
+def interpolated_tangent(roots, slots):
+    """Evaluate the eight gauge coordinates at the ordered incident edges."""
+    i0, i2, o0, o1, o2, d0, d1, d2 = slots
+    incident = [i0+i2*r**2 for r in roots]
+    opposite = [o0+o1*r+o2*r**2 for r in roots]
+    diagonal = [d0+d1*r+d2*r**2 for r in roots]
+    tangent = dict(zip(OFF_DIAGONAL, (opposite[2], incident[0], opposite[1],
+                                      incident[1], opposite[0], incident[2])))
+    tangent.update({(vertex, vertex): entry for vertex, entry in zip((0, 1, 3), diagonal)})
+    tangent[2, 2] = -sum(value*(1 if i == j else 2) for (i, j), value in tangent.items())
+    return tangent
+
+
 def residual_polar_system():
     """Descend the three linear polars and three quadratic forms on eight gauge slots.
 
@@ -149,16 +169,8 @@ def residual_polar_system():
     z = -x-y
     relations = (y**2+x*y+x**2+p, x**3+p*x-q)
     roots = (x, y, z)
-    opposite = [u+v*r+r**2 for r in roots]
-    kernel = kernel_from_edges((opposite[2], x, opposite[1], y, opposite[0], z))
-
-    incident = [i0+i2*r**2 for r in roots]
-    opposite = [o0+o1*r+o2*r**2 for r in roots]
-    diagonal = [d0+d1*r+d2*r**2 for r in roots]
-    tangent = dict(zip(OFF_DIAGONAL, (opposite[2], incident[0], opposite[1],
-                                      incident[1], opposite[0], incident[2])))
-    tangent.update({(vertex, vertex): entry for vertex, entry in zip((0, 1, 3), diagonal)})
-    tangent[2, 2] = -sum(value*(1 if i == j else 2) for (i, j), value in tangent.items())
+    kernel = ordered_kernel(roots, u, v)
+    tangent = interpolated_tangent(roots, (i0, i2, o0, o1, o2, d0, d1, d2))
     coefficients = pencil_coefficients(algebra, (kernel, tangent))
     polars = {(i, j): f.rem(relations) for (i, j, _), f in coefficients.items() if j in (1, 2)}
     assert set(polars) == {(1, 1), (2, 1), (3, 1), (0, 2), (1, 2), (2, 2)}
@@ -167,8 +179,8 @@ def residual_polar_system():
     return {powers: f.as_expr() for powers, f in polars.items()}
 
 
-def descended_forms(polars, values, field):
-    """Restrict the three descended quadrics to the five-dimensional polar kernel."""
+def descended_net(polars, values, field):
+    """Return the 5 by 8 inclusion of the polar kernel and its three Gram matrices."""
     linear = []
     quadrics = []
     base_monomials = {}
@@ -195,7 +207,12 @@ def descended_forms(polars, values, field):
     echelon, pivots = DomainMatrix(linear, (3, 8), field).rref()
     kernel = echelon.nullspace_from_rref(pivots)
     assert kernel.shape == (5, 8)
-    return [(kernel * form * kernel.transpose()).to_list() for form in quadrics]
+    return kernel.to_list(), [(kernel * form * kernel.transpose()).to_list() for form in quadrics]
+
+
+def descended_forms(polars, values, field):
+    """Restrict the three descended quadrics to the five-dimensional polar kernel."""
+    return descended_net(polars, values, field)[1]
 
 
 def descended_rank(polars, values, field):

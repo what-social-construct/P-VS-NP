@@ -1,0 +1,162 @@
+\paragraph{A finite divisor on the vertex quotient.}
+The following equation on the genus-seven quotient gives a finite
+index set for testing the remaining common-line directions. On the
+rank-five bundle \(W\) above, take the two vertex-invariant linear forms
+\[
+ H(X)=X_{02}+X_{12}+X_{23},\qquad D(X)=X_{00}+X_{11}+X_{33}.
+\]
+Both kill \(B\). Indeed \(H(B)=m_2(B)=0\), and if \(T\) is the sum of its
+six edges, the corrected diagonal entries are \(T/2-2m_i(B)\).
+The sum of the three outer diagonal entries is \(3T/2-4T=0\) at five.
+Thus the two forms are defined on \(W_B\).
+
+Write \(b_j\) for the symmetric bilinear form with
+\(b_j(x,x)=Q_j(x)\). Wedge the four covectors
+\(b_2(x,-), b_3(x,-), b_4(x,-), D\) to get a cofactor vector
+\(c(x)\in W\otimes\det W^*\otimes\mathcal O_C(3)\), cubic in \(x\).
+Set \(S(x)=Q_2(c(x))\) and form the homogeneous resultant
+\[
+         R=\operatorname{Res}_x(H,Q_2,Q_3,Q_4,S).
+\]
+If a two-space \(P\subset W_B\) is common isotropic, take nonzero
+\(x\in P\cap\ker H\) over the algebraic closure. The three polar rows
+annihilate \(P\). At rank three their common kernel is \(P\), hence
+contains the cofactor. At smaller rank the cofactor is zero. In either
+case \(S(x)=0\), so \(R(B)=0\). At \(B=(1,1,3,0,3,4)\) the checker uses
+\(D,H\) as the final two coordinates of \(W_B\). The quartic reductions
+exclude points at infinity in \(H=0\), and the reduced sextic has a
+verified inverse on its affine chart. Hence \(R(B)\ne0\).
+
+The five degrees are \((1,2,2,2,6)\), with product 48. The resultant
+has degree 48 divided by the corresponding degree in each coefficient
+block \cite{dandreaDickensteinResultant}. An invertible change of
+variables preserves the universal resultant hypersurface, so it acts on
+the resultant by a determinant character. Substitution of a scalar
+matrix in the five variables gives exponent 48 on its determinant.
+Writing \(M=\det W^*\), the sextic
+has coefficient twist \(M^2\otimes\mathcal O_C(6)\). Altogether the
+resultant takes values in \(M^{64}\otimes\mathcal O_C(120)\).
+Equivariantly \(M=\det(V^*)\otimes\mathcal O_C(5)\), where \(V\) is the
+nine-dimensional tangent space before imposing the three polars and
+quotienting by \(B\). Its determinant character has square one.
+Thus \(R\) is an invariant section of \(\mathcal O_C(440)\).
+As \(Y=\sum_i y_i\) is also invariant and nonzero at this test point,
+\(h=R/Y^{440}\) is a nonzero rational function on the smooth quotient.
+Its pullback has at most \(24\cdot440\) zeros counted with multiplicity.
+The degree-six quotient map gives \(\deg (h)_0\le 1760\).
+Every common-line direction on the face has \(Y\ne0\).
+
+\begin{theorem}[Decomposition of the common-line incidence on the fixed face]
+\label{thm:common-line-decomposition}
+Work in characteristic five on the face \([l:m]=[0:1]\).
+Let \(U\) be the invariant pure chart with distinct incident edges,
+\(w=1\), all six edges nonzero, and \(u(v-3)AY\ne0\), where \(A\)
+is the leading coefficient in the first subresultant. It is an open
+of the genus-seven quotient with coordinates \(p,q,u,v\). Every
+geometric common-line direction on the face lies above \(U\).
+Let \(T\to U\) order the three roots of \(X^3+pX-q\).
+There is an explicit scheme \(\mathcal F\to U\) of lines in the
+descended net. The incidence scheme \(\mathcal I\) of labeled
+directions with common lines is the pullback
+\[
+                \mathcal I\simeq T\times_U\mathcal F .
+\]
+The projection of \(\mathcal F\) has geometric support in
+\(U\cap(h)_0\). At each closed point \(s\) of this candidate divisor
+let \(K=\kappa(s)\), let \(e\) be the splitting degree of the incident
+cubic over \(K\), and let \(K_e/K\) be the degree-\(e\) extension.
+There is an isomorphism of \(K\)-schemes
+\[
+     \mathcal I_s\simeq
+        \coprod_{j=1}^{6/e} (\mathcal F_s\times_K K_e).
+\]
+In particular \(\mathcal I_s\) is geometrically empty exactly when
+\(\mathcal F_s\) is. The fiber \(\mathcal F_s\) retains its scheme structure.
+\end{theorem}
+
+\begin{proof}
+The exclusions above remove the complement of \(U\) from the possible
+incidence. Over its coordinate algebra the ordered-root algebra has
+presentation
+\[
+  x^3+px-q=0,\qquad y^2+xy+x^2+p=0,\qquad z=-x-y .
+\]
+It is free of rank six by the two monic equations. Inverting the
+discriminant makes it an étale \(S_3\)-torsor.
+For a tangent vector, evaluate three polynomials of degree at most two
+at the ordered roots, one polynomial each for the incident edges, the
+opposite edges, and the three outer diagonal entries. The Vandermonde
+matrix is invertible. The tangent sum determines the central diagonal.
+Adding a multiple of \(B\) shifts the linear coefficient of the
+incident polynomial by that multiple. Setting the coefficient to zero
+gives eight invariant coordinates. The three polar equations in these
+coordinates have constant rank three, since they do after the faithfully
+flat extension ordering the roots. Denote their rank-five kernel by
+\(E\). In \(\operatorname{Gr}_U(2,E)\) let \(\mathcal F\) be the zero scheme
+of the restrictions of the three descended quadrics to the universal
+two-space. In a frame these are nine Gram pairings. After pullback to
+\(T\) the interpolation is an invertible change of coordinates and
+these polynomials are precisely the three original restricted quadrics.
+The construction commutes with base change, giving the claimed scheme
+isomorphism. The resultant gives the support bound.
+
+Over the residue field, Frobenius permutes the three distinct roots.
+On the set of their six orderings it acts freely through the cyclic
+group it generates in \(S_3\). All its orbits have size \(e\).
+The equivalence between finite étale algebras and finite Galois sets
+\cite{stacksEtalePoint} now gives
+\[
+\begin{array}{c|c|c}
+ \text{factor degrees of the cubic over }K & e & \mathcal O(T_s)\\ \hline
+ 1,1,1 &1&K^6\\
+ 1,2   &2&K_2^3\\
+ 3     &3&K_3^2
+\end{array}
+\]
+Pullback gives the formula even for nonreduced or positive-dimensional
+line fibers. To retain infinitesimal variation of the direction itself,
+let \(Z\subset U\) be the scheme-theoretic image of \(\mathcal F\to U\).
+Its support is finite, hence it is a disjoint union of local Artin
+schemes. Over each such local ring the same \(6/e\) finite étale
+factors lift uniquely up to isomorphism from the residue field
+\cite{stacksHenselianEtale}. Pulling back \(\mathcal F\) along those
+factors gives the decomposition over the thickened image as well.
+\end{proof}
+
+For the degree-\(n\) extension \(K_n/K\), the same formula gives
+\(\#\mathcal I_s(K_n)=6\#\mathcal F_s(K_n)\) if \(e\mid n\), and
+zero otherwise. Over the algebraic closure every line has six labelings.
+The degree bound also gives a finite search independent of an expansion
+of \(h\): enumerate the closed points of \(U\) of degree at most 1,760
+over \(\mathbb F_5\), recovering \(p,q\) from \(u,v\). Larger-degree points
+cannot belong to the support. At each candidate \(s\), the
+ten row-echelon charts decide geometric existence in \(\mathcal F_s\).
+On a proper chart the field search recovers a line. Over a common
+field of definition, evaluating its two rows at the ordered roots
+recovers a frame \((B,X_1,X_2)\) and permits direct verification in
+the original permanent. If a full constant-permanent plane is required,
+impose the remaining cubic and quartic tangent coefficients on the
+whole line family. Vanishing of all nonconstant coefficients is
+preserved under a change of frame, adding multiples of \(B\) to its
+representatives, and permuting the vertices. It therefore defines a
+closed subfamily with the same ordering decomposition. For an individual
+recovered line these extra coefficients test that particular lift.
+The factorization of \((h)_0\) and the list of its nonempty line
+fibers remain undetermined.
+
+\paragraph{A complete test over quadratic slopes.}
+For each of the ten monic irreducible quadratics \(v^2+sv+t\) over
+\(\mathbb F_5\), reducing the invariant plane equation gives
+\(a(u)+b(u)v\). In every case \(a,b\) are coprime and
+\(a^2-sab+tb^2\) is squarefree of degree 24. Thus \(u\) separates
+the geometric points and \(v=-a/b\) recovers the slope. The lifts
+satisfy the original pure equations with separable incident cubic.
+Across the ten quadratics there are 30 closed quotient points.
+Three degree-two points lie on the excluded pencils. At each of the
+other 27 the degree-nine Jacobian rank is 54, above the common-line
+ceiling of 52. Thus every line fiber over these slopes is geometrically
+empty. The ordering algebra has splitting degree one, two and three
+at seven, sixteen and seven closed points, respectively. Those give
+104 closed labeled directions, comprising 1,440 geometric directions
+before testing for a line. With the prime-field slope calculation,
+this excludes every \(v\in\mathbb F_{25}\) throughout the eligible chart.

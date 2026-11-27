@@ -661,6 +661,24 @@ projection. The coefficient expansion and factorization of the norm
 remain open. [Stacks, degrees on curves (Tag 0AYQ)](https://stacks.math.columbia.edu/tag/0AYQ)
 · [Stacks, norms (Tag 0BCX)](https://stacks.math.columbia.edu/tag/0BCX)
 
+The [quotient divisor and incidence decomposition](manuscript/03-complexity/common-line-decomposition.tex)
+use the projective resultant criterion and coefficient multidegrees from
+D'Andrea and Dickenstein above. The invariant incident and diagonal
+covectors, the sextic obtained from the polar cofactors, and its
+[nonzero specialization](python/gct_collision_line_divisor.py) are
+specific to this face. The divisor bounds the support of the actual
+scheme-theoretic image. Its multiplicities need not be the multiplicities
+of that image. The [interpolation and frame replay](python/gct_collision_incidence_descent.py)
+uses the permanent and the full-rank polar kernel, and the
+[quadratic-slope check](python/gct_collision_quadratic_slopes.py) uses
+the plane resultant and first subresultant already recorded here.
+The [ordering calculation](python/gct_collision_ordering_fibers.py) computes
+Frobenius in each separable cubic algebra. The field decomposition uses
+the finite étale classification, and the lifting statement applies over
+the henselian local Artin rings of the scheme-theoretic image.
+[Stacks, schemes étale over a field](https://stacks.math.columbia.edu/tag/03QR)
+· [Stacks, finite étale extensions of henselian local rings](https://stacks.math.columbia.edu/tag/04GK)
+
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
 It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)

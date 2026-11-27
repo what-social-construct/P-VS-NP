@@ -182,6 +182,10 @@ python3 python/gct_collision_fiber_slice.py
 python3 python/gct_collision_translated_sections.py
 python3 python/gct_collision_pencil_orbits.py
 python3 python/gct_collision_vertex_orbits.py
+python3 python/gct_collision_line_divisor.py
+python3 python/gct_collision_incidence_descent.py
+python3 python/gct_collision_quadratic_slopes.py
+python3 python/gct_collision_ordering_fibers.py
 python3 python/gct_common_line_witness.py
 python3 python/gct_collision_normalization.py
 python3 python/gct_collision_fiber_net.py
@@ -203,6 +207,18 @@ over $\mathbb F_{25}$ for a test net defined over $\mathbb F_5$.
 Relabeling the vertices gives three pencils whose prime-field values,
 including infinity, exclude 328 distinct directions. The smooth model
 of the invariant plane curve has genus seven. [Orbit and quotient calculation](manuscript/03-complexity/collision-vertex-orbits.tex)
+
+On the fixed face, a resultant of degree 440 on the labeled curve
+gives a candidate divisor of degree at most 1,760 on the quotient.
+Above each candidate, the labeled incidence is the product of the
+cubic root-ordering scheme with the scheme of common lines.
+The three possible ordering types occur in the quadratic-slope test,
+and all 30 of its closed quotient points have empty geometric line fibers.
+For a supplied pure quotient point, `find_ordered_line(values, field)`
+tests the net before adjoining cubic roots and verifies any returned
+frame against the original permanent through tangent degree two.
+Which of the remaining candidates support a line is open.
+[Decomposition theorem](manuscript/03-complexity/common-line-decomposition.tex) · [Witness recovery](python/gct_collision_incidence_descent.py)
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options
