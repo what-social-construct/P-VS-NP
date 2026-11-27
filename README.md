@@ -105,6 +105,12 @@ python3 python/gct_permanent_hodge.py --emit-chart > /tmp/gct-hodge-two-plane.ms
 msolve -f /tmp/gct-hodge-two-plane.ms -o /tmp/gct-hodge-two-plane.out -t 1 -g 2 -l 2
 ~~~
 
+Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
+or `transposition` for the edge symmetry checks. The options
+`transverse` and `transverse-pair` export the ramified edge pencil
+and its two fixed columns. Each system gives a unit Gröbner basis
+with the same msolve command.
+
 The exact Frobenius searches show that a nonempty fiber at five must
 have at least 48 geometric points. An upper bound of seven on the
 dimension of the star chart's invariant quotient would settle the

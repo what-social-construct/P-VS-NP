@@ -3,6 +3,8 @@
 import argparse
 import sys
 from collections import Counter
+from itertools import combinations
+from math import comb
 
 import numpy as np
 import sympy as sp
@@ -18,6 +20,8 @@ from gct_permanent_plucker import (
 )
 
 EDGE_SLOTS = tuple(COORDINATES.index(edge) for edge in OFF_DIAGONAL)
+STAR = EDGE_GRAPH_PIVOTS["star"]
+STAR_AND_OPPOSITES = STAR + tuple(tuple(sorted({1, 2, 3} - {leaf})) for _, leaf in STAR)
 
 
 def verify_hodge_profiles():
@@ -115,6 +119,69 @@ def collision_kernel_chart():
     return names, list(equations.values())
 
 
+def edge_family_equations(frame, parameters, nonzero=None):
+    """Extend every column of a given edge frame by arbitrary tangent diagonals."""
+    names = tuple(map(str, parameters)) + tuple(
+        f"d{column}{vertex}" for column in range(frame.cols) for vertex in range(1, 4)
+    )
+    if nonzero is not None:
+        names += ("inv",)
+    coefficients, *variables = ring(names, sp.GF(PRIME), "grevlex")
+    diagonals = iter(variables[len(parameters):])
+    directions = []
+    for column in range(frame.cols):
+        entries = {edge: coefficients.from_expr(frame[row, column])
+                   for row, edge in enumerate(STAR_AND_OPPOSITES)}
+        entries.update({(i, i): next(diagonals) for i in range(1, 4)})
+        directions.append(tangent_direction(entries[slot] for slot in COORDINATES))
+    equations = pencil_coefficients(coefficients, directions)
+    assert Counter(map(sum, equations)) == {n: comb(frame.cols+n-1, n) for n in (2, 3, 4)}
+    system = list(equations.values())
+    if nonzero is not None:
+        system.append(coefficients.gens[-1] * coefficients.from_expr(nonzero) - 1)
+    return names, system
+
+
+def edge_family_chart(family):
+    """Export the level conditions on a symmetry locus or a transverse pencil."""
+    if family == "transposition":
+        a, b, c = sp.symbols("a b c")
+        graph_pair = sp.Matrix([[a, b], [b, a], [c, c]])
+        frame = sp.eye(3)[:, :2].col_join(graph_pair)
+        # At a=b the difference has only two adjacent nonzero star edges.
+        return edge_family_equations(frame, (a, b, c), nonzero=a-b)
+    metric = sp.Matrix([[edge_metric(left, right) for right in STAR_AND_OPPOSITES]
+                        for left in STAR_AND_OPPOSITES])
+    if family == "cyclic":
+        a, b, c = sp.symbols("a b c")
+        parameters = (a, b, c)
+        graph = sp.Matrix([[a, b, c], [c, a, b], [b, c, a]])
+        frame = sp.eye(3).col_join(graph)
+        gram = frame.T * metric * frame
+        total = a+b+c
+        # The symmetric circulant Gram matrix is scalar on the sum-zero plane.
+        eigenvalue = 4 - 2*(2*a-b-c) + 4*(a*a+b*b+c*c-a*b-b*c-c*a)
+        discriminant = 3*eigenvalue**2*(total**2+total+1)
+        assert sp.Poly(gram.det() - 4*discriminant, *parameters, modulus=PRIME).is_zero
+    elif family in ("transverse", "transverse-pair"):
+        v = sp.Symbol("v")
+        parameters = (v,)
+        graph = sp.Matrix([[1+v, 2, 3], [3, 2, 1], [3, 4, 3]])
+        frame = sp.eye(3).col_join(graph)
+        gram = frame.T * metric * frame
+        assert sp.Poly(gram.det() - 12*(v**2-2), v, modulus=PRIME).is_zero
+        assert gram[1:, 1:].det() % PRIME == 2
+        for rows in combinations(range(6), 3):
+            minor = sp.Poly(frame.extract(rows, range(3)).det(), v, modulus=PRIME)
+            assert minor.degree() <= 1 and minor.eval(0) != 0
+        if family == "transverse-pair":
+            frame = frame[:, 1:]
+            parameters = ()
+    else:
+        raise ValueError(f"Unknown edge family {family!r}")
+    return edge_family_equations(frame, parameters)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     modes = parser.add_mutually_exclusive_group()
@@ -122,7 +189,12 @@ def main():
                        help="emit the corrected-diagonal two-plane chart in msolve input format")
     modes.add_argument("--emit-collision-kernel", action="store_const", dest="export", const=collision_kernel_chart,
                        help="emit the 17-variable star collision chart in msolve input format")
+    modes.add_argument("--emit-edge-family", choices=("cyclic", "transposition", "transverse", "transverse-pair"),
+                       help="emit level equations for the chosen family of edge frames")
     args = parser.parse_args()
+    if args.emit_edge_family:
+        write_msolve_system(*edge_family_chart(args.emit_edge_family), sys.stdout)
+        return
     if args.export is not None:
         names, equations = args.export()
         write_msolve_system(names, equations, sys.stdout)

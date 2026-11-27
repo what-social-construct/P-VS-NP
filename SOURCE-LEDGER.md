@@ -311,6 +311,40 @@ quadratic identity over the rationals and in the normalized frame
 at five. It checks the discriminant on the scalar edge-graph line
 and emits the collision and injective branch systems.
 
+The 2026-11-26 field-extension review drew on the following working copies.
+The JC3 checkout at `e3b8a20` contains a local
+`CollisionIdeals/General/Normalization/QuadraticDVRParity.lean`
+proving that a fraction-field square cannot have odd valuation
+in a discrete valuation ring. The reviewed file has SHA-256
+`679cf6af206561bc2b23c0d23e4bc6fa4c5b65e2382fdc3d1353b23ec938aa14`.
+The Galois checkout at `ed50f62` extends the first-colon comparison
+in `ResidualBaseChange.lean`, reviewed working-copy SHA-256
+`ef4a15d4bf8346e28da1cb771003f56db59c0707ef966749d9cc4d06b0d20436`.
+Both working files passed Lean in their respective checkouts.
+The Hodge checkout at `7ace84b` has a working comparison of the
+length-two square-map fiber with its reduced support in
+`research/working/0065-projective-line-ramification-comparison.md`,
+reviewed SHA-256
+`2cee6a8928e18c8b72210d9a1d3e0797ad4f200d378c9a13b5ab87b4f9063f55`.
+The committed [Hodge coefficient-descent theorem](https://github.com/what-social-construct/HodgeConjecture/blob/7ace84b545cb027f4dfceedb214bcdc9ac0835b4/HodgeConjecture/LinearAlgebra/GaloisDescent.lean#L111)
+characterizes fixed tensors. Homotopical Encryption Paper 3 at
+`1ed8d55` supplies the previously reviewed linear certificate
+comparison in [`Boundary.lean`](https://github.com/what-social-construct/homotopical-encrypt/blob/1ed8d55b67f266414cb7b1c55858f8b5566d4013/lean/Proximity/Core/PolynomialAgreement/Boundary.lean#L94).
+
+The [permanent manuscript](manuscript/03-complexity/gct-extension.tex)
+derives its own first-colon ideal from the unit-minor charts and normalizes
+its explicit orientation curve over the field of five elements. It uses
+the elementary quadratic field inclusion to bound the residue degree
+of a surviving lift. The general finite étale field decomposition is
+recorded in [Stacks, Tag 00U3](https://stacks.math.columbia.edu/tag/00U3).
+The [edge-family exporter](python/gct_permanent_hodge.py) checks the
+transverse pencil and emits its full and fixed-pair systems. The same
+tool emits the cyclic edge chart and the open transposition pair chart.
+All four inputs give reduced Gröbner basis `[1]` in msolve 0.11.0
+with `-t 1 -g 2 -l 2`. The transposition exclusion also uses the
+previous adjacent-edge result at `a=b`. These permanent results have
+written and executable evidence.
+
 The [kernel chart](python/gct_permanent_hodge.py) uses the Hadamard
 coordinates from the [permanent fiber computation](python/gct_permanent_fiber.py)
 and the written Witt chart coverage. [msolve v0.11.0](https://msolve.lip6.fr/)

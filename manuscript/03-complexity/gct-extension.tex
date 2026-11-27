@@ -525,6 +525,30 @@ After extending the edge field to contain a nonzero root
 are cut out by the idempotents \((1+D/d)/2\) and \((1-D/d)/2\).
 Either factor can vanish. For nonsquare radicand at a rational
 edge point they are exchanged by Frobenius.
+In that case the residue field of any full lift contains
+\(\mathbb F_{25}\). The existing exclusion of level planes over
+\(\mathbb F_{25}\) then forces its degree over \(\mathbb F_5\)
+to be even and at least four. One orientation suffices for a
+geometric emptiness check on this fiber. Indeed, if the first
+factor is zero after adjoining \(d\), its idempotent is zero,
+and applying Frobenius kills the complementary idempotent as
+well. Their sum is one.
+
+The scalar line distinguishes collision from ramification of
+the normalized orientation cover. Put \(h=c^2-c+1\) and
+\(g=c^2+c+1\). In the function field set \(v=D/h\).
+The finite cover \(v^2=3g\) is smooth, hence normal, and
+\(D=hv\) identifies it birationally with the original curve.
+Both \(h\) and \(g\) are irreducible over \(\mathbb F_5\).
+At a root of \(g\) the radicand has order one, so the cover
+ramifies. At a root of \(h\) its value is \(3g=c\), a unit.
+This \(c\) has order six and is a square in the cyclic group
+\(\mathbb F_{25}^{\times}\) of order 24. Hence the two normalized
+points there are distinct and defined over \(\mathbb F_{25}\),
+although both have \(D=0\). Each edge plane on the scalar line
+contains a direction supported on the matching \(01,23\), so the
+earlier matching exclusion already eliminates this line from the
+full level scheme.
 
 The full star equations with \(D=0\) give the closed collision
 branch. Adjoining an inverse with equation \(tD=1\) gives its open
@@ -573,6 +597,27 @@ three-plane, as it would force \(A(U)\) to be totally isotropic
 in the nondegenerate three-dimensional form on \(T\), of Witt
 index at most one.
 
+The first-colon residual identifies the scheme structure on the
+collision branch. Work over the full star algebra \(R\) at five
+and write a pair as \((u,u+w)\). In \(R[u,w]\) the equal-readout
+ideal is \(I=(Aw)\) and the diagonal ideal is \(J=(w_1,w_2,w_3)\).
+The opens on which a two-by-two minor of \(A\) is invertible
+cover the base by the rank exclusion above. On each such open,
+invertible row and column operations give
+\(\operatorname{diag}(1,1,d)\), where \(d\) is \(D\) times a unit.
+Writing the last difference coordinate as \(\lambda\), we get
+\[
+ I=(w_1,w_2,d\lambda),\qquad I:J=(w_1,w_2,d).
+\]
+Indeed \(\lambda\) is an indeterminate, so it cancels in the
+colon even over a nonreduced base. The residual is locally
+\((R/(D))[u_1,u_2,u_3,\lambda]\), with the same localization of
+\(R\) understood. It is the kernel line bundle over \(D=0\)
+with a free choice of the first direction \(u\). Distinct pairs
+have \(\lambda\ne0\) and their scheme-theoretic image in the
+star chart is exactly \(V(D)\). The same calculation works after
+any scalar extension, since the unit-minor cover pulls back.
+
 One can use that kernel line directly. In the star frame, some
 coordinate on the line is nonzero. Permute the leaves and
 normalize a generator \(B\) of the line to have \(B_{01}=1\).
@@ -582,6 +627,49 @@ with six free entries. The resulting 17-variable system of 31
 permanent coefficient equations covers the collision branch up to
 leaf permutations. Every solution has a kernel direction by
 construction. Its emptiness and that of the injective branch remain open.
+
+\paragraph{Testing the higher equations on edge families.}
+Keep the star edges in order \(01,02,03\) and the opposite edges
+in order \(23,13,12\). For the pencil of edge planes with frame
+\[
+ X(t)=\begin{pmatrix}I_3\\ C(t)\end{pmatrix},
+ \qquad
+ C(t)=\begin{pmatrix}1+t&2&3\\3&2&1\\3&4&3\end{pmatrix},
+\]
+the discriminant at five is
+\(\det(X^{\mathsf T}G_E X)/4=3(t^2-2)\).
+At the two conjugate roots of \(t^2=2\), the Gram matrix has rank
+two and all 20 three-row minors of \(X\) are nonzero.
+These edge planes therefore pass every test for full rank on a
+triple of edges. Nonetheless the last two columns alone admit
+no level lift. Keeping their six free diagonal entries, the
+three quadratic, four cubic and five quartic coefficients give
+reduced Gr\"obner basis \([1]\) at five. This also excludes any
+choice of the first complementary edge column with the other
+two columns fixed.
+
+For a three-cycle of the leaves, the edge plane is stable exactly
+when \(C\) commutes with its cyclic permutation matrix. These \(C\)
+are all the circulant three-by-three matrices. With three circulant
+parameters and all nine free diagonal entries, the 31 permanent
+coefficients give reduced Gr\"obner basis \([1]\) over \(\mathbb F_5\).
+For a transposition interchanging the first two leaves, the first
+two complementary edge columns are \((a,b,c)\) and \((b,a,c)\).
+With six free diagonal coordinates, the twelve two-column level
+equations and \(v(a-b)=1\) likewise give reduced basis \([1]\).
+If \(a=b\), the column difference is a nonzero level direction
+supported off the diagonal on just the first two star edges, already
+excluded by the adjacent-edge calculation. Thus no transposition
+or three-cycle stabilizes the edge image of a geometric level plane.
+This also holds over \(\mathbb C\). The edge
+projection has constant rank three on the finite level scheme
+over \(\mathbb Z_{(5)}\), so it defines a morphism to
+\(\operatorname{Gr}(3,6)\). The inverse image of the closed fixed
+locus is proper, and its special fiber is empty. Each nonidentity
+vertex permutation fixing a vertex is conjugate to one of the
+two cases. Hence the stabilizer of an occurring edge plane acts
+freely on the four vertices. Its order divides four, and the
+\(S_4\) orbit of that edge plane has size \(6\), \(12\), or \(24\).
 
 \paragraph{Frobenius orbits and the invariant quotient.}
 The \(S_4\) action on the geometric level three-planes at five is
