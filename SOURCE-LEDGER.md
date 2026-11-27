@@ -433,3 +433,5 @@ The desk subsequently marked the step proved after
 [PR #32240](https://github.com/open-goat/pequalnp-proofs/pull/32240)
 merged the proof file at
 [`4211944`](https://github.com/open-goat/pequalnp-proofs/commit/4211944feb4bb0c0ca21f6b62a901dbfbbfc493b).
+Intake closed #33168 on the same day because the other proof had already
+merged. [Closure notice](https://github.com/open-goat/pequalnp-proofs/pull/33168#issuecomment-7203883959)
