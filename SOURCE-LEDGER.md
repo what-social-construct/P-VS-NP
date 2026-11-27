@@ -247,6 +247,19 @@ The order-three chart and ten extensions through that fixed direction
 give unit bases over $\mathbb F_5$. The generator checks the identities
 over exact coefficients and emits the msolve systems.
 
+For triangle support, the same cofactor argument reduces to a
+rank-two radical pencil. The [generator and checker](gct_permanent_plucker.py)
+check the five-variable rank exclusion by exact Gröbner basis and
+emit a 12-variable pencil with reduced msolve basis `[1]` modulo five.
+The [written incidence argument](manuscript/03-complexity/gct-extension.tex)
+uses [Stacks Project, Tag 01WN](https://stacks.math.columbia.edu/tag/01WN)
+to deduce finiteness from projectivity and containment in the fixed
+affine star chart. The same executable separately checks a three-plane
+in the special fiber at three of the integral tangent model.
+[Lean](lean/PvsNP/LevelSetExtension.lean) checks the coordinate restriction
+from four injective coordinates to an isomorphism onto three using
+Mathlib's standard coordinate basis.
+
 The same section derives the path-reversal change of coordinates and
 the averaging identity for bounded-degree certificates. A pilot
 standard F4 run with those coordinates ended before returning a basis.

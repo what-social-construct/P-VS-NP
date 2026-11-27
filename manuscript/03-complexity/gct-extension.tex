@@ -321,6 +321,49 @@ Proper specialization excludes the adjacent case over \(\mathbb C\).
 Together with the matching case, every candidate projects injectively
 onto any four off-diagonal entries.
 
+\paragraph{Triangle directions and a fixed star chart.}
+Suppose a direction \(D\) is supported off the diagonal on the
+triangle \(01,02,12\), with all three edge entries nonzero.
+The isolated-row calculation again gives \(d=\ell=e=k=0\).
+Use the same map \(B\mapsto z-y\mathbf1\) on \(L\).
+Its image is totally isotropic for the cofactor matrix \(H\).
+If the image had dimension at most one, its kernel would contain
+a two-plane. As above, the constant last row on that kernel must
+vanish, and the upper blocks would give an excluded order-three
+level two-plane.
+
+An exact five-variable calculation over \(\mathbb F_5\) excludes
+cofactor rank at most one. It imposes the level coefficients of
+\(D\), all two-by-two minors of \(H\), and a variable inverting the
+product of the two nonpivot edge entries. Rank three is impossible
+because the image has dimension at least two and is isotropic.
+For rank two the quotient by the one-dimensional radical is
+nondegenerate. Its isotropic subspaces have dimension at most one,
+so the radical of \(H\) lies in the image.
+
+Lift a nonzero radical vector to \(B\), relabel the triangle so
+the vector's first coordinate is nonzero, and scale \(B\) so this
+coordinate equals one. Scale \(D\) to make \(D_{01}=1\) and subtract
+a multiple of \(D\) from \(B\) to make \(B_{01}=0\).
+The latter step preserves \(z-y\mathbf1\) because \(D\) has a zero
+last row and column. The radical equations, the edge inverse
+relation, and the full two-direction pencil give 15 generators in
+12 variables. The exact reduced Gr\"obner basis modulo five is
+\([1]\). This excludes triangle-supported directions in a
+geometric level three-plane at five.
+
+Fix any three-edge star and project onto its edge entries. The
+complementary edges form a triangle, so the exclusions of supports
+of size at most two and of genuine triangles make the projection
+injective. The rank-drop incidence is closed in the projective
+level locus over \(\mathbb Z_{(5)}\) and has empty geometric special
+fiber. Properness therefore gives an empty rank-drop incidence over
+the whole base. The full level locus lies in the affine Grassmannian
+chart of this one fixed star. Since it is also proper over
+\(\mathbb Z_{(5)}\), it is finite over that base~\cite{stacksproperaffine}.
+The 18-variable star system now suffices for unrestricted
+nonexistence. Its ideal remains undecided.
+
 \paragraph{Path reversal and bounded-degree certificates.}
 Replace the three path pivots by \(B_{01}+B_{23}, B_{01}-B_{23}, B_{12}\).
 This is an invertible change in odd characteristic.
@@ -361,7 +404,10 @@ is injective by the matching exclusion. Over \(\mathbb F_5\), take
 indices modulo four use Fourier coordinates
 \(\widehat x_k=\sum_i\zeta^{ik}x_i\).
 They are invertible coordinates, so some three of them give a
-normalized frame. Cycle rotation acts on \(\widehat x_k\) by
+normalized frame. Lean checks the coordinate deletion and the
+resulting isomorphism onto the three chosen coordinates, conditional
+on the projection into four coordinates being injective.
+Cycle rotation acts on \(\widehat x_k\) by
 \(\zeta^k\). Reflection exchanges the frequencies \(k\) and \(-k\)
 up to nonzero scale, so the omitted frequency can be taken as
 \(0,1,2\).

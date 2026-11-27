@@ -4,6 +4,7 @@ public import Mathlib.Algebra.MvPolynomial.Eval
 public import Mathlib.Algebra.Polynomial.Roots
 public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 public import Mathlib.LinearAlgebra.Pi
+import Mathlib.LinearAlgebra.StdBasis
 import Mathlib.Tactic.Ring
 
 @[expose] public section
@@ -147,5 +148,73 @@ theorem no_threePlane_of_hyperplane_maximal
   have hLW := hmax W hWf hWdim (hmono hWL hL) L hWL hL
   rw [hLW, hWdim] at hLdim
   omega
+
+/-- An injective map into a coordinate space of strictly larger dimension
+has a coordinate that can be discarded while preserving injectivity. -/
+theorem exists_injective_coordinate_deletion
+    {K V ι : Type*} [Field K] [AddCommGroup V] [Module K V] [Fintype ι]
+    (f : V →ₗ[K] (ι → K)) (hf : Function.Injective f)
+    (hdim : Module.finrank K V < Fintype.card ι) :
+    ∃ i : ι, Function.Injective (fun v (j : {j : ι // j ≠ i}) => f v j.1) := by
+  classical
+  have hproper : LinearMap.range f ≠ ⊤ := by
+    intro htop
+    have hrank := LinearMap.finrank_range_of_inj hf
+    rw [htop, finrank_top, Module.finrank_fintype_fun_eq_card] at hrank
+    exact (ne_of_lt hdim) hrank.symm
+  obtain ⟨i, hi⟩ : ∃ i, Pi.basisFun K ι i ∉ LinearMap.range f := by
+    by_contra! h
+    apply hproper
+    apply top_unique
+    rw [← (Pi.basisFun K ι).span_eq]
+    exact Submodule.span_le.mpr (by rintro _ ⟨j, rfl⟩; exact h j)
+  refine ⟨i, fun x y hxy => ?_⟩
+  have hdiff : f (x - y) = f (x - y) i • Pi.basisFun K ι i := by
+    funext j
+    by_cases hji : j = i
+    · subst j
+      simp [Pi.basisFun_apply]
+    · have h := congrFun hxy ⟨j, hji⟩
+      change f x j = f y j at h
+      simp [map_sub, Pi.basisFun_apply, hji, h]
+  by_cases hz : f (x - y) i = 0
+  · apply hf
+    rw [hz, zero_smul, map_sub] at hdiff
+    exact sub_eq_zero.mp hdiff
+  · exfalso
+    apply hi
+    have hmem : f (x - y) ∈ LinearMap.range f := ⟨x - y, rfl⟩
+    have hscaled := (LinearMap.range f).smul_mem (f (x - y) i)⁻¹ hmem
+    have heq := congrArg (fun w : ι → K => (f (x - y) i)⁻¹ • w) hdiff
+    change (f (x - y) i)⁻¹ • f (x - y) =
+        (f (x - y) i)⁻¹ • (f (x - y) i • Pi.basisFun K ι i) at heq
+    rwa [← inv_smul_smul₀ hz (Pi.basisFun K ι i), ← heq]
+
+/-- A rank-three map into four injective coordinates stays injective after omitting one. -/
+theorem exists_three_coordinate_projection_injective
+    {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    (f : V →ₗ[K] (Fin 4 → K)) (hf : Function.Injective f)
+    (hdim : Module.finrank K V = 3) :
+    ∃ i : Fin 4, Function.Injective (fun v (j : {j : Fin 4 // j ≠ i}) => f v j.1) :=
+  exists_injective_coordinate_deletion f hf (by simp [hdim])
+
+/-- The selected coordinate projection identifies the plane with the whole
+three-dimensional coordinate space, allowing its standard basis to be lifted. -/
+theorem exists_three_coordinate_projection_equiv
+    {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+    (f : V →ₗ[K] (Fin 4 → K)) (hf : Function.Injective f)
+    (hdim : Module.finrank K V = 3) :
+    ∃ (i : Fin 4) (e : V ≃ₗ[K] ({j : Fin 4 // j ≠ i} → K)),
+      ∀ v j, e v j = f v j.1 := by
+  classical
+  obtain ⟨i, hi⟩ := exists_three_coordinate_projection_injective f hf hdim
+  let g := (LinearMap.funLeft K K (Subtype.val : {j : Fin 4 // j ≠ i} → Fin 4)).comp f
+  have hcard : Fintype.card {j : Fin 4 // j ≠ i} = 3 := by
+    rw [Fintype.card_subtype_compl (fun j : Fin 4 => j = i), Fintype.card_subtype_eq]
+    decide
+  have heq : Module.finrank K V = Module.finrank K ({j : Fin 4 // j ≠ i} → K) := by
+    rw [hdim, Module.finrank_fintype_fun_eq_card, hcard]
+  let _ : FiniteDimensional K V := FiniteDimensional.of_injective f hf
+  exact ⟨i, g.linearEquivOfInjective hi heq, fun _ _ => rfl⟩
 
 end PvsNP.LevelSetExtension

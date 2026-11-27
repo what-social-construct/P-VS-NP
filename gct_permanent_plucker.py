@@ -504,6 +504,67 @@ def adjacent_direction_chart(pivots):
     return names, equations
 
 
+def triangle_direction(coefficient_ring, b, c, q, r):
+    """Normalize the (01) entry of a direction on the triangle 01, 02, 12."""
+    return tangent_direction(map(coefficient_ring, (1, q, 0, b, r, 0, c, 0, 0)))
+
+
+def triangle_cofactors(direction):
+    """The permanent cofactors of the upper three-by-three block."""
+    complements = ((1, 2), (0, 2), (0, 1))
+
+    def entry(i, j):
+        return direction[min(i, j), max(i, j)]
+
+    return [[entry(i, k)*entry(j, l) + entry(i, l)*entry(j, k)
+             for k, l in complements] for i, j in complements]
+
+
+def verify_triangle_cofactor_rank():
+    """Exclude rank at most one for a genuine level triangle direction."""
+    coefficients, b, c, q, r, inverse = ring("b,c,q,r,w", sp.GF(PRIME), "grevlex")
+    direction = triangle_direction(coefficients, b, c, q, r)
+    cofactors = triangle_cofactors(direction)
+    minors = [
+        cofactors[i][k]*cofactors[j][l] - cofactors[i][l]*cofactors[j][k]
+        for (i, j), (k, l) in product(combinations(range(3), 2), repeat=2)
+    ]
+    pencil = pencil_coefficients(coefficients, (direction,))
+    assert set(pencil) == {(2, 0, 0), (3, 0, 0)}
+    equations = [inverse*q*r-1, *pencil.values(), *minors]
+    basis = sp.groebner([equation.as_expr() for equation in equations],
+                        *coefficients.symbols, order="grevlex", modulus=PRIME)
+    assert list(basis) == [1]
+
+
+def triangle_radical_chart():
+    """Return the pencil system for a genuine triangle and its cofactor radical."""
+    names = ("b", "c", "q", "r", "u", "v", "d", "e", "y", "i", "j", "w")
+    coefficients, b, c, q, r, u, v, d, e, y, i, j, inverse = ring(names, sp.GF(PRIME), "grevlex")
+    direction = triangle_direction(coefficients, b, c, q, r)
+    trial = tangent_direction(map(coefficients, (0, u, y+1, d, v, y+i, e, y+j, y)))
+    # The cross entries of the trial minus its last diagonal give (1, i, j).
+    radical = [sum(entry*value for entry, value in zip(row, (1, i, j)))
+               for row in triangle_cofactors(direction)]
+    pencil = pencil_coefficients(coefficients, (direction, trial))
+    equations = [inverse*q*r-1, *radical, *pencil.values()]
+    assert len(equations) == 15
+    return names, equations
+
+
+def verify_characteristic_three_plane():
+    """Check a point of the integral tangent model after reduction at three."""
+    directions = (
+        sp.Matrix([[0, 0, 0, 0], [0, 1, -1, 0], [0, -1, 0, 1], [0, 0, 1, -1]]),
+        sp.Matrix([[0, 0, 0, 0], [0, 0, -1, 1], [0, -1, 1, 0], [0, 1, 0, -1]]),
+        sp.Matrix([[0, -1, -1, -1], [-1, 1, 1, 1], [-1, 1, 1, 1], [-1, 1, 1, 1]]),
+    )
+    pivots = ((0, 1), (1, 1), (2, 2))
+    assert all(direction.is_symmetric() and sum(direction) % 3 == 0 for direction in directions)
+    assert sp.Matrix([[direction[pivot] for direction in directions] for pivot in pivots]).det() % 3
+    assert all(coefficient % 3 == 0 for coefficient in permanent_difference(sp.ones(4), directions).coeffs())
+
+
 def write_msolve_system(names, equations, output):
     """Emit the generators as prime-field polynomials for msolve."""
     def polynomial_text(polynomial):
@@ -528,7 +589,10 @@ def main():
                        help="emit one of the three opposite-edge direction systems, numbered 0 to 2")
     modes.add_argument("--adjacent-edge", type=int, choices=range(len(ADJACENT_PIVOT_PAIRS)),
                        help="emit one of the ten adjacent-edge direction systems, numbered 0 to 9")
+    modes.add_argument("--triangle-radical", action="store_true",
+                       help="emit the triangle radical-pencil system over F5")
     modes.add_argument("--order-three", action="store_true", help="emit the order-three level two-plane system")
+    modes.add_argument("--star", action="store_true", help="emit the unrestricted star chart over F5")
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
     modes.add_argument("--path-reversal", action="store_true",
                        help="emit the path chart in coordinates adapted to path reversal")
@@ -549,8 +613,12 @@ def main():
         system = matching_direction_chart(MATCHING_PIVOT_PAIRS[args.matching])
     elif args.adjacent_edge is not None:
         system = adjacent_direction_chart(ADJACENT_PIVOT_PAIRS[args.adjacent_edge])
+    elif args.triangle_radical:
+        system = triangle_radical_chart()
     elif args.order_three:
         system = order_three_chart()
+    elif args.star:
+        system = edge_graph_chart(EDGE_GRAPH_PIVOTS["star"])
     elif args.path:
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
     elif args.path_reversal:
@@ -570,11 +638,15 @@ def main():
         verify_chart_data()
         verify_matching_direction_identities()
         verify_isolated_row_identities()
+        verify_triangle_cofactor_rank()
+        verify_characteristic_three_plane()
         names, equations = order_three_chart()
         assert unit_ideal_at_degree(equations, len(names), PRIME, degree_cap=7)
         for pivots in ADJACENT_PIVOT_PAIRS:
             adjacent_direction_chart(pivots)
         print("Checked the isolated-row and adjacent-edge formulas and the order-three unit ideal over F5.")
+        print("Excluded cofactor rank at most one on genuine level triangle directions over F5.")
+        print("Verified a three-plane in the special fiber at 3 of the integral tangent model.")
         print(f"No cut zeros among {verify_rational_rank_cut()} rational rank-drop two-planes over F5.")
         verify_extension_field_witness()
         print("Verified a rank-six point on the cuts over F25. Its only possible extension fails q2.")

@@ -83,7 +83,11 @@
   the exact msolve inputs. Section~\ref{sec:gct-path} reduces the
   unrestricted problem to a single path chart using the checked
   opposite-edge systems. Exact bases for the matching and adjacent
-  cases exclude any direction on at most two edges. The generator checks the
+  cases exclude any direction on at most two edges. The triangle
+  calculation gives the single star chart, and properness gives
+  finiteness. \path{PvsNP/LevelSetExtension.lean} verifies coordinate
+  selection conditional on the four-coordinate projection being
+  injective. The generator checks the
   signs of the path-reversal equations, and the written averaging
   argument restricts certificate search to even products. Checking the
   stored functional on all even products excludes degree-seven

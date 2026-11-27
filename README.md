@@ -60,7 +60,8 @@ The Plücker checker also exports exact input for msolve. Choose
 `--single-edge` from 0 through 3 to reproduce the four unit-ideal checks.
 `--matching` from 0 through 2 reproduces the three checks for a direction
 supported on two opposite edges. For adjacent edges, use `--order-three`
-and `--adjacent-edge` from 0 through 9.
+and `--adjacent-edge` from 0 through 9. The triangle radical pencil can
+be exported with `--triangle-radical`.
 The full systems use an ordered pivot pair from `PIVOT_PAIRS` and a
 different extension pivot from `PIVOT_COORDINATES`.
 The unrestricted path chart can also be exported in coordinates adapted
@@ -72,7 +73,9 @@ msolve -g 2 -l 2 -f /tmp/gct-edge.ms -o /tmp/gct-edge.out
 python3 gct_permanent_plucker.py --matching 0 > /tmp/gct-matching.ms
 python3 gct_permanent_plucker.py --order-three > /tmp/gct-order-three.ms
 python3 gct_permanent_plucker.py --adjacent-edge 0 > /tmp/gct-adjacent.ms
+python3 gct_permanent_plucker.py --triangle-radical > /tmp/gct-triangle.ms
 python3 gct_permanent_plucker.py --chart u P v > /tmp/gct-plucker.ms
+python3 gct_permanent_plucker.py --star > /tmp/gct-star.ms
 python3 gct_permanent_plucker.py --path > /tmp/gct-path.ms
 python3 gct_permanent_plucker.py --path-reversal > /tmp/gct-path-reversal.ms
 ~~~
