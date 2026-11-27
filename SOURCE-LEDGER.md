@@ -479,6 +479,32 @@ and the enumeration of eligible prime-field lines. The argument over
 the algebraic closure uses the evaluated monomial vector. The conclusion
 over the rationals uses the properness results cited above.
 
+The [quadratic-field census](python/gct_collision_f25.py) uses the
+same pure kernel equations and the finite-field arithmetic from the
+Frobenius checker, with \(\mathbb F_{25}=\mathbb F_5[\omega]/(\omega^2-2)\).
+The [companion checker](python/gct_collision_f25_companion.py)
+recovers and verifies the coefficients of an identity for one at each
+orbit representative. The [quadratic-net checker](python/gct_collision_quadrics.py)
+uses the three quadratic terms on the polar quotient. The
+[rank bound and specialization proof](manuscript/03-complexity/collision-kernel-quadrics.tex)
+are local written derivations. The calculation uses exact reduced
+Gröbner bases from msolve v0.11.0 for the four exceptional rank cases.
+The [projective slice](python/gct_collision_slice.py) restricts the
+original permanent to the two stated hyperplanes and computes its
+Hilbert function. The 24 distinct census points account for the
+whole geometric slice. The local dimension argument uses the
+[projective intersection theorem, Tag 0B2R](https://stacks.math.columbia.edu/tag/0B2R).
+The complex conclusion applies proper specialization to the projective
+flag incidence. These dimension bounds apply to directions satisfying
+the quadratic completion conditions alone.
+
+D'Andrea and Dickenstein, *Explicit formulas for the multivariate
+resultant*, introduction and Lemma 3.4, give the projective
+resultant criterion and its degree in each block of coefficients.
+The [local specialization](python/gct_collision_eliminant.py) gives
+kernel degree 180 and verifies that the polynomial is nonzero by a
+rank calculation at five. [Primary source](https://arxiv.org/pdf/math/0007036)
+
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
 It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)

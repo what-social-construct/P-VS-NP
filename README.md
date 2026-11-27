@@ -145,6 +145,23 @@ The generated module exposes the reconstructed frame and its equations in
 factored form. Put the repository's Python directory on the import path and
 evaluate in a commutative algebra of characteristic five.
 
+Over the quadratic field, 964 eligible projective kernel lines form 31
+orbits under vertex permutations and Frobenius. A quintic rank test and
+40 exact common-line calculations exclude all geometric completions on
+these orbits using the quadratic completion equations. A second replay
+checks a degree-four identity for one for each orbit's companion system.
+A fixed projective three-space slice contains just 24 such points.
+Its exclusion bounds the entire quadratic direction locus by a curve
+over the algebraic closure and over the complex numbers. The two
+linear forms defining the slice give a finite fiber to test in four
+coordinates. The projective resultant provides a degree-180 equation
+for full completions. [Proof and remaining target](manuscript/03-complexity/collision-kernel-quadrics.tex)
+
+~~~sh
+python3 python/gct_collision_f25.py --verify-lines msolve
+python3 python/gct_collision_eliminant.py
+~~~
+
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options
 `transverse` and `transverse-pair` export the ramified edge pencil

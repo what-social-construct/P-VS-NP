@@ -139,6 +139,16 @@
   Proposition~\ref{prop:rational-kernel-exclusion} gives the geometric
   and specialization arguments. \\
   \addlinespace
+  Quadratic extension and common lines &
+  \path{python/gct_collision_f25.py} enumerates the eligible kernel
+  lines and checks the companion identities.
+  \path{python/gct_collision_quadrics.py} tests the quintic rank and
+  the four remaining common-line cases in Proposition~\ref{prop:quadratic-kernel-exclusion}.
+  \path{python/gct_collision_slice.py} verifies the length-24
+  section used in Proposition~\ref{prop:kernel-curve}.
+  \path{python/gct_collision_eliminant.py} verifies a nonzero
+  specialization of the degree-180 resultant. \\
+  \addlinespace
   Local readout algebra &
   \path{PvsNP/PermanentReadout.lean} parametrizes kernel differences
   at a unit minor. \path{PvsNP/ReadoutPivotIdeal.lean} computes the

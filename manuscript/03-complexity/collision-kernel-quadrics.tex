@@ -1,0 +1,162 @@
+\paragraph{A necessary rank bound from the quadratic terms.}
+For a pure kernel direction \(B\), put
+\(W_B=\ker T_B/\langle B\rangle\), of dimension five. The coefficients
+\(Q_j(X)=[t^2]q_j(B+tX)\), for \(j=2,3,4\), define quadratic forms
+on \(W_B\). Indeed, replacing \(X\) by \(X+cB\) adds
+\((j-1)c(dq_j)_BX+\binom j2 c^2q_j(B)\), which vanishes on the
+polar kernel. A completing three-plane through \(B\) gives a
+two-dimensional subspace of \(W_B\) on which all three forms vanish.
+
+Let \(S=k[\lambda_2,\lambda_3,\lambda_4]\), where
+\(k=\overline{\mathbb F}_5\), and let
+\(\Phi_B=\det(\lambda_2Q_2+\lambda_3Q_3+\lambda_4Q_4)\) in any
+basis of \(W_B\), using the symmetric matrices of the forms. Set
+\(J_B=(\Phi_B,\partial_{\lambda_2}\Phi_B,
+\partial_{\lambda_3}\Phi_B,\partial_{\lambda_4}\Phi_B)\).
+We keep the quintic itself because its degree equals the characteristic.
+If a completing plane exists, then
+\[
+                 \dim_k(S/J_B)_9\ \geq\ 3 .
+\]
+To see this, begin the basis with the two common isotropic directions.
+The matrix of the net then has upper-left block zero, upper-right block
+\(A\) of size \(2\times3\), and lower-right block \(T\).
+Let \(v\) be the column of signed maximal minors of \(A\).
+Determinant expansion gives \(\Phi_B=v^{\mathsf T}Tv\).
+Consequently \(J_B\subseteq I=(v_1,v_2,v_3)\). If \(v=0\), the
+bound follows immediately. Otherwise the two rows of \(A\) give
+linear relations on the minors, independent over the fraction field.
+Their degree-six polynomial multiples give \(2\dim S_6\) independent
+relations among the degree-seven multiples of the three quadrics.
+Hence \(\dim I_9\le 3\dim S_7-2\dim S_6=52\), while
+\(\dim S_9=55\). The test is an explicit \(78\times55\) matrix of
+degree-nine multiples of the four generators of \(J_B\).
+A rank of at least 53 excludes a completion over \(k\).
+
+\begin{proposition}[Kernel lines over the quadratic extension]
+\label{prop:quadratic-kernel-exclusion}
+No geometric level three-plane in the collision branch at five
+has a kernel line defined over \(\mathbb F_{25}\). Over \(\mathbb C\)
+such a kernel line cannot be defined over a number field of degree
+at most two.
+\end{proposition}
+\begin{proof}
+Every nonzero kernel edge vector can be relabeled and scaled so its
+\(01\) entry is one. Testing all \(25^5\) assignments of the other
+edges against the three pure equations yields 904 normalized directions.
+Restoring the projective relabelings gives 964 lines. Under \(S_4\)
+and fifth power they form 31 orbits, of sizes \(8,12,24,48\) with
+multiplicities \(2,1,17,11\). These operations preserve geometric
+extendibility. The quadratic rank test excludes 27 orbits. Its ranks
+on the other four are \(52,50,49,48\). For each of these four, use the
+ten echelon cells of \(\operatorname{Gr}(2,5)\) to parametrize a line
+and impose vanishing of all three quadratic forms on it. Each quadratic
+contributes its two diagonal and one mixed coefficient. Exact
+Gr\"obner reduction gives \([1]\) in all forty systems, with
+\(\omega^2=2\) representing the coefficient extension. Thus the
+quadratic conditions alone exclude a common line in all 31 orbits.
+
+For each of the 31 representatives the checker also solves the three
+polar rows for a companion with prescribed star \((0,1,0)\). After
+substitution the six remaining two-column equations are polynomials
+in three free entries. Their multiples through degree four give 39
+rows on 35 monomials. The checker computes coefficients for a linear
+combination and verifies the identity \(1=\sum h_i f_i\) coefficient by
+coefficient over \(\mathbb F_{25}\). Thirty matrices have rank 35.
+The remaining matrix has rank 34 and still contains the constant in
+its row span. Each identity persists after extension of scalars.
+
+For the complex assertion, choose a place above five of a field of
+definition of degree at most two. Its residue field embeds in
+\(\mathbb F_{25}\). Extend the kernel line over the local discrete
+valuation ring and apply the closed incidence and properness argument
+of Proposition~\ref{prop:rational-kernel-exclusion}.
+\end{proof}
+
+\begin{proposition}[Dimension of the quadratic direction locus]
+\label{prop:kernel-curve}
+In \(\mathbb P^5_{\overline{\mathbb F}_5}\), the locus \(Z\) of pure
+kernel directions whose three quotient quadrics contain a common line
+has dimension at most one. The complex locus defined by the same
+pure, polar and quadratic completion conditions also has dimension
+at most one.
+\end{proposition}
+\begin{proof}
+The full polar rank is three on the pure locus, by relabeling a nonzero
+edge and using the normalized rank calculation above. Hence the spaces
+\(W_B\) form a rank-five bundle there. The common-line incidence is
+closed in its relative Grassmannian. Its image \(Z\) is closed by
+properness.
+
+Put \(l=e_{02}+e_{12}+e_{23}\) and \(m=e_{03}+e_{13}+e_{23}\). Their
+common zero set \(\Pi\) is a projective three-space with edge vectors
+\[
+                 (a,-b-d,-c-d,b,c,d).
+\]
+Restrict \(q_2,q_3,q_4\) to this space. In graded reverse lexicographic
+order \(a>b>c>d\) their initial ideal is
+\[
+       (ac^5,\ c^6,\ abc^3,\ a^2c^3,\ a^2bc,\ a^3,\ b^2).
+\]
+There are 24 standard monomials in \(a,b,c\), with counts
+\(1,3,5,6,5,3,1\) in degrees zero through six. Since the initial
+generators are independent of \(d\), the Hilbert function is constant
+at 24 from degree six on. The geometric projective intersection has
+length 24. The quadratic-field census supplies 24 distinct points on
+\(\Pi\), including the points with \(e_{01}=0\). They exhaust the
+intersection and none belongs to \(Z\), by the common-line checks in
+Proposition~\ref{prop:quadratic-kernel-exclusion}. Every closed subset
+of dimension at least two in \(\mathbb P^5\) meets \(\Pi\)
+\cite{stacksProjectiveIntersection}. Hence \(\dim Z\le1\).
+
+For the complex assertion, use the projective flag incidence over
+\(\mathbb Z_{(5)}\) of a kernel line \(\langle B\rangle\) in a
+tangent three-plane \(L\). Impose the pure equations on \(B\), the
+polar and quadratic equations on every vector in \(L\), and \(l=m=0\)
+on \(B\). These conditions are closed and are defined at five.
+The incidence has empty geometric special fiber by the calculation
+above. Properness rules out a complex point, so the projective
+dimension argument applies to the complex direction locus as well.
+\end{proof}
+
+\paragraph{A finite fiber to test.}
+The two linear forms give a morphism \(Z\to\mathbb P^1\) by
+\([B]\mapsto[l(B):m(B)]\). Every fiber is projective and contained
+in the complement of \(\Pi\) in a hyperplane of the pencil, an affine
+four-space. Thus every fiber is finite \cite{stacksproperaffine}.
+The fiber \([0:1]\) has the four-coordinate presentation
+\[
+                 B=(a,-b-d,1-c-d,b,c,d).
+\]
+The census finds 40 pure directions over \(\mathbb F_{25}\) with this
+normalization, all excluded. The next target is to test the pure,
+polar and common-line conditions on this fiber over the algebraic
+closure. If it is empty, \(Z\) is
+finite, since every curve component would map onto \(\mathbb P^1\).
+If it has points, their residue fields and the higher permanent
+coefficients give concrete tests for lifting those directions.
+
+\paragraph{An equation on the remaining kernel directions.}
+Give the prescribed companion star a homogeneous scale \(h\), so
+its entries are \((0,h,0)\). Together with the six free entries of
+the companion \(C\) these are seven homogeneous coordinates. In
+\(\operatorname{per}(J_4+sB+tC)\) take the coefficients of
+\(s^it^j\) for
+\[
+ (i,j)=(1,1),(2,1),(3,1),(0,2),(1,2),(2,2),(0,3).
+\]
+Let \(R(B)\) be their projective resultant. An actual companion with
+\(h=1\) forces \(R(B)=0\). The companion degrees are
+\(1,1,1,2,2,2,3\), and the kernel degree in each block is \(i\).
+The multidegree formula gives total kernel degree
+\(24(1+2+3)+12(0+1+2)=180\) when the specialized polynomial is
+nonzero \cite[Introduction and Lemma~3.4]{dandreaDickensteinResultant}.
+At \(B=(3,0,2,1,1,2)\), the three polar forms eliminate three
+homogeneous coordinates. The remaining three quadrics and one cubic
+generate all 84 sextic monomials in the four remaining coordinates,
+as checked by exact row reduction at five. Thus they have no common
+projective zero, proving \(R(B)\ne0\).
+
+Every kernel direction of a full plane must lie in \(Z\) and satisfy
+all vertex relabelings of \(R\). These resultant equations give a
+second way to cut any curve components that survive the quadratic tests.
