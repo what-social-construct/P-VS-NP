@@ -9,8 +9,7 @@ at least three for d >= 2. In degree nine the resulting rank ceiling is 52.
 import argparse
 import subprocess
 from functools import lru_cache
-from itertools import combinations, permutations, product
-from math import prod
+from itertools import combinations, product
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -20,7 +19,8 @@ from sympy.polys.matrices import DomainMatrix
 from sympy.polys.rings import ring
 
 from gct_collision_direction import REPRESENTATIVE
-from gct_collision_kernel_reduction import COORDINATES, OFF_DIAGONAL, evaluate, first_variations
+from gct_collision_slice import kernel_from_edges
+from gct_collision_kernel_reduction import COORDINATES, evaluate, first_variations
 from gct_permanent_plucker import pencil_coefficients, tangent_direction, write_msolve_system
 
 
@@ -54,6 +54,13 @@ def quotient_quadrics(edges):
         raise ValueError("supply six packed F25 entries, with the first edge normalized to one")
     field = quadratic_field()
     point = [field(int(v) % 5) + (int(v) // 5) * field.generator for v in edges]
+    return quotient_forms_at(point, field)
+
+
+def quotient_forms_at(point, field):
+    """Build the quotient forms over a characteristic-five field at B01=1."""
+    if len(point) != 6 or point[0] != field.one or field.characteristic() != 5:
+        raise ValueError("expected normalized edges over a characteristic-five field")
     pure, polars = polar_equations()
     if any(evaluate(f, point[1:]) for f in pure):
         raise ValueError("the direction fails a pure kernel equation")
@@ -67,10 +74,7 @@ def quotient_quadrics(edges):
     for row, pivot in zip(echelon.to_list(), pivots):
         coordinates[pivot] = -sum(algebra(row[j]) * coordinates[j] for j in free)
     tangent = tangent_direction(coordinates[j] for j in range(9))
-    kernel = dict(zip(OFF_DIAGONAL, (algebra(x) for x in point)))
-    half_sum = 3 * sum(kernel.values())
-    for i in range(4):
-        kernel[i, i] = half_sum - 2 * sum(kernel[e] for e in OFF_DIAGONAL if i in e)
+    kernel = kernel_from_edges(algebra(x) for x in point)
     coefficients = pencil_coefficients(algebra, (kernel, tangent))
     assert all(powers[1] >= 2 for powers in coefficients)
     forms = []
@@ -90,21 +94,35 @@ def quotient_quadrics(edges):
 
 def determinant_quintic(edges):
     """Compute det(l Q0 + m Q1 + n Q2) in the parameter plane of the net."""
-    field = quadratic_field()
+    return determinant_of_net(quotient_quadrics(edges), quadratic_field())
+
+
+def determinant_of_net(forms, field):
     algebra, *parameters = ring("l,m,n", field)
-    forms = quotient_quadrics(edges)
     net = [[sum(p * algebra(q[i][j]) for q, p in zip(forms, parameters))
             for j in range(5)] for i in range(5)]
-    determinant = algebra.zero
-    for permutation in permutations(range(5)):
-        inversions = sum(permutation[i] > permutation[j] for i in range(5) for j in range(i+1, 5))
-        term = prod(net[i][permutation[i]] for i in range(5))
-        determinant += (-1)**inversions * term
-    return determinant
+    # Laplace expansion along the last row builds each leading-row minor once.
+    minors = {(): algebra.one}
+    for size in range(1, 6):
+        for cols in combinations(range(5), size):
+            minors[cols] = sum(((-1)**(size-1+j) * net[size-1][col] *
+                                minors[cols[:j] + cols[j+1:]] for j, col in enumerate(cols)),
+                               algebra.zero)
+    return minors[tuple(range(5))]
 
 
 def homogeneous_powers(degree):
     return [(i, j, degree-i-j) for i in range(degree+1) for j in range(degree-i+1)]
+
+
+def jacobian_multiples(quintic, degree, columns):
+    """Yield the derivative index, monomial shift and coefficients of each row."""
+    field = quintic.ring.domain
+    generators = [(None, quintic, 5)] + [(i, quintic.diff(x), 4) for i, x in enumerate(quintic.ring.gens)]
+    for index, polynomial, generator_degree in generators:
+        for shift in homogeneous_powers(degree-generator_degree):
+            yield index, shift, [polynomial.get(tuple(a-b for a, b in zip(power, shift)), field.zero)
+                                 for power in columns]
 
 
 def jacobian_rank(quintic, degree):
@@ -115,15 +133,9 @@ def jacobian_rank(quintic, degree):
     """
     if degree < 2:
         raise ValueError("the rank ceiling is stated in degrees at least two")
-    field = quadratic_field()
     columns = homogeneous_powers(degree)
-    generators = [(quintic, 5), *((quintic.diff(x), 4) for x in quintic.ring.gens)]
-    rows = []
-    for polynomial, generator_degree in generators:
-        for shift in homogeneous_powers(degree-generator_degree):
-            rows.append([polynomial.get(tuple(a-b for a, b in zip(power, shift)), field.zero)
-                         for power in columns])
-    return DomainMatrix(rows, (len(rows), len(columns)), field).rank() if rows else 0
+    rows = [row for _, _, row in jacobian_multiples(quintic, degree, columns)]
+    return DomainMatrix(rows, (len(rows), len(columns)), quintic.ring.domain).rank() if rows else 0
 
 
 def net_singularity_ranks(edges, degrees=(8, 9)):

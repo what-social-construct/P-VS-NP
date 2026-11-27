@@ -1,0 +1,216 @@
+\paragraph{The pure curve above \([0:1]\).}
+Work over \(k=\mathbb F_5\) and write \(m_r=\sum_{i\ne r}e_{ir}\)
+with unordered edge indices. Thus \(l=m_2\) and \(m=m_3\).
+Before imposing a common line, the closure of the normalized pure locus is
+the curve \(C\subset\mathbb P^4\) with edge vector
+\[
+             (a,-b-d,m-c-d,b,c,d),\qquad q_2=q_3=q_4=0 .
+\]
+This curve is geometrically integral of degree 24 and arithmetic genus 49.
+Indeed, its section at \(m=0\) consists of the 24 reduced points above,
+all with \(d\ne0\). Thus \(q_2,q_3,q_4,m,d\) are homogeneous parameters
+in a polynomial ring on five variables and form a regular sequence.
+In particular \(C\) is a complete intersection. The 24 standard monomials
+of the section at \(m=d=0\) lift to a basis of its homogeneous coordinate
+ring over \(k[m,d]\), by graded generation and the complete-intersection
+Hilbert series. Hence \([m:d]\) gives a finite flat projection of degree
+24. The counts \((1,3,5,6,5,3,1)\) in degrees zero through six give
+Hilbert polynomial \(24n-48\).
+
+Two other projective hyperplane sections have the following closed points.
+All occur with multiplicity one.
+\[
+\begin{array}{c|c|c}
+ \text{hyperplane} & \text{residue degrees over } k
+                    & \text{degree-nine Jacobian ranks}\\ \hline
+ d=4m & 1,1,2,20 & 54,54,54,54\\
+ d=a  & 6,18     & 54,54
+\end{array}
+\]
+In each case the lexicographic basis on \(m=1\) expresses \(a,b\) as
+polynomials in \(c\) and has a squarefree degree-24 eliminant in \(c\).
+The second hyperplane has no point at infinity, as substitution of
+\(a=d=1,m=0\) gives the unit ideal. For the first this follows from
+\(d\ne0\) at infinity. A reduced finite hyperplane section meets every
+curve component in smooth points of the curve. Thus \(C\) is generically
+reduced and is reduced by the complete-intersection property. The
+degree-20 point lies on a unique component over \(k\), of degree at
+least 20. Any remaining components would have total degree at most four,
+whereas their section at \(d=a\) would contain a point of degree at
+least six. Hence \(C\) is irreducible over \(k\). Its smooth rational
+point lies on a unique geometric component, fixed by Frobenius.
+Transitivity on geometric components and perfectness of \(k\) give
+geometric integrality. The two disjoint sections exclude 48 geometric
+directions from \(Z\). In the chart \(m=1\), the Jacobian ideal of \(C\)
+has length ten and support \(a=c=0,\ d=1,\ b^2+b+1=0\).
+The reduced section at infinity gives smoothness there.
+
+\paragraph{Edge conditions on a surviving direction.}
+Every \(B\in Z\) with \(l(B)=0\) has all six edges nonzero. The
+permutations fixing vertex 2 have two edge orbits, represented by
+\(e_{12}\) and \(e_{13}\). Relabeling preserves the projective face,
+and the excluded pencil base section permits normalization at \(m=1\).
+When \(e_{12}=0\), the pure equations give closed points of degrees
+8 and 12. When \(e_{13}=0\), the (degree, multiplicity) pairs are
+\((1,2),(1,3),(2,2),(2,3),(4,1)\). The separating coordinates for
+these lexicographic calculations are \(d\) and \(d+2b\), respectively.
+
+Here is the common-line test at each of these seven closed points. In
+the quotient space of dimension five, a common line meets the hyperplane
+\(x_4=0\). For the chosen frames, on \(x_3=1\) the three restricted
+quadrics reduce all monomials of degree four to terms of degree at most
+three. Homogenization also excludes any point at \(x_3=0\) in that
+hyperplane. At a common zero \(x\), form the signed cofactor vector
+\(y\) of the four rows \(Q_2x,Q_3x,Q_4x,e_3^*\).
+If the first three rows have rank three, their kernel must equal
+any common two-space through \(x\), so \(Q_2(y)=0\). If their rank is
+smaller, \(y=0\). In each residue field, multiples of the reduced sextic
+\(Q_2(y)\) span all eight remaining monomials modulo the three quadrics.
+This gives a unit and excludes the line over the algebraic closure.
+
+There is a second reduction under the same vertex permutations. Let
+\(x_i=e_{2i}\), for \(i=0,1,3\), and let \(y_i\) be the edge opposite
+\(x_i\). The \(x_i\) sum to zero. If two coincide, then either all
+vanish (the pure equations give a unit), or the equal pair can be
+scaled to \(1,1\). The latter section has four rational points and two
+closed points of degree nine, all of Jacobian rank 54 in degree nine.
+For distinct \(x_i\), write \(y_i=u+v x_i+w x_i^2\) by interpolation.
+For \(w=0,u=0\), the pure equations force the \(x_i\) to be scaled
+cube roots of unity with \(v=0\) or \(3\). For \(w=0,u\ne0\),
+normalize \(u=1\). The eliminant for \(v\) is irreducible of degree
+seven, and the cubic of incident edges splits over the degree-14
+extension. Each case gives rank 54, allowing vertex permutations and
+Frobenius. Thus a surviving direction has distinct \(x_i\) and \(w\ne0\).
+Scaling all edges by \(w\) sets the quadratic coefficient to one.
+With \(x_i\) the roots of \(T^3+pT-q\), the three pure equations
+now use just \(p,q,u,v\), on \(-4p^3-27q^2\ne0\). For instance the
+quadratic equation becomes
+\[
+ (4v+3)q+2p^2+2pu+2pv^2+3pv+2p+u^2=0 .
+\]
+Interpolating the incident, opposite and outer diagonal entries of a
+tangent vector in the same cubic and setting the incident linear
+coefficient to zero gives eight coordinates modulo \(B\). Reduction in
+the ordered splitting algebra gives three linear polars and three
+quadratic forms in these eight coordinates, with coefficients in
+\(k[p,q,u,v]\).
+
+On the surviving locus \(q\ne0\), since it is the product of the incident
+edges. With \(u=0\) the pure quotient gives two closed points of degrees
+5 and 9, both excluded by rank 54. With \(v=3\) the degrees are 2, 2
+and 7. One quadratic point has a zero opposite edge, and the other
+points again have rank 54. We may therefore solve the displayed
+equation for \(q\). Substitute in the two remaining pure equations and
+clear powers of \(4v+3\). Their resultant in \(p\), after division by
+\(u^4(v-3)^8\), has bidegree \((12,24)\) in \((u,v)\). Any surviving
+direction projects to this plane curve.
+
+The resulting polynomial is absolutely irreducible. Its leading
+coefficient in \(u\) is a nonzero constant. At \(v=2\) its factors
+have degrees 2 and 10, so a proper factorization over \(k[v]\)
+would have a degree-two factor in \(u\). At a root of \(v^2+v+1\),
+the norm of the specialization to \(k[u]\) factors into irreducibles
+of degrees 10 and 14. A degree-two factor would give a degree-four
+factor of this norm. Finally the rational point \((u,v)=(4,4)\)
+has gradient \((4,2)\), so it is smooth and singles out a unique
+geometric component. The first subresultant in \(p\) is
+\((v-3)^5(A(u,v)p+D(u,v))\), with bidegrees \((9,19)\) and \((10,17)\)
+for \(A,D\). Since \(\deg_u A<12\), it is nonzero in the function
+field of the plane curve. Generically one therefore recovers
+\(p=-D/A\), then \(q\) from the quadratic equation. On the open \(u\ne0,v\ne3\), a lift with \(A=0\) must also
+satisfy \(D=0\). The resultant of \(A\) and the plane equation in
+\(u\) has \(v\)-factors of degrees \(1,1,5,9,44\).
+At \(v=0\) and at the factors of degrees 5 and 9, the common zeros
+of \(A,D\) and the plane equation have \(u=0\). At the degree-44
+factor their monic gcd in \(u\) is linear with nonzero constant.
+The remaining two equations in \(p\) have an irreducible quadratic
+gcd there, verified by its nonsquare discriminant. Thus the exception
+is a single closed invariant point of degree 88. The powers
+\(1,p,\ldots,p^{87}\) give a basis of its residue field. In that basis
+the degree-nine Jacobian rank of the descended net is 54, excluding
+every conjugate. Hence \(A\ne0\) and the two rational recovery formulas
+apply at every surviving common-line direction on this face.
+
+In particular one can test every prime-field slope \(v\) while allowing
+\(u\) to range over the algebraic closure. For \(v=0,1,2,4\), respectively,
+the irreducible factors left after the edge and discriminant checks have
+degrees \((8)\), \((2,4,4)\), \((2,10)\), and \((2,2,3,4)\).
+All ten closed points have degree-nine rank 54. Together with the
+\(v=3\) calculation, this excludes every \(v\in\mathbb F_5\).
+
+\paragraph{One affine chart for the common-line question.}
+Let \(L\) be the three-space above a common line in \(W_B\).
+For \(r=0,1,3\), the excluded base section and vertex symmetry imply
+\(m_r(B)\ne0\). Thus \(U_r=L\cap\ker m_r\) represents the common
+two-space modulo \(B\). For \(r=3\) use the eight coordinates
+\[
+       X_{01},X_{02},X_{12},X_{13},X_{23},X_{11},X_{22},X_{33}.
+\]
+Here \(X_{03}=-X_{13}-X_{23}\) and the entry sum determines \(X_{00}\).
+Projection to the first three coordinates is injective on \(U_3\).
+Indeed, for a nonzero vector with these three entries zero, normalize
+its first nonzero entry to one. All five resulting systems, imposing
+the pure equations and the three polar and three quadratic equations
+on that vector, have reduced Gröbner basis \([1]\).
+
+Suppose no relabeling fixing vertex 2 makes \((X_{01},X_{02})\)
+independent on \(U_3\). Swapping 0 and 1 shows that both pairs involving
+\(X_{01}\) in the first three coordinates are dependent. The projection
+has rank two, so \(X_{01}=0\) on \(U_3\). Applying the same argument with
+\(r=0,1\) gives proportionality of the opposite edge and \(m_r\) on \(L\).
+Take the unique \(X\in U_3\) with \(X_{02}=0,X_{12}=1\). Then
+\[
+    m_0(B)X_{13}-B_{13}m_0(X)=
+    m_1(B)X_{03}-B_{03}m_1(X)=0 .
+\]
+Adding these two relations to its pure, polar and quadratic system gives
+reduced basis \([1]\) as well. Consequently every common line admits,
+after relabeling, a frame \(X,Y\in U_3\) whose \((01,02)\) entries are
+\((1,0),(0,1)\). The converse holds by coefficient extraction. The one
+remaining system has four kernel coordinates, twelve free frame entries
+and eighteen equations obtained from three pure coefficients, six
+linear polars and nine quadratic coefficients of \(\operatorname{per}(J_4+sB+tX+zY)\).
+Thus emptiness of the zero set of this single ideal over the algebraic closure decides
+the whole \([0:1]\) fiber. Its unit status remains open.
+
+\paragraph{Finite divisors containing the residual directions.}
+There is a degree bound even for the quadratic conditions alone. On
+\(C\) the three polar rows have full rank and define an exact sequence
+\[
+ 0\longrightarrow E\longrightarrow\mathcal O_C^9\longrightarrow
+ \mathcal O_C(1)\oplus\mathcal O_C(2)\oplus\mathcal O_C(3)
+ \longrightarrow 0 .
+\]
+The kernel direction is the tautological line \(\mathcal O_C(-1)\)
+inside \(E\). Its quotient \(W\) therefore has determinant
+\(\mathcal O_C(-5)\). The quadratic form \(Q_j\) on \(W\) takes
+values in \(\mathcal O_C(j-2)\). Give \(\lambda_2,\lambda_3,\lambda_4\)
+weights \(0,1,2\). In the determinant quintic the coefficient of
+\(\lambda^\alpha\) is a section of
+\((\det W^*)^2\otimes\mathcal O_C(\mathrm{wt}(\alpha))
+\simeq\mathcal O_C(10+\mathrm{wt}(\alpha))\).
+
+At \(B=(1,2,2,4,0,4)\) on \(C\), the degree-nine Jacobian matrix has
+a nonzero \(53\)-minor with twist 755. To reproduce the choice,
+order the columns by increasing weight. Order the rows by increasing
+\(10+\mathrm{wt}(\lambda_j)-\mathrm{wt}(\lambda^s)\) for a monomial
+multiple \(\lambda^s\partial_j\Phi_B\), omitting the derivative weight
+for a multiple of \(\Phi_B\). Keep the first 53 independent rows, then
+the first 53 independent columns on those rows, using the enumerations
+in the checker for ties. Each determinant term has the same twist,
+the sum of the selected row and column weights. This minor is a nonzero
+section of \(\mathcal O_C(755)\). Its zero divisor has length
+\(24\cdot755=18{,}120\) and contains every direction of the quadratic
+collision fiber by its rank ceiling. At the relabeling \((1,0,4,2,2,4)\) of the same point the companion
+sextic matrix has rank 84. The corresponding degree-180 resultant thus
+cuts out a divisor of length \(24\cdot180=4{,}320\) containing every
+direction admitting a full completion \cite{stacksCurveDegrees}.
+These lengths count zeros of individual equations with multiplicity.
+The surviving directions have distinct incident edges after normalizing
+the quadratic interpolation coefficient to one. Their vertex-permutation
+orbits on this face therefore have size six, giving at most 3,020 orbits
+of quadratic collision directions.
+Since \(\mathcal O_C(1)\) is the pullback of \(\mathcal O(1)\) under
+\([m:d]\), the norm of the minor is a nonzero binary form of degree
+18,120 \cite{stacksFiniteNorm}. Computing it and testing its factors against the remaining
+chart would turn the bound into a list of surviving directions.

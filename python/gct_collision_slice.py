@@ -9,13 +9,26 @@ from sympy.polys.rings import ring
 from gct_permanent_plucker import OFF_DIAGONAL, pencil_coefficients
 
 
+def face_edges(a, b, c, d, m=1):
+    """Edges with vertex-2 sum zero and vertex-3 sum m."""
+    return a, -b-d, m-c-d, b, c, d
+
+
+def kernel_from_edges(values):
+    """Restore the four corrected-kernel diagonal entries in characteristic five."""
+    values = tuple(values)
+    if len(values) != len(OFF_DIAGONAL):
+        raise ValueError("expected six edge entries in the order 01,02,03,12,13,23")
+    edges = dict(zip(OFF_DIAGONAL, values))
+    half_sum = 3 * sum(edges.values())
+    return {**edges, **{(i, i): half_sum - 2*sum(value for edge, value in edges.items() if i in edge)
+                        for i in range(4)}}
+
+
 def slice_equations():
     """Restrict the original permanent to edges (a,-b-d,-c-d,b,c,d)."""
     algebra, a, b, c, d = ring("a,b,c,d", sp.GF(5), "grevlex")
-    edges = dict(zip(OFF_DIAGONAL, (a, -b-d, -c-d, b, c, d)))
-    half_sum = sum(edges.values()) / 2
-    kernel = {**edges, **{(i, i): half_sum - 2*sum(x for edge, x in edges.items() if i in edge)
-                          for i in range(4)}}
+    kernel = kernel_from_edges(face_edges(a, b, c, d, 0))
     coefficients = pencil_coefficients(algebra, [kernel])
     assert set(coefficients) == {(2, 0, 0), (3, 0, 0), (4, 0, 0)}
     equations = [coefficients[i, 0, 0] for i in (2, 3, 4)]

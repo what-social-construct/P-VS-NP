@@ -153,14 +153,27 @@ checks a degree-four identity for one for each orbit's companion system.
 A fixed projective three-space slice contains just 24 such points.
 Its exclusion bounds the entire quadratic direction locus by a curve
 over the algebraic closure and over the complex numbers. The two
-linear forms defining the slice give a finite fiber to test in four
-coordinates. The projective resultant provides a degree-180 equation
-for full completions. [Proof and remaining target](manuscript/03-complexity/collision-kernel-quadrics.tex)
+linear forms defining the slice give a finite fiber above $[0:1]$.
+Over the algebraic closure at five, this fiber lies on a geometrically
+integral degree-24 curve. Up to vertex relabeling, one chart with 16
+variables and 18 equations decides whether it contains a common line.
+The chart remains open. [Proof and remaining target](manuscript/03-complexity/collision-kernel-quadrics.tex)
 
 ~~~sh
 python3 python/gct_collision_f25.py --verify-lines msolve
 python3 python/gct_collision_eliminant.py
+python3 python/gct_collision_fiber_slice.py
+python3 python/gct_collision_fiber_net.py
+python3 python/gct_collision_face.py
+python3 python/gct_collision_subresultant.py
+python3 python/gct_collision_pencil_fiber.py --verify-boundary msolve
+python3 python/gct_collision_pencil_fiber.py --emit > /tmp/gct-pencil-fiber.ms
 ~~~
+
+The surviving vertex-permutation invariants are recovered from two
+coordinates on an explicit plane curve of bidegree $(12,24)$. Every
+prime-field interpolation slope and the exceptional degree-88 lift
+fail the common-line test. [Geometric fiber calculation](manuscript/03-complexity/collision-pencil-fiber.tex)
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options
