@@ -185,6 +185,8 @@ python3 python/gct_collision_vertex_orbits.py
 python3 python/gct_collision_line_divisor.py
 python3 python/gct_collision_incidence_descent.py
 python3 python/gct_collision_quadratic_slopes.py
+python3 python/gct_collision_line_divisor_slopes.py
+python3 python/gct_collision_resultant_square.py
 python3 python/gct_collision_ordering_fibers.py
 python3 python/gct_common_line_witness.py
 python3 python/gct_collision_normalization.py
@@ -208,12 +210,15 @@ Relabeling the vertices gives three pencils whose prime-field values,
 including infinity, exclude 328 distinct directions. The smooth model
 of the invariant plane curve has genus seven. [Orbit and quotient calculation](manuscript/03-complexity/collision-vertex-orbits.tex)
 
-On the fixed face, a resultant of degree 440 on the labeled curve
-gives a candidate divisor of degree at most 1,760 on the quotient.
+On the fixed face, an auxiliary linear form contributes a square to
+the degree-440 resultant. Removing it gives a degree-336 equation on
+the labeled curve. Its zero divisor on the quotient has degree at
+most 1,344 and contains the scheme-theoretic image of the common lines.
 Above each candidate, the labeled incidence is the product of the
 cubic root-ordering scheme with the scheme of common lines.
-The three possible ordering types occur in the quadratic-slope test,
-and all 30 of its closed quotient points have empty geometric line fibers.
+The three possible ordering types occur in the quadratic-slope test.
+The resultant is a unit at all 40 eligible closed points with slope
+in $\mathbb F_{25}$, representing 281 geometric points.
 For a supplied pure quotient point, `find_ordered_line(values, field)`
 tests the net before adjoining cubic roots and verifies any returned
 frame against the original permanent through tangent degree two.

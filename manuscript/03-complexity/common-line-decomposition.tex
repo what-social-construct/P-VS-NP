@@ -127,9 +127,9 @@ For the degree-\(n\) extension \(K_n/K\), the same formula gives
 \(\#\mathcal I_s(K_n)=6\#\mathcal F_s(K_n)\) if \(e\mid n\), and
 zero otherwise. Over the algebraic closure every line has six labelings.
 The degree bound also gives a finite search independent of an expansion
-of \(h\): enumerate the closed points of \(U\) of degree at most 1,760
-over \(\mathbb F_5\), recovering \(p,q\) from \(u,v\). Larger-degree points
-cannot belong to the support. At each candidate \(s\), the
+of \(h\). Proposition~\ref{prop:common-line-residual} lowers the ceiling
+to 1,344 for closed points of \(U\) over \(\mathbb F_5\). Recover
+\(p,q\) from \(u,v\). At each candidate \(s\), the
 ten row-echelon charts decide geometric existence in \(\mathcal F_s\).
 On a proper chart the field search recovers a line. Over a common
 field of definition, evaluating its two rows at the ordered roots
@@ -160,3 +160,96 @@ at seven, sixteen and seven closed points, respectively. Those give
 104 closed labeled directions, comprising 1,440 geometric directions
 before testing for a line. With the prime-field slope calculation,
 this excludes every \(v\in\mathbb F_{25}\) throughout the eligible chart.
+
+\begin{proposition}[Removing the auxiliary square from the common-line resultant]
+\label{prop:common-line-residual}
+Write \(B_D=\operatorname{Res}_x(H,Q_2,Q_3,Q_4,D)\). There is a
+polynomial \(G\) in the coefficients of \(H,Q_2,Q_3,Q_4\) such that
+\(R=B_D^2G\). On the fixed labeled curve, \(B_D\) and \(G\) are invariant
+sections of \(\mathcal O_C(52)\) and \(\mathcal O_C(336)\), respectively.
+On the smooth quotient chart \(U\) put
+\(b=B_D/Y^{52}\), \(j=G/Y^{336}\), and let \(Z\) be the scheme-theoretic
+image of \(\pi:\mathcal F\to U\). Then
+\[
+   (h):(b^2)=(j),\qquad Z\subseteq V(j),\qquad \deg V(j)\le 1344.
+\]
+With \(\mathcal I_L=(j):\mathcal I_Z\), the effective divisors satisfy
+\(V(h)=2V(b)+Z+L\) and \((j):\mathcal I_L=\mathcal I_Z\).
+\end{proposition}
+
+\begin{proof}
+First take all coefficients to be independent over \(\mathbb F_5\).
+Over the algebraic closure of the function field of \(H,Q_2,Q_3,Q_4\),
+these four forms cut out eight transverse points in \(\mathbb P^4\).
+Transversality holds on a nonempty open since on \(H=X_4=0\)
+the three quadrics \(X_i^2-X_3^2\), \(0\le i\le2\), give eight simple points.
+For a further form of degree one or six, its resultant is a nonzero
+scalar times the product of its values at the eight points, using
+fixed representatives. Each evaluation gives a distinct linear
+factor in its coefficients, and the multidegree is eight.
+At one of these points \(x\), the three independent polar rows have
+kernel \(\langle x,y\rangle\). Their wedge gives, up to a nonzero
+scalar independent of \(D\), the cofactor
+\(D(y)x-D(x)y\). Since \(Q_2(x)=b_2(x,y)=0\), its quadratic value
+is proportional to \(D(x)^2Q_2(y)\). Multiplication over the eight
+points gives \(R=B_D^2 G\) with \(G\) independent of \(D\) over the
+function field. The universal homogeneous resultant \(B_D\) is
+irreducible over the ground field \cite{jouanolouResultant}, hence
+primitive as a polynomial in \(D\) over the other coefficients.
+Gauss's lemma gives the identity in the full polynomial ring.
+
+Work in a frame of the ordered rank-five bundle adapted to a chosen
+two-space \(P=\langle e_1,e_2\rangle\), with the coefficient lines
+trivialized. Take the entries of \(H,D\) and the free entries of the
+three symmetric Gram matrices as indeterminates over \(\mathbb F_5\).
+Their upper left \(2\times 2\) blocks are zero, precisely the nine
+equations defining \(\mathcal F\). The coefficient ring is a polynomial
+domain. Over its fraction field,
+\(x=H(e_2)e_1-H(e_1)e_2\) is nonzero and lies in \(P\cap\ker H\).
+The three polar rows vanish in their first two columns. Every cofactor
+outside \(P\) keeps both columns, where only the \(D\)-row can be
+nonzero. Thus \(c(x)\in P\) and \(S(x)=0\). The resultant
+vanishes in the fraction field, hence in the polynomial ring.
+Here \(B_D\) is nonzero when \(H,D\) are the first two
+coordinates and the quadrics are the squares of the last three.
+Cancel \(B_D^2\) in this domain. It follows that \(G\) vanishes in
+every adapted frame, even after specialization to nonreduced rings or
+to a point where \(B_D=0\). Since \(Y\) is a unit and ordering the
+roots is faithfully flat, \(\pi^*j=0\) on \(\mathcal F\). This is the
+asserted containment of schemes.
+
+The five degrees for \(B_D\) are \((1,2,2,2,1)\). Its twist is
+\(M^8\otimes\mathcal O_C(12)\), giving degree \(8\cdot5+12=52\).
+Subtracting its twist twice from that of \(R\) gives
+\(M^{48}\otimes\mathcal O_C(96)\) for \(G\), hence degree 336.
+Both determinant exponents are even, so the vertex action fixes the
+sections. The nonzero specialization of \(R\) gives nonzero sections
+for both factors. Normalizing by \(Y\) gives \(h=b^2j\), and
+canceling the regular factor \(b^2\) gives the first colon. The pullback
+of \(j\) has at most \(24\cdot336\) zeros counted with multiplicity, so
+the degree-six quotient gives the bound \(24\cdot336/6=1344\).
+
+At a closed point of \(U\) the local ring is a discrete valuation ring
+\cite{stacksSmoothCurveDivisors}. With uniformizer \(t\), write
+\((j)=(t^n)\) and \(\mathcal I_Z=(t^a)\). Containment gives
+\(0\le a\le n\). Taking the colon yields \((t^{n-a})\), and taking it
+again gives \((t^a)\). In particular both divisors have support at the
+same point whenever \(0<a<n\).
+\end{proof}
+
+On \(U\), the section \(v^{25}-v=0\) contains ten closed points at
+prime-field slopes and thirty more at quadratic slopes. These represent
+41 and 240 geometric points, respectively. At all forty points the
+\(H=0\) section of the three quadrics has no point on \(D=0\), and
+the polar sextic has an inverse on \(D=1\), as verified over each
+residue field. Hence \(h\) itself is a unit at all forty points.
+Saturation by \(v^{25}-v\) leaves both \((h)\) and \((j)\) unchanged.
+
+To compute the exact residual from the nine Gram equations one can work
+on affine opens of \(U\) trivializing the bundle \(E\). Intersect the
+kernels of the base-ring maps to the incidence coordinate rings on the
+ten standard affine opens of \(\operatorname{Gr}(2,5)\). Each open
+normalizes a chosen invertible two-column minor to the identity and
+allows all six other entries to vary. This gives \(\mathcal I_Z\),
+including its infinitesimal thickness. The degree of \(L\) and the
+individual multiplicities \(a\) require that image calculation.

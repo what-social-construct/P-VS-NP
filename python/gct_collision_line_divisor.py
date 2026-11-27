@@ -1,5 +1,7 @@
 """Certify nonvanishing of the vertex-invariant common-line resultant at five."""
 
+from itertools import combinations
+
 import sympy as sp
 from sympy.polys.matrices import DomainMatrix
 from sympy.polys.rings import ring
@@ -15,6 +17,18 @@ def invariant_covectors(tangent):
     incident = tangent[0, 2] + tangent[1, 2] + tangent[2, 3]
     diagonal = tangent[0, 0] + tangent[1, 1] + tangent[3, 3]
     return incident, diagonal
+
+
+def adapted_grams(grams, diagonal, incident, field):
+    """Express the three quadrics in a frame with fourth coordinate D and fifth H."""
+    for slots in combinations(range(5), 3):
+        chart = [[field(int(i == j)) for j in range(5)] for i in slots]
+        change = DomainMatrix([*chart, list(diagonal), list(incident)], (5, 5), field)
+        if change.det():
+            frame = change.inv().transpose()
+            return [(frame * DomainMatrix(q, (5, 5), field) * frame.transpose()).to_list()
+                    for q in grams]
+    raise ValueError("D and H are dependent on the polar kernel")
 
 
 def check_line_divisor():
@@ -43,12 +57,7 @@ def check_line_divisor():
         [field(int(i == j)) for j in range(5)] for i in range(5)]
     incident_row, diagonal_row = zip(*(invariant_covectors(tangent_direction(row)) for row in basis))
     # In the new coordinates the fourth coordinate is D and the fifth is H.
-    chart = [[field(int(i == j)) for j in range(5)] for i in range(3)]
-    change = DomainMatrix([*chart, list(diagonal_row), list(incident_row)], (5, 5), field)
-    assert change.det()
-    frame = change.inv().transpose()
-    grams = [DomainMatrix(q, (5, 5), field) for q in quotient_forms_at(edges, field)]
-    adapted = [(frame * q * frame.transpose()).to_list() for q in grams]
+    adapted = adapted_grams(quotient_forms_at(edges, field), diagonal_row, incident_row, field)
     polar_sextic_certificate(adapted, field)
 
     # For degrees (1,2,2,2,6) the determinant character uses 48 copies

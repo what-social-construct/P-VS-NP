@@ -666,9 +666,7 @@ use the projective resultant criterion and coefficient multidegrees from
 D'Andrea and Dickenstein above. The invariant incident and diagonal
 covectors, the sextic obtained from the polar cofactors, and its
 [nonzero specialization](python/gct_collision_line_divisor.py) are
-specific to this face. The divisor bounds the support of the actual
-scheme-theoretic image. Its multiplicities need not be the multiplicities
-of that image. The [interpolation and frame replay](python/gct_collision_incidence_descent.py)
+specific to this face. The [interpolation and frame replay](python/gct_collision_incidence_descent.py)
 uses the permanent and the full-rank polar kernel, and the
 [quadratic-slope check](python/gct_collision_quadratic_slopes.py) uses
 the plane resultant and first subresultant already recorded here.
@@ -678,6 +676,24 @@ the finite étale classification, and the lifting statement applies over
 the henselian local Artin rings of the scheme-theoretic image.
 [Stacks, schemes étale over a field](https://stacks.math.columbia.edu/tag/03QR)
 · [Stacks, finite étale extensions of henselian local rings](https://stacks.math.columbia.edu/tag/04GK)
+
+The residual proposition uses irreducibility and multidegrees of the
+universal homogeneous resultant. On a transverse section its eight
+evaluation factors give the auxiliary square. Specialization in the
+polynomial ring of framed nets containing a line proves that the remaining
+degree-336 equation vanishes on the full incidence scheme. The degree
+bound 1,344 is a written consequence of its twist and the quotient degree.
+The local subtraction of multiplicities uses the discrete valuation rings
+of the smooth quotient. [Jouanolou, *Le formalisme du résultant*](https://doi.org/10.1016/0001-8708(91)90031-2) · [Stacks, effective divisors on smooth curves](https://stacks.math.columbia.edu/tag/0B9D)
+
+The [local colon identities](lean/PvsNP/ReadoutResidual.lean) are proved
+in Lean for regular principal factors. The [eight-point control](python/gct_collision_resultant_square.py)
+computes the polar cofactors for a split transverse section over the prime
+field and checks the double zero as the auxiliary form varies.
+The [slope check](python/gct_collision_line_divisor_slopes.py)
+tests the original resultant itself at all eligible closed points above
+$v^{25}-v=0$, including four points on excluded pencils. Each unit
+certificate uses the two vertex-invariant covectors in the descended frame.
 
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.

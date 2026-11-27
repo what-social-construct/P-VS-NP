@@ -331,11 +331,9 @@ def verify_geometric_irreducibility(curve):
     assert [int(f(4, 4)) % 5 for f in (curve, curve.diff(a), curve.diff(b))] == [0, 4, 2]
 
 
-def verify_prime_slopes(curve, leading, constant):
-    """Test every geometric plane point with prime-field interpolation slope."""
-    polars = specialization_polars()
+def prime_slope_points(curve, leading, constant):
+    """Yield the distinct-root, nonzero-edge lifts at v in F5 on the w=1, uA(v-3) != 0 chart."""
     u_symbol, v_symbol = curve.ring.symbols
-    rank_checks = []
     # The separate v=3 calculation precedes division by 4v+3.
     for slope in (0, 1, 2, 4):
         def specialize(f):
@@ -348,11 +346,21 @@ def verify_prime_slopes(curve, leading, constant):
             u, v = field.generator, field(slope)
             if not u:
                 continue
-            p = -field(numerator.rem(factor).as_expr()) / field(denominator.rem(factor).as_expr())
+            leading_value = field(denominator.rem(factor).as_expr())
+            assert leading_value
+            p = -field(numerator.rem(factor).as_expr()) / leading_value
             q = -(2*p**2+2*p*u+2*p*v**2+3*p*v+2*p+u**2) / (4*v+3)
             if q and -4*p**3-27*q**2 and opposite_edge_product(p, q, u, v):
-                assert descended_rank(polars, (p, q, u, v), field) == 54
-                rank_checks.append((slope, factor.degree()))
+                yield field, (p, q, u, v)
+
+
+def verify_prime_slopes(curve, leading, constant):
+    """Test every geometric plane point with prime-field interpolation slope."""
+    polars = specialization_polars()
+    rank_checks = []
+    for field, values in prime_slope_points(curve, leading, constant):
+        assert descended_rank(polars, values, field) == 54
+        rank_checks.append((int(values[3].as_expr()) % 5, field.rank))
     assert sorted(rank_checks) == [(0, 8), (1, 2), (1, 4), (1, 4), (2, 2), (2, 10),
                                    (4, 2), (4, 2), (4, 3), (4, 4)]
 
