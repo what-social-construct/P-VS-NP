@@ -5,6 +5,7 @@ from itertools import product
 import sympy as sp
 from sympy.polys.agca.extensions import MonogenicFiniteExtension
 from sympy.polys.matrices import DomainMatrix
+from sympy.polys.matrices.exceptions import DMNonInvertibleMatrixError
 from sympy.polys.rings import ring
 
 from gct_collision_kernel_reduction import determinant
@@ -42,8 +43,8 @@ def face_points(incident):
         yield field, face_edges(av, bv, cv, dv)
 
 
-def polar_sextic_certificate(forms, field):
-    """Check that H meets no common line by reducing one sextic to a unit."""
+def polar_sextic_inverse(forms, field):
+    """Return a checked inverse, or None if this chart and sextic give no exclusion."""
     algebra, x, y, z = ring("x,y,z", field, "grevlex")
     point = (x, y, z, algebra.one, algebra.zero)
     grams = [[[algebra(c) for c in row] for row in gram] for gram in forms]
@@ -69,7 +70,8 @@ def polar_sextic_certificate(forms, field):
     free = [p for j, p in enumerate(powers) if j not in pivots]
     # Every quartic reduces to terms of degree <= 3. Homogenizing these
     # identities excludes all points of the hyperplane section at infinity.
-    assert len(free) == 8 and all(sum(p) <= 3 for p in free)
+    if len(free) != 8 or any(sum(p) > 3 for p in free):
+        return None
     rules = [algebra.from_dict({p: c for p, c in zip(powers, row) if c})
              for row in reduced.to_list()[:len(pivots)]]
 
@@ -83,9 +85,27 @@ def polar_sextic_certificate(forms, field):
         tangent[j] = (-1)**i * determinant([columns[k] for k in slots if k != j])
     sextic = dot(covector(grams[0], tangent), tangent).rem(rules)
     products = [(monomials[p]*sextic).rem(rules) for p in free]
-    assert all(set(f).issubset(free) for f in products)
-    # Full rank expresses 1 in the ideal of the quadrics and the sextic.
-    assert coefficients(products, free).rank() == len(free)
+    if any(not set(f).issubset(free) for f in products):
+        raise ArithmeticError("a reduced sextic multiple is outside the quartic basis")
+    # Rows are products of the free monomials with the reduced sextic.
+    # The row of the inverse indexed by 1 gives an explicit unit certificate.
+    try:
+        inverse_matrix = coefficients(products, free).inv()
+    except DMNonInvertibleMatrixError:
+        return None
+    inverse_row = inverse_matrix.to_list()[free.index((0, 0, 0))]
+    inverse = algebra.from_dict({p: c for p, c in zip(free, inverse_row) if c})
+    if (inverse*sextic).rem(rules) != algebra.one:
+        raise ArithmeticError("the proposed polar sextic inverse fails the unit identity")
+    return inverse
+
+
+def polar_sextic_certificate(forms, field):
+    """Require a geometric common-line exclusion for this net and chart."""
+    inverse = polar_sextic_inverse(forms, field)
+    if inverse is None:
+        raise AssertionError("this polar sextic chart gives no unit certificate")
+    return inverse
 
 
 if __name__ == "__main__":

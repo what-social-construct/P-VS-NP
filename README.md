@@ -179,6 +179,8 @@ The chart remains open. [Proof and remaining target](manuscript/03-complexity/co
 python3 python/gct_collision_f25.py --verify-lines msolve
 python3 python/gct_collision_eliminant.py
 python3 python/gct_collision_fiber_slice.py
+python3 python/gct_collision_translated_sections.py
+python3 python/gct_common_line_witness.py
 python3 python/gct_collision_normalization.py
 python3 python/gct_collision_fiber_net.py
 python3 python/gct_collision_face.py
@@ -191,6 +193,11 @@ The surviving vertex-permutation invariants are recovered from two
 coordinates on an explicit plane curve of bidegree $(12,24)$. Every
 prime-field interpolation slope and the exceptional degree-88 lift
 fail the common-line test. [Geometric fiber calculation](manuscript/03-complexity/collision-pencil-fiber.tex)
+
+The five sections $d=a+rm$ for $r\in\mathbb F_5$ contain 112 distinct
+geometric directions. Residue-field certificates exclude a common line at
+every one of them. The witness checker also recovers an explicit line
+over $\mathbb F_{25}$ for a test net defined over $\mathbb F_5$.
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options

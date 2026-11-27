@@ -87,6 +87,63 @@ on this fixed face. Turning a decomposition of a witness family into
 a polynomial-time selector would additionally require a uniform algorithm
 that chooses and recovers a witness from each encoded yes-instance.
 
+\paragraph{Testing lines over the residue fields.}
+Consider the pencil \(d=a+rm\). Its finite sections have no point at
+infinity, since \(m=0,\ d=a\) misses \(C\). At \(r=0\) the two residue
+fields above account for all 24 geometric directions. In particular,
+over \(\mathbb F_{5^e}\) the number of pure directions in this section is
+\[
+   6\,\mathbf{1}_{6\mid e}+18\,\mathbf{1}_{18\mid e}.
+\]
+To test for a common line, take one representative of each closed point
+and form its three quotient quadrics over the residue field. On both
+factors the polar sextic described below has an explicit inverse
+modulo the three hyperplane quadrics. The checker multiplies the inverse
+by the sextic and reduces the product to one. The same identity holds
+over every field extension. Thus even over \(\mathbb F_{5^{18}}\),
+where all 24 directions are rational, none admits a geometric common
+line. This gives a second certificate for the rank exclusions at \(r=0\).
+
+The same test excludes the four translated sections. The table lists
+the degree of each closed point over \(\mathbb F_5\). All have geometric
+multiplicity one except for the two marked quadratic points.
+\[
+\begin{array}{c|l|r}
+ r & \text{residue degrees} & \text{geometric points} \\ \hline
+ 0 & 6,18 &24\\
+ 1 & 2\ (\mathrm{mult.}\ 2),\ 2\ (\mathrm{mult.}\ 4),\ 6,6 &16\\
+ 2 & 3,3,4,4,5,5 &24\\
+ 3 & 1,1,1,1,1,1,2,2,7,7 &24\\
+ 4 & 2,22 &24
+\end{array}
+\]
+For \(r=1,2,3\), eliminate first to \(b+c\), then separate the points
+by \(b\) when needed. For \(r=4\), \(c\) separates the points. Factoring
+the eliminants gives the residue fields, and standard monomials give
+the lengths of the corresponding factors. The line test uses the
+residue field at each point, including those with multiplicity.
+The five sections are disjoint, so their total length 120 accounts for
+112 distinct geometric directions. The fiber at \(m=0\) was excluded
+above. Consequently every common-line direction on this face satisfies
+\[
+           m\ne0,\qquad ((d-a)/m)^5-(d-a)/m\ne0.
+\]
+
+To test recovery when a line exists, consider the three quadrics
+\(x_1^2-2x_0^2,\ x_3^2-2x_2^2,\ x_4^2\) on \(\mathbb P^4\) over
+\(\mathbb F_5\). For \(\alpha^2=2\), their geometric support consists of
+four lines obtained by choosing the signs in \(x_1=\pm\alpha x_0\)
+and \(x_3=\pm\alpha x_2\), with \(x_4=0\). Frobenius exchanges both
+signs, so there is no line defined over \(\mathbb F_5\). Over
+\(\mathbb F_{25}\) the search returns a frame for one line and checks
+its rank and all nine Gram pairings. The search uses the ten row-echelon
+charts for two-planes. Over a specified finite field it can exhaust
+the coordinates of each chart. A maximal ideal containing a proper
+chart ideal has residue field finite over \(\mathbb F_5\), so searching
+successive extension degrees divisible by the coefficient-field degree
+eventually recovers a frame. The uniform selector target still requires
+a polynomial bound in the encoded input length.
+
 \paragraph{Edge conditions on a surviving direction.}
 Every \(B\in Z\) with \(l(B)=0\) has all six edges nonzero. The
 permutations fixing vertex 2 have two edge orbits, represented by

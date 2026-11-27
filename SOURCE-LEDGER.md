@@ -591,7 +591,25 @@ and its source are recorded in the [Galois handoff](#handoff-to-galois-collision
 
 The [edge-face checker](python/gct_collision_fiber_net.py) excludes the
 geometric support of both edge-orbit sections using polar sextic unit
-identities. The [vertex-symmetry calculation](python/gct_collision_face.py)
+identities. The [original slice](python/gct_collision_fiber_slice.py) and
+[its four translates](python/gct_collision_translated_sections.py) apply
+this test to every closed point of the five sections $d=a+rm$. They
+construct the inverse of the reduced sextic in each residue-field
+calculation and verify its product reduces to one. The section lengths
+and multiplicities come from the original permanent equations by
+elimination. Together with the earlier exclusion at $m=0$, these give
+the prime-field pencil restriction in the manuscript.
+
+The [witness search](python/gct_common_line_witness.py) uses the existing
+[ten row-echelon charts](python/gct_collision_quadrics.py) and verifies
+each returned frame against the input Gram matrices after embedding
+the coefficients. The positive control is the explicit net
+$(x_1^2-2x_0^2,x_3^2-2x_2^2,x_4^2)$ over $\mathbb F_5$.
+The certificates, field searches and control are exact Python computations.
+The geometric termination argument is written in the
+[pencil calculation](manuscript/03-complexity/collision-pencil-fiber.tex).
+
+The [vertex-symmetry calculation](python/gct_collision_face.py)
 interpolates opposite edges, excludes boundary strata, and descends the
 permanent polars to the invariant coordinates. Excluding the $u=0$ and
 $v=3$ sections permits the plane resultant in two variables. Two factorizations

@@ -143,31 +143,67 @@ def net_singularity_ranks(edges, degrees=(8, 9)):
     return tuple(jacobian_rank(quintic, d) for d in degrees)
 
 
-def common_line_cells(edges):
-    """Give the ten disjoint row-echelon systems for lines in the three quadrics.
+def line_frame_slots(pivots):
+    return [(i, j) for i, pivot in enumerate(pivots)
+            for j in range(pivot + 1, 5) if j not in pivots]
 
-    The additional coordinate omega makes each system a prime-field input
-    for msolve. Both embeddings of the quadratic coefficient field are tested.
+
+def line_frame(pivots, entries, one, zero):
+    free = line_frame_slots(pivots)
+    if len(entries) != len(free):
+        raise ValueError("wrong number of entries for the line chart")
+    slots = dict(zip(free, entries))
+    return [[slots.get((i, j), one if pivot == j else zero) for j in range(5)]
+            for i, pivot in enumerate(pivots)]
+
+
+def checked_line_forms(forms, field):
+    """Coerce three Gram matrices to the finite coefficient field."""
+    if field != sp.GF(5) and not (isinstance(field, MonogenicFiniteExtension) and
+                                  field.domain == sp.GF(5) and field.modulus.is_irreducible):
+        raise ValueError("expected F5 or a simple finite field over F5")
+    if len(forms) != 3 or any(len(q) != 5 or any(len(row) != 5 for row in q) for q in forms):
+        raise ValueError("expected three 5 by 5 Gram matrices")
+    forms = [[[field.convert(c) for c in row] for row in q] for q in forms]
+    if any(q[i][j] != q[j][i] for q in forms for i, j in combinations(range(5), 2)):
+        raise ValueError("expected symmetric matrices")
+    return forms
+
+
+def common_line_form_cells(forms, field):
+    """Give the ten RREF line ideals over F5, including the coefficient root.
+
+    The input consists of three symmetric Gram matrices over F5 or a
+    monogenic finite extension of F5 given by an irreducible polynomial.
     """
-    field = quadratic_field()
-    codes = {field(i % 5) + (i // 5) * field.generator: i for i in range(25)}
-    forms = quotient_quadrics(edges)
+    forms = checked_line_forms(forms, field)
+    omega = sp.Symbol("omega")
+    if isinstance(field, MonogenicFiniteExtension):
+        substitution = {field.symbol: omega}
+        modulus = field.modulus.as_expr().xreplace(substitution)
+    else:
+        substitution = {}
+        modulus = omega
+    expressions = [[[field.to_sympy(c).xreplace(substitution) for c in row]
+                    for row in q] for q in forms]
     for pivots in combinations(range(5), 2):
-        free = [(i, j) for i, pivot in enumerate(pivots) for j in range(pivot+1, 5) if j not in pivots]
+        free = line_frame_slots(pivots)
         names = (*[f"x{i}{j}" for i, j in free], "omega")
         algebra, *values = ring(names, sp.GF(5), "grevlex")
-        omega = values[-1]
-        slots = dict(zip(free, values[:-1]))
-        rows = [[slots.get((i, j), algebra(int(pivot == j))) for j in range(5)]
-                for i, pivot in enumerate(pivots)]
-        equations = [omega**2 - 2]
-        for form in forms:
-            gram = [[algebra(codes[c] % 5) + (codes[c] // 5) * omega for c in row] for row in form]
+        rows = line_frame(pivots, values[:-1], algebra.one, algebra.zero)
+        equations = [algebra.from_expr(modulus)]
+        for form in expressions:
+            gram = [[algebra.from_expr(c) for c in row] for row in form]
             for i, j in ((0, 0), (0, 1), (1, 1)):
                 pairing = sum(rows[i][a] * gram[a][b] * rows[j][b] for a, b in product(range(5), repeat=2))
                 if pairing:
                     equations.append(pairing)
         yield pivots, names, equations
+
+
+def common_line_cells(edges):
+    """Specialize the common-line charts to the original F25 direction."""
+    yield from common_line_form_cells(quotient_quadrics(edges), quadratic_field())
 
 
 def verify_no_common_lines(msolve):

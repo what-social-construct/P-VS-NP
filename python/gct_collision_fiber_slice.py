@@ -9,6 +9,7 @@ from sympy.polys.rings import ring
 
 from gct_collision_direction import relabelings
 from gct_collision_eliminant import restricted_sextic_rank
+from gct_collision_fiber_net import polar_sextic_certificate
 from gct_collision_kernel_reduction import determinant
 from gct_collision_quadrics import (
     determinant_of_net, homogeneous_powers, jacobian_multiples, jacobian_rank, quotient_forms_at,
@@ -39,7 +40,7 @@ def shape_basis(slope, intercept):
                  (av - basis[0], bv - basis[1], basis[2]))
 
 
-def net_at_factor(a_poly, b_poly, factor, slope, intercept):
+def forms_at_factor(a_poly, b_poly, factor, slope, intercept):
     """A single residue field represents every geometric conjugate of this point."""
     field = MonogenicFiniteExtension(factor)
     c = field.generator
@@ -48,7 +49,16 @@ def net_at_factor(a_poly, b_poly, factor, slope, intercept):
     raw = face_edges(a, b, c, d)
     edges = next(image for image in relabelings(raw) if image[0])
     scale = field.one / edges[0]
-    return determinant_of_net(quotient_forms_at([scale*x for x in edges], field), field)
+    return field, quotient_forms_at([scale*x for x in edges], field)
+
+
+def net_at_factor(a_poly, b_poly, factor, slope, intercept, *, check_lines=False):
+    field, forms = forms_at_factor(a_poly, b_poly, factor, slope, intercept)
+    if check_lines:
+        polar_sextic_certificate(forms, field)
+        print(f"d={slope}a+{intercept}, residue degree {factor.degree()}: "
+              "verified polar sextic inverse; no geometric common line.", flush=True)
+    return determinant_of_net(forms, field)
 
 
 def check_section_projectors(eliminant, factors):
@@ -80,13 +90,13 @@ def check_section_projectors(eliminant, factors):
     assert restriction.rem([hx]) == 1
 
 
-def check_section(slope, intercept, degrees):
+def check_section(slope, intercept, degrees, *, check_lines=False):
     a_poly, b_poly, eliminant = shape_basis(slope, intercept)
     factors = eliminant.factor_list()[1]
     assert [(f.degree(), n) for f, n in factors] == [(e, 1) for e in degrees]
     check_section_projectors(eliminant, factors)
     for factor, _ in factors:
-        quintic = net_at_factor(a_poly, b_poly, factor, slope, intercept)
+        quintic = net_at_factor(a_poly, b_poly, factor, slope, intercept, check_lines=check_lines)
         rank = jacobian_rank(quintic, 9)
         print(f"d={slope}a+{intercept}, residue degree {factor.degree()}: rank {rank}", flush=True)
         assert rank == 54
@@ -152,7 +162,7 @@ if __name__ == "__main__":
     infinity = sp.groebner([f.as_expr().subs({a: 1, d: 1}) for f in base], b, c, modulus=5)
     assert list(infinity) == [1]
     check_section(0, 4, [1, 1, 2, 20])
-    check_section(1, 0, [6, 18])
+    check_section(1, 0, [6, 18], check_lines=True)
     check_singular_points()
     check_resultant_specialization()
     check_quotient_minor()
