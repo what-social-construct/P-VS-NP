@@ -187,6 +187,7 @@ python3 python/gct_collision_incidence_descent.py
 python3 python/gct_collision_quadratic_slopes.py
 python3 python/gct_collision_line_divisor_slopes.py
 python3 python/gct_collision_resultant_square.py
+python3 python/gct_collision_polar_extension.py
 python3 python/gct_collision_ordering_fibers.py
 python3 python/gct_common_line_witness.py
 python3 python/gct_collision_normalization.py
@@ -222,8 +223,12 @@ in $\mathbb F_{25}$, representing 281 geometric points.
 For a supplied pure quotient point, `find_ordered_line(values, field)`
 tests the net before adjoining cubic roots and verifies any returned
 frame against the original permanent through tangent degree two.
-Which of the remaining candidates support a line is open.
-[Decomposition theorem](manuscript/03-complexity/common-line-decomposition.tex) · [Witness recovery](python/gct_collision_incidence_descent.py)
+At a quotient point where the hyperplane section has eight simple points,
+testing the polar kernel at each point gives the complete line fiber.
+A successful degree-$d$ point gives a line over that same field. Ordering
+the incident cubic as well requires relative degree $\operatorname{lcm}(d,e)$,
+where $e$ is its splitting degree. Which remaining candidates support a
+line is open. [Decomposition theorem](manuscript/03-complexity/common-line-decomposition.tex) · [Polar line test](python/gct_collision_polar_extension.py) · [Ordered witness recovery](python/gct_collision_incidence_descent.py)
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options

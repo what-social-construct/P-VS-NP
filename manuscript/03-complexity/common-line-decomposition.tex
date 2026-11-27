@@ -253,3 +253,63 @@ normalizes a chosen invertible two-column minor to the identity and
 allows all six other entries to vary. This gives \(\mathcal I_Z\),
 including its infinitesimal thickness. The degree of \(L\) and the
 individual multiplicities \(a\) require that image calculation.
+
+\begin{proposition}[Fields of common lines on a transverse section]
+\label{prop:common-line-extension}
+Let \(K=\kappa(s)\) at a closed point of the eligible quotient chart.
+Suppose \(X=V(H,Q_2,Q_3,Q_4)\subset\mathbb P(E_s)\) consists of
+eight simple geometric points. At a point \(x\) of \(X\) put
+\[
+       N_x=\bigcap_{i=2}^4\ker b_i(x,-).
+\]
+The common-line scheme \(\mathcal F_s\) is isomorphic over \(K\) to
+the union of exactly those residue-field factors of \(X\) for which
+all three quadrics vanish on \(N_x\). A successful point of relative
+degree \(d\) gives a line with least field of definition \(K_d\).
+If the incident cubic has splitting degree \(e\), the least field for
+that line with a chosen ordering is \(K_{\operatorname{lcm}(d,e)}\).
+In particular this relative degree is at most 24.
+\end{proposition}
+
+\begin{proof}
+Transversality makes the three polar rows independent, so \(N_x\) is
+a two-space containing \(x\). A common line meets \(H=0\) in a unique
+point since the section is finite. At that point the polars vanish
+on the line, so its underlying two-space equals \(N_x\).
+
+The two constructions are inverse over test algebras as well. On a
+family of common two-spaces \(P\), the restriction of \(H\) to \(P\) is
+surjective on fibers. Its kernel is a line subbundle giving the point
+of \(X\). The inclusion \(P\subseteq N_x\) between rank-two bundles
+is an isomorphism on fibers and hence an isomorphism. Conversely the
+three quadratic restrictions on the polar kernel cut out a closed
+subscheme of \(X\) carrying that common two-space. Since \(X\) is
+finite étale over the field \(K\), a closed subscheme is a union of
+its field factors. These inverse maps commute with Frobenius, so a
+geometric line and its section point have the same period \(d\le8\).
+The cubic ordering has period \(e\in\{1,2,3\}\), and the pair is
+fixed precisely by the powers divisible by both periods
+\cite{stacksEtalePoint}.
+\end{proof}
+
+For a point on the permanent face with \(v=1\) and
+\(u^2-2u-1=0\), the residue field is \(\mathbb F_{25}\).
+The section factors have relative degrees \(1,1,3,3\), and the
+cubic ordering has relative degree two. The polar-kernel test fails at
+all four factors, agreeing with the independent polar sextic unit check.
+A separate control over \(\mathbb F_5\) takes \(H=c-a\) and quadrics
+\(b^2-2a^2,\ d^2-2c^2,\ t(t-a-c)\). At \(a=c=1\) the two signs
+of each of \(b,d\) and the choices \(t=0,2\) give eight simple
+points. Each yields a line over \(\mathbb F_{25}\). With the labeling
+cubic \(T^3+T+1\), the 48 labeled lines form eight orbits of degree six.
+For fibers where the section is nontransverse, the Grassmannian
+description in Theorem~\ref{thm:common-line-decomposition} still applies.
+
+Constant-field extension also preserves the residual multiplicities.
+In the local ring of the quotient curve write \((j)=(t^n)\) and
+\(\mathcal I_Z=(t^a)\). After a finite extension of the constant field,
+the curve projection is étale and \(t\) remains a uniformizer at each
+point above the original one. Flatness preserves the intersection
+of the affine-chart kernels defining the image. Thus the orders of
+the candidate, the image and their residual at every such point are
+\(n,a,n-a\), even when the image is nonreduced.

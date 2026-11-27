@@ -695,6 +695,23 @@ tests the original resultant itself at all eligible closed points above
 $v^{25}-v=0$, including four points on excluded pencils. Each unit
 certificate uses the two vertex-invariant covectors in the descended frame.
 
+For field extensions of a fixed-face fiber, the Hodge fixed-tensor theorem
+identifies the normalized coordinates that descend through a finite Galois
+extension. The Galois theorem `map_annihilator_eq_of_flat` at the
+previously reviewed revision `4d104436` identifies the extended
+annihilator of a finitely generated ideal with the annihilator of its
+extension along a flat map. Applied in the
+quotient by the candidate equation, this transports the residual ideal.
+Finite étale descent identifies Frobenius orbits with residue fields on
+the transverse section. Reassembly from the residue fields alone applies
+to reduced Artinian algebras. At a thickened point the local Artin ring
+retains the multiplicity. [Hodge fixed tensors](https://github.com/what-social-construct/HodgeConjecture/blob/7ace84b545cb027f4dfceedb214bcdc9ac0835b4/HodgeConjecture/LinearAlgebra/GaloisDescent.lean#L111) · [Stacks, schemes étale over a field](https://stacks.math.columbia.edu/tag/03QR)
+
+The identification of the transverse common-line scheme with a union
+of section factors uses the three polar rows of the permanent net.
+The degree-two negative fiber and the eight-line control are direct
+calculations in this repository. [Permanent fiber](python/gct_collision_line_divisor_slopes.py) · [Extension control](python/gct_collision_polar_extension.py)
+
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
 It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)
