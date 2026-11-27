@@ -16,9 +16,25 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
 | [CR](#cr) | Cook and Reckhow, JSL 44 (1979) | Proof systems, p-simulation, polynomial boundedness | Resource-bounded comparison |
 | [VV](#vv) | Valiant and Vazirani, TCS 47 (1986) | Randomized reduction to distinguishing zero and one satisfying assignments | Empty off-diagonal residual and witness feasibility |
+| [APT](#apt) | Aspvall, Plass and Tarjan, IPL 8 (1979), Theorem 1 | Implication graph and complementary literals in strong components | Correctness of the local 2-CNF prefix compiler |
 | [ML](#ml) | Mathlib at `56a0058` | Linear-map kernels, finite-dimensional rank–nullity | Lean algebra and the cardinality derivation |
 | [ST](#st) | Stacks Project, Tags 00DT and 04PN | Chinese remainder and idempotents of spectra | Background for the finite split scheme realization |
 | [PEQ](#peq) | PEqualNP public `MetaComplexity.lean` | Bounded circuit semantics | External comparison target |
+
+## APT
+
+Aspvall, Plass and Tarjan, “A Linear-Time Algorithm for Testing the Truth
+of Certain Quantified Boolean Formulas,” 1979, pp. 121–123. Theorem 1
+characterizes satisfiability by complementary literal pairs in the same
+strong component. [Original paper](https://mathweb.ucsd.edu/~sbuss/CourseWeb/Math268_2007WS/2SAT.pdf)
+
+The [local prefix construction](manuscript/03-complexity/prefix-collision.tex)
+combines component equalities with pins from the prefix's implication
+closure. The [compiler](python/two_sat_prefix.py) uses the existing binary
+elimination routine. The [Lean module](lean/PvsNP/PrefixCollision.lean)
+proves the tagged fiber equivalence, the linear-verifier prefix
+specialization and the finite candidate-weight construction. The 2-CNF
+graph argument is written and its implementation has executable tests.
 
 ## HE-P1-Code
 
@@ -449,6 +465,19 @@ coordinate of the kernel line and uses leaf symmetry for coverage.
 The executable verifies its kernel and quadratic pairing identities.
 A bounded msolve run on this larger system reached degree seven without
 deciding the ideal.
+
+The [collision chart reduction](python/gct_collision_kernel_reduction.py)
+uses those same 17 coordinates and the three polars of the permanent
+at the kernel direction. The local [derivation](manuscript/03-complexity/collision-kernel-reduction.tex)
+uses exact row operations capped at working degree seven for the rank test
+and a five-variable reduced-basis comparison to obtain three chart opens for all possible completions.
+The [kernel direction checker](python/gct_collision_direction.py)
+uses the original permanent, the star normalization, and simultaneous
+vertex permutations to define the degree-507 minor and its orbit sum.
+It verifies the nonzero specialization, a degree-four identity for one,
+and the enumeration of eligible prime-field lines. The argument over
+the algebraic closure uses the evaluated monomial vector. The conclusion
+over the rationals uses the properness results cited above.
 
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.

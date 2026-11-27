@@ -53,8 +53,9 @@ class WitnessFamily:
         return Witness(tuple(key), tuple(message))
 
 
-def _affine_decomposition(rows, width):
-    """Return a particular solution and kernel basis, or None."""
+def binary_affine_decomposition(rows, width):
+    """Solve binary augmented rows of length width + 1 without changing them."""
+    rows = [list(row) for row in rows]
     pivot_columns = []
     for column in range(width):
         rank = len(pivot_columns)
@@ -133,7 +134,7 @@ def select_for_profile(profile, cochain, constraints=(), *, residual_coordinates
         row[-1] = int(value == -profile.scale)
         rows.append(row)
 
-    solution = _affine_decomposition(rows, width)
+    solution = binary_affine_decomposition(rows, width)
     if solution is None:
         return None
     message, kernel_basis = solution

@@ -60,6 +60,17 @@ python3 python/agreement_scheme.py
 python3 python/polynomial_agreement_selector.py
 ~~~
 
+For a 2-CNF formula the [prefix compiler](python/two_sat_prefix.py)
+prints augmented binary affine rows and the first satisfying assignment
+extending the prefix, or JSON null when the prefix cannot extend.
+The arguments are the number of ordered variables, clauses written as
+signed variable numbers, and an optional bit prefix.
+
+~~~sh
+python3 python/two_sat_prefix.py 2 '[[1,2]]' 0
+python3 python/test_two_sat_prefix.py
+~~~
+
 The permanent checks use SymPy. The modular certificates also use NumPy
 for exact integer arithmetic.
 
@@ -116,6 +127,23 @@ python3 python/gct_permanent_hodge.py --emit-collision-kernel > /tmp/gct-hodge-k
 python3 python/gct_permanent_hodge.py --emit-chart > /tmp/gct-hodge-two-plane.ms
 msolve -f /tmp/gct-hodge-two-plane.ms -o /tmp/gct-hodge-two-plane.out -t 1 -g 2 -l 2
 ~~~
+
+Three [localized charts](python/gct_collision_kernel_reduction.py) cover
+the possible completions. Each has twelve variables, including an inverse.
+The [kernel determinant](python/gct_collision_direction.py) excludes all
+24 eligible prime-field lines even for completions over the algebraic closure.
+
+~~~sh
+python3 python/gct_collision_direction.py
+python3 python/gct_collision_kernel_reduction.py
+python3 python/gct_collision_kernel_reduction.py --verify-cover msolve
+python3 python/gct_collision_kernel_reduction.py --list-charts
+python3 python/gct_collision_kernel_reduction.py --emit-chart 12,22,23 > /tmp/gct-collision-chart.py
+~~~
+
+The generated module exposes the reconstructed frame and its equations in
+factored form. Put the repository's Python directory on the import path and
+evaluate in a commutative algebra of characteristic five.
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options

@@ -28,6 +28,13 @@
   proves soundness and completeness given a stratum classifier, model
   representatives, and witness transport satisfying Section~\ref{sec:selector-target}. \\
   \addlinespace
+  Prefix extension &
+  \path{PvsNP/PrefixCollision.lean} proves the tagged equivalences and
+  finite affine encoding. Proposition~\ref{prop:two-cnf-prefix} proves
+  correctness of the 2-CNF rows using the cited graph criterion.
+  \path{python/two_sat_prefix.py} constructs them and selects an original
+  witness by prefix search. \\
+  \addlinespace
   Affine disclosure &
   \path{PvsNP/AffineDisclosure.lean} checks the pointwise equivalences,
   commuting identity, and diagonal. The coordinate rings, first-colon
@@ -123,6 +130,14 @@
   Section~\ref{sec:gct-path} supplies chart coverage and specialization.
   \path{PvsNP/BranchCertificate.lean} combines the two proposed ideal
   identities as in Proposition~\ref{prop:branch-certificates}. \\
+  \addlinespace
+  Collision kernel directions &
+  \path{python/gct_collision_kernel_reduction.py} checks the polar rank
+  and reduces to three completion charts.
+  \path{python/gct_collision_direction.py} checks the degree-507 invariant,
+  the 24 rational directions and the specialized identity for one.
+  Proposition~\ref{prop:rational-kernel-exclusion} gives the geometric
+  and specialization arguments. \\
   \addlinespace
   Local readout algebra &
   \path{PvsNP/PermanentReadout.lean} parametrizes kernel differences

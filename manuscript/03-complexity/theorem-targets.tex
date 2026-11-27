@@ -63,12 +63,14 @@ Substitution yields a certificate for one, including when the quotient
 has nilpotents. Conversely, if \(1\in I_\star\), take \(a=0\) and
 \(N=1\). Both right-hand representations then exist.
 \end{proof}
-Both polynomial identities remain to be found. The closed branch is
-the first smaller calculation to try. Its kernel line gives a
-17-variable chart covering it up to leaf permutations. A unit-ideal
+Both polynomial identities remain to be found. On the closed branch
+the kernel line gives a 17-variable chart covering it up to leaf
+permutations. A unit-ideal
 calculation there would prove that branch empty. A certificate in the
 original 18 variables could be replayed directly in
 \eqref{eq:target-closed-certificate}.
+
+\input{03-complexity/collision-kernel-reduction}
 
 The orbit count gives a second sufficient route. A nonempty geometric
 fiber at five would contain at least eight free \(S_3\)-orbits, so
@@ -120,3 +122,5 @@ original witness or has certified emptiness. For the decoded affine
 HCP family the construction just appends coordinate equations. For a
 succinct verifier beyond this control, the proof obligation is to give
 the prefix construction and prove the equivalence for every prefix.
+
+\input{03-complexity/prefix-collision}

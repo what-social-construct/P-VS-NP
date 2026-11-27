@@ -1,0 +1,76 @@
+\paragraph{Prefix extension as an off-diagonal collision.}
+For \(f:W\to Y\) and \(t\in Y\), take two tagged copies of the candidate
+space and define
+\[
+ G(0,w)=(w,t),\qquad G(1,w)=(w,f(w)).
+\]
+The first coordinate forces colliding candidates to be identical. Two
+distinct tagged points with that candidate collide exactly when
+\(f(w)=t\). Thus the ordered off-diagonal of \(G\) is two copies of
+\(f^{-1}(t)\), one per choice of the first tag. In particular a unique
+witness already contributes two ordered collisions. For any binary
+verifier take \(f(w)=(V(x,w),w_{1:k})\) and \(t=(1,u)\). The
+off-diagonal is inhabited exactly when \(u\) extends. Lean proves the
+equivalence. For an affine verifier \(Qw=c\), use instead the linear
+map \(w\mapsto(Qw,w_{1:k})\) and target \((c,u)\). Its fiber consists
+of the original extending witnesses.
+
+There is also an exact binary affine system for \emph{any} verifier
+when exponential size is allowed. After fixing \(u\), introduce one
+variable \(\lambda_s\) per remaining suffix and impose
+\[
+ \sum_{s\in\{0,1\}^{n-k}}\lambda_s=1,\qquad
+ (1-V(x,us))\lambda_s=0\quad\text{for each }s .
+\]
+An extending suffix gives its unit vector. Conversely, at least one
+coordinate of any solution is nonzero, and every such coordinate
+indexes an extending suffix. This is an affine fiber, so the same
+tagged graph construction realizes its feasibility as a collision.
+It uses \(2^{n-k}\) variables. The following family admits a
+polynomial-size construction.
+
+\begin{proposition}[An affine consistency test for every 2-CNF prefix]
+\label{prop:two-cnf-prefix}
+Let \(F\) be a conjunction of clauses of size at most two on \(n\)
+explicitly ordered variables. From \(F\) and any \(k\)-bit prefix \(u\),
+\(0\le k\le n\), one can construct in polynomial time a binary affine
+system on \(n\) variables that is consistent exactly when \(u\)
+extends to a satisfying assignment of \(F\).
+\end{proposition}
+\begin{proof}
+Write \(\tau(x_i)=v_i\) and \(\tau(\neg x_i)=1+v_i\) over \(\Ftwo\).
+Use the implication graph with edges \(\neg a\to b,\ \neg b\to a\)
+for each \(a\lor b\), repeating a literal for a unit clause. Include
+\(0=1\) if there is an empty clause. In each strongly connected
+component choose a representative \(r\) and impose
+\(\tau(\ell)=\tau(r)\) for its other literals. These rows depend only
+on \(F\). From the literals set true by the prefix, take their
+forward reachability closure \(T\), including the starting literals.
+Append \(\tau(\ell)=1\) for each \(\ell\in T\).
+
+Every extending assignment satisfies the rows. Conversely, consistency
+rules out a component containing a complementary pair, since its two
+truth values would be equal. It also gives \(T\cap\neg T=\varnothing\).
+Assign \(T\) true and its complements false. If a clause contains a
+literal assigned false, the edge from its true complement forces the
+other literal into \(T\). Only clauses wholly on unassigned variables
+still require an assignment. Their implication graph is a subgraph of
+the original graph, so no component contains a complementary pair.
+The strong-component criterion for 2-SAT gives a satisfying completion
+\cite[Theorem~1]{aspvallplassTarjan}.
+
+Reachability from the \(2n\) literals in the base graph can be
+precomputed once by graph search. Each prefix uses at most \(2n\)
+component rows, \(2n\) pins and one empty-clause row. The resulting
+dense binary system has polynomial size and can be tested by elimination.
+\end{proof}
+For \(F=x_1\lor x_2\), prefix \(0\) forces \(\neg x_1\) and \(x_2\).
+The affine system is \(v_1=0,\ v_2=1\). Prefix \(00\) gives incompatible
+pins, and prefix search returns \(01\) from the empty prefix. The
+empty-prefix system accepts the auxiliary point \(00\) too. Its
+off-diagonal detects the existence of an extension, while the
+original verifier's off-diagonal counts the actual extensions.
+The three satisfying full prefixes of \(x_1\lor x_2\) cannot be the
+projection of a single binary affine solution set, since every
+nonempty affine image has power-of-two cardinality. Our construction
+uses the prefix to determine which rows to append.

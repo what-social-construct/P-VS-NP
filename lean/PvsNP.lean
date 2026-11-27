@@ -18,6 +18,7 @@ public import PvsNP.OrientationDescent
 public import PvsNP.OrientationSquare
 public import PvsNP.PermanentLevelTarget
 public import PvsNP.PermanentReadout
+public import PvsNP.PrefixCollision
 public import PvsNP.ReadoutGluing
 public import PvsNP.ReadoutPivotIdeal
 public import PvsNP.ReadoutResidual
