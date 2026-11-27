@@ -399,6 +399,78 @@ orbit size. The executable checks it directly against all 98,336
 weight-zero products before reflection, ruling out a degree-seven
 identity in this chart.
 
+\paragraph{Frobenius orbits and the invariant quotient.}
+The \(S_4\) action on the geometric level three-planes at five is
+free. For a transposition, a negative eigenvector has support
+of size at most two by the quartic formula of
+Section~\ref{sec:gct-modular}. The fixed sector has equal edge
+entries at a star centered at either unmoved vertex, contrary
+to star injectivity. For a double transposition, the negative
+sector has two free off-diagonal coordinates, each controlling
+two opposite edge entries. A negative two-plane would contain a
+nonzero vector with one of those coordinates zero. The positive
+sector contains no level two-plane by four exact Witt chart
+checks at five. Hence an invariant three-plane under either
+involution is impossible. The three-cycle exclusion already
+holds in characteristic five, and the square of a four-cycle
+is a double transposition.
+
+Let \(F\) denote entrywise fifth power. To test \(F(L)=\pi L\)
+for a permutation \(\pi\) of order \(d\), iterate to obtain
+\(F^d(L)=L\). Uniqueness of reduced row echelon form gives a model
+over \(\mathbb F_{5^d}\). On this field, use the semilinear map
+\(\pi^{-1}F\). In the fixed symmetric matrix space, each orbit
+of slots of length \(m\) is determined by one entry in
+\(\mathbb F_{5^m}\), and the entry-sum condition removes one
+dimension. A basis of this nine-dimensional fixed space spans
+the ambient tangent space after extension. Indeed, normalize a
+shortest dependence to have one coefficient equal to one.
+Subtract its transform under \(\pi^{-1}F\) to see that every
+coefficient is fixed by Frobenius, contradicting independence
+over \(\mathbb F_5\). In this basis the stable plane has
+\(\mathbb F_5\)-coordinates, again by uniqueness of echelon form.
+
+For one representative of each of the five conjugacy classes,
+the executable constructs the fixed tangent basis, verifies its
+split quadratic form, and excludes all 32 Witt charts by the
+column and pair tests of Section~\ref{sec:gct-modular}.
+Hence Frobenius stabilizes no \(S_4\) orbit. A nonempty special
+fiber must have at least two orbits of size 24, so it has at least
+48 distinct geometric points.
+
+The reduced generic fiber has the same lower bound if nonempty.
+Take the image of the finite star algebra over \(\mathbb Z_{(5)}\)
+in its reduced generic fiber. It is a finite torsion-free module
+over a discrete valuation ring, hence finite free. Its rank is
+the number of complex points. Its special fiber has length
+equal to that rank and has nonempty \(S_4\)-stable support, so
+the rank is at least 48.
+
+Let \(A\) be the coordinate algebra of the star chart over
+\(\mathbb F_5\), and let \(S_3\) fix the star center. Each
+\(S_3\) orbit of points has size six. Averaging over \(S_3\)
+shows that the invariant algebra surjects onto the invariants of
+the reduced geometric fiber after extending scalars.
+Thus nonemptiness implies \(\dim_{\mathbb F_5} A^{S_3}\ge8\).
+An upper bound of seven on this dimension would prove geometric
+emptiness at five and hence nonexistence over \(\mathbb C\).
+
+In the original star coordinates the leaves permute the rows and
+columns of two three-by-three arrays. The nonmodular Noether bound
+for \(S_3\) is four~\cite{cziszterdomokos}. Orbit sums of
+monomials of degrees one through four therefore generate the
+invariant polynomial ring. In each degree the executable uses
+exact row reduction to choose orbit sums modulo products of
+lower-degree invariants and leading parts of averaged equation
+multiples. These leading parts agree in the quotient with
+invariants of lower degree. The resulting \(4,22,71,30\) classes
+generate \(A^{S_3}\), since averaging preserves surjectivity
+onto the quotient. To establish the required upper bound, it
+suffices to exhibit a span of at most seven invariant classes
+containing one and closed under multiplication by these 127
+generators.
+Finding that span remains open.
+
 \paragraph{Path reversal and bounded-degree certificates.}
 Replace the three path pivots by \(B_{01}+B_{23}, B_{01}-B_{23}, B_{12}\).
 This is an invertible change in odd characteristic.

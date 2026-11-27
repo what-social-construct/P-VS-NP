@@ -6,6 +6,7 @@ from itertools import combinations, combinations_with_replacement, permutations,
 
 import numpy as np
 import sympy as sp
+from sympy.polys.matrices import DomainMatrix
 from sympy.polys.rings import ring
 
 from gct_permanent_extensions import (
@@ -325,6 +326,76 @@ def star_fourier_chart():
     return names, list(equations.values()), weights
 
 
+def star_invariant_generators():
+    """Construct orbit sums generating the star's invariant algebra modulo its equations."""
+    star = EDGE_GRAPH_PIVOTS["star"]
+    coordinates = tuple((column, i, j) for column in range(1, 4)
+                        for i, j in COORDINATES if (i, j) not in star)
+    names, equations = edge_graph_chart(star)
+    coefficients = equations[0].ring
+    index_by_coordinate = {coordinate: index for index, coordinate in enumerate(coordinates)}
+    actions = [
+        tuple(index_by_coordinate[(permutation[column], *sorted((permutation[i], permutation[j])))]
+              for column, i, j in coordinates)
+        for permutation in PERMUTATIONS if permutation[0] == 0
+    ]
+
+    homogeneous = {}
+    generators = []
+    for degree in range(1, 5):
+        orbit_sums = []
+        representatives = {}
+        orbit_by_monomial = {}
+        orbit_sizes = []
+        visited = set()
+        for indices in combinations_with_replacement(range(len(names)), degree):
+            if indices in visited:
+                continue
+            orbit = {tuple(sorted(action[index] for index in indices)) for action in actions}
+            visited.update(orbit)
+            terms = [tuple(member.count(i) for i in range(len(names))) for member in sorted(orbit)]
+            representatives[terms[0]] = len(orbit_sums)
+            orbit_by_monomial.update(dict.fromkeys(terms, len(orbit_sums)))
+            orbit_sizes.append(len(terms))
+            orbit_sums.append(coefficients.from_dict(dict.fromkeys(terms, coefficients.domain.one)))
+
+        relation_rows = []
+        for lower_degree in range(1, degree//2+1):
+            left = homogeneous[lower_degree]
+            right = homogeneous[degree-lower_degree]
+            pairs = combinations_with_replacement(left, 2) if left is right else product(left, right)
+            for first, second in pairs:
+                relation_rows.append({representatives[term]: value for term, value in (first*second).items()
+                                      if term in representatives})
+
+        # Average each bounded equation multiple and keep its highest-degree part.
+        # The omitted terms are lower-degree invariants in the quotient relation.
+        for equation in equations:
+            equation_degree = max(map(sum, equation))
+            if equation_degree > degree:
+                continue
+            leading_terms = [(powers, value) for powers, value in equation.items() if sum(powers) == equation_degree]
+            for shift in combinations_with_replacement(range(len(names)), degree-equation_degree):
+                multiplier = tuple(shift.count(i) for i in range(len(names)))
+                orbit_totals = {}
+                for powers, value in leading_terms:
+                    orbit = orbit_by_monomial[tuple(a+b for a, b in zip(powers, multiplier))]
+                    orbit_totals[orbit] = orbit_totals.get(orbit, 0) + value
+                relation_rows.append({orbit: value/coefficients.domain(orbit_sizes[orbit])
+                                      for orbit, value in orbit_totals.items() if value})
+
+        relation_count = len(relation_rows)
+        rows = {index: row for index, row in enumerate(relation_rows) if row}
+        rows.update({relation_count+index: {index: coefficients.domain.one}
+                     for index in range(len(orbit_sums))})
+        matrix = DomainMatrix(rows, (relation_count+len(orbit_sums), len(orbit_sums)), coefficients.domain)
+        # Select independent orbit sums after products and the leading relation rows.
+        _, pivots = matrix.transpose().rref()
+        generators.extend(orbit_sums[index-relation_count] for index in pivots if index >= relation_count)
+        homogeneous[degree] = orbit_sums
+    return names, generators
+
+
 def verify_path_degree_dual(source):
     """Check a functional taking 1 to 1 and killing all bounded invariant products."""
     header = next(source, "").split()
@@ -633,6 +704,8 @@ def main():
     modes.add_argument("--star", action="store_true", help="emit the unrestricted star chart over F5")
     modes.add_argument("--star-fourier", action="store_true",
                        help="emit the star chart in coordinates adapted to leaf rotation")
+    modes.add_argument("--star-invariants", action="store_true",
+                       help="list orbit sums generating the star invariant quotient over F5")
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
     modes.add_argument("--path-reversal", action="store_true",
                        help="emit the path chart in coordinates adapted to path reversal")
@@ -662,6 +735,11 @@ def main():
     elif args.star_fourier:
         names, equations, _ = star_fourier_chart()
         system = names, equations
+    elif args.star_invariants:
+        _, generators = star_invariant_generators()
+        for generator in generators:
+            print(generator.as_expr())
+        return
     elif args.path:
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
     elif args.path_reversal:

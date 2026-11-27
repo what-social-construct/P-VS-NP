@@ -37,53 +37,41 @@ def modular_witt_basis(prime):
     return np.array([[reduce_matrix(direction) for direction in pair] for pair in pairs]), reduce_matrix(remainder)
 
 
-def verify_no_prime_field_three_plane(prime):
-    """Exclude rational planes by checking necessary conditions on each chart."""
-    pairs, remainder = modular_witt_basis(prime)
-    masks = [
-        np.array([[(row, permutation[row]) for row in rows]
-                  for rows in combinations(range(4), degree)
-                  for permutation in permutations(range(4))])
-        for degree in (3, 4)
-    ]
+def verify_witt_three_plane_charts(prime, remainder_norm, higher_coefficients_vanish):
+    """Exclude base-field planes in four hyperbolic pairs and a perpendicular line.
 
-    def higher_coefficients_vanish(directions):
-        cubic, quartic = (
-            directions[..., mask[:, :, 0], mask[:, :, 1]].prod(axis=-1).sum(axis=-1) % prime
-            for mask in masks
-        )
-        return (cubic == 0) & (quartic == 0)
-
+    The callback evaluates the cubic and quartic tests on isotropic Witt
+    coordinate rows. The Gram blocks are [[0,1],[1,0]] and [remainder_norm].
+    """
     choices = np.array(list(product(range(prime), repeat=5)), dtype=np.int64)
     u, v, w = choices[:, :3].T
-    diagonal_dual = -u*v + 6*w*w
+    diagonal_dual = (-u*v - pow(2, -1, prime)*remainder_norm*w*w) % prime
+    gram = np.array([[0, 1, 0], [1, 0, 0], [0, 0, remainder_norm]])
     for selected in combinations(range(4), 3):
         (omitted,) = set(range(4)) - set(selected)
-        residual_basis = np.array([*pairs[omitted], remainder])
-        residual = np.einsum("ni,ijk->njk", choices[:, :3], residual_basis)
+        residual = (2*omitted, 2*omitted+1, 8)
         for sides in product(range(2), repeat=3):
-            pivot = [pairs[index, side] for index, side in zip(selected, sides)]
-            dual = [pairs[index, 1-side] for index, side in zip(selected, sides)]
+            pivot = tuple(2*index+side for index, side in zip(selected, sides))
+            dual = tuple(2*index+1-side for index, side in zip(selected, sides))
             columns = []
             for j in range(3):
                 other = [i for i in range(3) if i != j]
-                dual_coordinates = np.zeros((len(choices), 3), dtype=np.int64)
-                dual_coordinates[:, j] = diagonal_dual
-                dual_coordinates[:, other] = choices[:, 3:]
-                directions = (pivot[j] + residual + np.einsum("ni,ijk->njk", dual_coordinates, dual)) % prime
-                valid = higher_coefficients_vanish(directions)
-                columns.append((directions[valid], choices[valid, :3], dual_coordinates[valid]))
+                directions = np.zeros((len(choices), 9), dtype=np.int64)
+                directions[:, pivot[j]] = 1
+                directions[:, residual] = choices[:, :3]
+                directions[:, dual[j]] = diagonal_dual
+                directions[:, [dual[i] for i in other]] = choices[:, 3:]
+                columns.append(directions[higher_coefficients_vanish(directions)])
 
             edges = {}
             for i, j in combinations(range(3), 2):
-                left, left_residual, left_dual = columns[i]
-                right, right_residual, right_dual = columns[j]
+                left, right = columns[i], columns[j]
                 pairs_in_chart = set()
-                gram = np.array([[0, 1, 0], [1, 0, 0], [0, 0, -12]])
                 for start in range(0, len(left), 100):
                     block = slice(start, start + 100)
-                    mixed_quadratic = (left_residual[block] @ gram @ right_residual.T
-                                       + left_dual[block, j, None] + right_dual[None, :, i])
+                    left_block = left[block]
+                    mixed_quadratic = (left_block[:, residual] @ gram @ right[:, residual].T
+                                       + left_block[:, dual[j], None] + right[None, :, dual[i]])
                     row, col = np.where(mixed_quadratic % prime == 0)
                     row += start
                     for scalar in (1, 2, 3):
@@ -94,6 +82,28 @@ def verify_no_prime_field_three_plane(prime):
 
             for i, j in edges[0, 1]:
                 assert not any((j, k) in edges[1, 2] for l, k in edges[0, 2] if l == i)
+
+
+def verify_no_prime_field_three_plane(prime):
+    """Exclude rational planes by checking necessary conditions on each chart."""
+    pairs, remainder = modular_witt_basis(prime)
+    basis = np.array([*pairs.reshape(8, 4, 4), remainder])
+    masks = [
+        np.array([[(row, permutation[row]) for row in rows]
+                  for rows in combinations(range(4), degree)
+                  for permutation in permutations(range(4))])
+        for degree in (3, 4)
+    ]
+
+    def higher_coefficients_vanish(coordinates):
+        directions = np.einsum("ni,ijk->njk", coordinates, basis) % prime
+        cubic, quartic = (
+            directions[..., mask[:, :, 0], mask[:, :, 1]].prod(axis=-1).sum(axis=-1) % prime
+            for mask in masks
+        )
+        return (cubic == 0) & (quartic == 0)
+
+    verify_witt_three_plane_charts(prime, -12, higher_coefficients_vanish)
 
 
 def unit_ideal_at_degree(generators, variable_count, prime, degree_cap):

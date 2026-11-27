@@ -1,4 +1,4 @@
-"""Unit-ideal certificates for both involution types over F11."""
+"""Unit-ideal certificates for the involution sectors of level planes."""
 
 from itertools import combinations, permutations, product
 
@@ -60,6 +60,20 @@ def _verify_involution_charts(prime, matrix, pairs, remainder=(), extra=()):
         assert list(sp.groebner(ideal, *unknowns, modulus=prime, order="grevlex")) == [1]
 
 
+def double_transposition_positive(coordinates):
+    a,b,c,d,e = coordinates
+    f = -a-b-2*c-2*d-e
+    return sp.Matrix([[a,b,c,d], [b,a,d,c], [c,d,e,f], [d,c,f,e]])
+
+
+def verify_double_transposition_positive_sector_at_five():
+    """Exclude level two-planes in the fixed sector of (01)(23) at five."""
+    _verify_involution_charts(5, double_transposition_positive, (
+        ((0,0,0,1,4), (0,0,1,3,2)),
+        ((1,2,3,0,0), (2,4,1,2,0)),
+    ), ((1,0,1,1,0),))
+
+
 def verify_involution_exclusion(base):
     """Check geometric emptiness of the five involution slices modulo 11."""
     prime = 11
@@ -68,11 +82,6 @@ def verify_involution_exclusion(base):
         a,b,c,d,e,f = coordinates
         return sp.Matrix([[a,b,c,d], [b,a,c,d], [c,c,e,f],
                           [d,d,f,-2*a-2*b-4*c-4*d-e-2*f]])
-
-    def double_plus(coordinates):
-        a,b,c,d,e = coordinates
-        f = -a-b-2*c-2*d-e
-        return sp.Matrix([[a,b,c,d], [b,a,d,c], [c,d,e,f], [d,c,f,e]])
 
     def double_minus(coordinates):
         a,b,c,d = coordinates
@@ -116,7 +125,7 @@ def verify_involution_exclusion(base):
         ((0,0,0,0,1), (5,0,0,0,-4)),
         ((2,-4,0,1,1), (-5,4,-3,-3,-3)),
     ), ((-3,1,3,-5,1),), (anti_direction((-2,-2,0,1)),))
-    _verify_involution_charts(prime, double_plus, (
+    _verify_involution_charts(prime, double_transposition_positive, (
         ((0,0,0,1,-1), (-2,0,0,-3,3)),
         ((2,1,1,0,-2), (1,0,4,2,3)),
     ), ((-1,-5,-2,0,1),))

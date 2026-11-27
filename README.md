@@ -88,6 +88,17 @@ python3 gct_permanent_plucker.py --star-fourier > /tmp/gct-star-fourier.ms
 gzip -dc gct_permanent_star_degree7.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
 ~~~
 
+The exact Frobenius searches show that a nonempty fiber at five must
+have at least 48 geometric points. An upper bound of seven on the
+dimension of the star chart's invariant quotient would settle the
+nonexistence question. The generator command lists the 127 orbit sums
+needed for a multiplication-closure check.
+
+~~~sh
+python3 gct_permanent_frobenius.py
+python3 gct_permanent_plucker.py --star-invariants
+~~~
+
 The exact degree-seven certificate search found a functional that
 takes the constant to one and annihilates every even monomial multiple
 of the path generators within the degree cap. Replay all 147,622

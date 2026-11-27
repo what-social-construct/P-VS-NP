@@ -50,7 +50,9 @@ Paper 3, *Capacity-Radius Proximity for Smooth-Domain Reed–Solomon
 Codes*, local §8 working draft reviewed on 2026-11-26. The checked-out
 base was [`62f20ffd0dc8bf643fe72511dc80c04b8825883f`](https://github.com/what-social-construct/homotopical-encrypt/tree/62f20ffd0dc8bf643fe72511dc80c04b8825883f).
 The draft section and four agreement modules were local additions at
-that base. Their content hashes identify the source snapshot.
+that base. They are available with the same contents at
+the [public source revision `1ed8d55`](https://github.com/what-social-construct/homotopical-encrypt/tree/1ed8d55b67f266414cb7b1c55858f8b5566d4013).
+Their content hashes identify the source snapshot.
 
 | Source path | SHA-256 |
 | --- | --- |
@@ -288,6 +290,22 @@ the matrix of 49,527 row orbits and 80,588 column orbits. Its
 [functional](gct_permanent_star_degree7.dual.gz) is checked before
 reflection against all 98,336 weight-zero products. The degree-eight
 run ended after 155,700 of 209,809 rows without deciding the bound.
+
+The [Frobenius checker](gct_permanent_frobenius.py) constructs the
+fixed tangent spaces for all five conjugacy classes modulo five.
+It uses the existing [Witt chart enumeration](gct_permanent_modular.py)
+with exact extension-field arithmetic for the twisted classes.
+The double-transposition positive sector uses four
+[involution charts](gct_permanent_involutions.py) at five. These
+exclusions and the earlier support and three-cycle arguments give
+the 48-point lower bounds in the manuscript. The complex statement
+uses the finite free closure of the reduced generic fiber.
+The invariant-algebra criterion uses
+[Cziszter and Domokos, Theorem 10.3](https://arxiv.org/abs/1205.3011)
+for the degree-four generating bound. The [orbit-sum generator](gct_permanent_plucker.py)
+uses decomposables and leading parts of averaged equation multiples
+to choose 127 generators for the quotient by exact row reduction.
+The dimension-seven upper bound is a proof target.
 
 The Homotopical Encryption local repository was reviewed at
 `1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3
