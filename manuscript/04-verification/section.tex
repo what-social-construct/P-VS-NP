@@ -24,7 +24,9 @@
   \path{HCP/CoupledSignResidual.lean} checks the cost and gap.
   Python computes the Paper~1 residual and selects from the explicit
   affine system. A proof of the implementation's full-fiber
-  specification remains a target. \\
+  specification remains a target. \path{PvsNP/StratumSelector.lean}
+  proves soundness and completeness given a stratum classifier, model
+  representatives, and witness transport satisfying Section~\ref{sec:selector-target}. \\
   \addlinespace
   Affine disclosure &
   \path{PvsNP/AffineDisclosure.lean} checks the pointwise equivalences,
@@ -50,7 +52,9 @@
   Permanent level spaces &
   Section~\ref{sec:gct} gives the coefficient pullback and the tangent
   Hessian bound. \path{python/gct_permanent_fiber.py} checks the symmetric
-  rank-two pencil, its support bound, and the Hessian rank at \(J_4\). \\
+  rank-two pencil, its support bound, and the Hessian rank at \(J_4\).
+  \path{PvsNP/PermanentLevelTarget.lean} proves the complex
+  three-plane criterion and counts its 31 higher coefficients. \\
   \addlinespace
   Three-plane constraints &
   Section~\ref{sec:gct-three-plane} gives the written maximality, rank,
@@ -116,7 +120,9 @@
   and the 17-variable collision system.
   Its edge-family systems test the transverse pencil and the
   possible leaf symmetries of the edge image.
-  Section~\ref{sec:gct-path} supplies chart coverage and specialization. \\
+  Section~\ref{sec:gct-path} supplies chart coverage and specialization.
+  \path{PvsNP/BranchCertificate.lean} combines the two proposed ideal
+  identities as in Proposition~\ref{prop:branch-certificates}. \\
   \addlinespace
   Local readout algebra &
   \path{PvsNP/PermanentReadout.lean} parametrizes kernel differences

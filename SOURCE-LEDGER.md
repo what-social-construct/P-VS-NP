@@ -1,6 +1,6 @@
 # Source ledger
 
-Reviewed 2026-11-26. Source IDs refer to a specific text, code revision, or
+Local theorem targets reviewed 2026-11-27. Source IDs refer to a specific text, code revision, or
 external definition. The [parity register](SEMANTIC-PARITY.md) records the
 local statements and their proof or execution status. Full entries for cited
 manuscript sources are in the [bibliography](manuscript/references.bib).
@@ -465,6 +465,20 @@ for the degree-four generating bound. The [orbit-sum generator](python/gct_perma
 uses decomposables and leading parts of averaged equation multiples
 to choose 127 generators for the quotient by exact row reduction.
 The dimension-seven upper bound is a proof target.
+
+The [theorem targets](manuscript/03-complexity/theorem-targets.tex)
+use the star equations, corrected diagonal determinant and orbit bound from
+the [local reduction at 9c8b588](https://github.com/what-social-construct/P-VS-NP/blob/9c8b58844113c8ae7e43e389349eb7d5104b272f/manuscript/03-complexity/gct-extension.tex).
+[PermanentLevelTarget](lean/PvsNP/PermanentLevelTarget.lean) derives its
+coefficient criterion from Mathlib's permanent and multivariate polynomials.
+[BranchCertificate](lean/PvsNP/BranchCertificate.lean) applies the finite
+geometric sum identity to the two proposed ideal memberships. Both are
+local proofs. The chart-specific identities are open hypotheses.
+The [selector interface](lean/PvsNP/StratumSelector.lean) makes the model
+representative and transport hypotheses explicit. Its correctness proof
+is local. The geometric existence input is Coste's Theorem 4.1 above,
+and the decoded affine example uses [HE-P1-Text](#he-p1-text). Uniform
+bit bounds for a new succinct verifier require an independent proof.
 
 [Lean](lean/PvsNP/InvariantClosure.lean) proves the finite dimension
 criterion for stability under algebra generators. The

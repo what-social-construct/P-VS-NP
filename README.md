@@ -20,6 +20,13 @@ Start with the [TeX source](manuscript/main.tex) and the
 [source ledger](SOURCE-LEDGER.md) traces the mathematical claims to the Lean
 proofs, computations, and cited results.
 
+The [theorem targets](manuscript/03-complexity/theorem-targets.tex) work
+backward from two questions. Can a symmetric three-plane through the
+all-ones $4\times4$ matrix have constant permanent? Can an algorithm
+use a decomposition of an encoded witness family to select a witness in
+polynomial time? The [target register](SEMANTIC-PARITY.md#theorem-targets)
+identifies the missing certificates and the Lean results that would use them.
+
 ## Reproduce the draft
 
 Build the PDF with a TeX distribution that includes Latexmk and Biber.

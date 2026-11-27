@@ -1,0 +1,122 @@
+\section{Theorem targets and backward reductions}
+\label{sec:theorem-targets}
+
+\subsection{The largest symmetric permanent level space through the all-ones matrix}
+\label{sec:permanent-target}
+
+\paragraph{Open target.}
+Let \(J_4\) be the all-ones matrix. Prove that
+\[
+ \max\{\dim_{\mathbb C}L : L\subseteq\operatorname{Sym}_4(\mathbb C)
+   \text{ a linear subspace},\
+   \operatorname{per}(J_4+B)=24\text{ for every }B\in L\}=2 .
+\]
+The first-row-and-column construction in Section~\ref{sec:gct} attains
+two. Every larger space contains a three-plane. Thus the upper bound
+asks for the exclusion of every independent symmetric triple
+\(B_1,B_2,B_3\). In \(\operatorname{per}(J_4+\sum_i t_iB_i)\)
+the coefficient of \(t_i\) is \(6\sum_{r,c}(B_i)_{rc}\).
+For every triple with zero entry sum in each direction it therefore
+suffices to exhibit one nonzero coefficient of degree two, three, or
+four. The constant is \(24\) and the total degree is at most four.
+There are \(6+10+15=31\) such coefficients. Lean checks the linear
+formula, the equivalence over \(\mathbb C\), and the count of 31 indices.
+
+\paragraph{A sufficient certificate at five.}
+Let \(P=\mathbb F_5[y_1,\ldots,y_{18}]\), let
+\(I_\star=(f_1,\ldots,f_{31})\) be the coefficient ideal in the
+normalized star chart of Section~\ref{sec:gct-path}, and let \(D\in P\)
+be the determinant of its corrected diagonal readout. The chart covers
+the geometric special fiber. By the proper specialization argument in
+that section, \(1\in I_\star\) would exclude complex three-planes.
+A point in characteristic five would leave its lift to characteristic
+zero to be determined. Over \(\mathbb C\), write the integral star
+equations as \(f_j^{\mathbb Z}(e,z)=0\), where \(e\) and \(z\) are
+the free edge and diagonal entries. The target is equivalent to
+emptiness of the projection
+\[
+ E_{\mathrm{lift}}=\{e\in\mathbb C^9:\exists z\in\mathbb C^9,\
+ f_j^{\mathbb Z}(e,z)=0\text{ for all }j\}.
+\]
+One exact complex pair \((e,z)\) would give a counterexample, since
+the three star pivots already guarantee independence.
+
+\begin{proposition}[Two certificates for the star ideal]
+\label{prop:branch-certificates}
+The membership \(1\in I_\star\) is equivalent to the existence of
+\(a,h_j,k_j\in P\) and an integer \(N\ge1\) satisfying
+\begin{align}
+ 1-aD &= \sum_{j=1}^{31}h_j f_j ,
+       \label{eq:target-closed-certificate}\\
+ D^N &= \sum_{j=1}^{31}k_j f_j .
+       \label{eq:target-open-certificate}
+\end{align}
+\end{proposition}
+\begin{proof}
+The first identity makes \(D\) a unit in \(P/I_\star\), so it rules
+out the collision branch \(D=0\). The second rules out the branch
+where \(D\) is invertible. In \(P\) we have the explicit combination
+\[
+ 1=\Bigl(\sum_{i=0}^{N-1}(aD)^i\Bigr)(1-aD)+a^N D^N .
+\]
+Substitution yields a certificate for one, including when the quotient
+has nilpotents. Conversely, if \(1\in I_\star\), take \(a=0\) and
+\(N=1\). Both right-hand representations then exist.
+\end{proof}
+Both polynomial identities remain to be found. The closed branch is
+the first smaller calculation to try. Its kernel line gives a
+17-variable chart covering it up to leaf permutations. A unit-ideal
+calculation there would prove that branch empty. A certificate in the
+original 18 variables could be replayed directly in
+\eqref{eq:target-closed-certificate}.
+
+The orbit count gives a second sufficient route. A nonempty geometric
+fiber at five would contain at least eight free \(S_3\)-orbits, so
+\(\dim_{\mathbb F_5}(P/I_\star)^{S_3}\le7\) would suffice. The missing
+data on the whole chart are a span through \(1\) of at most seven
+invariants and product identities for every span element against all
+127 generators. The degree-seven dual calculation forces degree at
+least eight in some product identity with \(1\). The existence of
+such a certificate at degree eight or higher remains open.
+
+\subsection{Selecting a witness from its encoded instance}
+\label{sec:selector-target}
+
+\paragraph{Uniform selector target for a specified verifier.}
+Fix a polynomial-time binary verifier \(V(x,w)\) with a known,
+polynomial-time computable padded witness length \(m(|x|)\) bounded by
+a polynomial. Put \(W_x=\{w\in\{0,1\}^{m(|x|)}:V(x,w)=1\}\).
+Construct a single deterministic polynomial-time algorithm which, on
+every \(x\), returns an element of \(W_x\) if it is inhabited and
+returns \(\bot\) exactly if \(W_x\) is empty. The explicit affine
+family of Section~\ref{sec:disclosure} realizes this target by row
+reduction. Requiring it for every such verifier is equivalent to
+\(\PT=\NP\). A total selector decides feasibility. Conversely, under
+\(\PT=\NP\) the prefix feasibility language below is decidable in
+polynomial time for each fixed \(V\).
+
+\paragraph{Two ways to discharge the target.}
+A decomposition can supply a stratum index \(c(x)\), a representative
+of its nonempty model fiber (or an empty marker), and a map taking each
+valid model representative back to a valid original witness over \(x\).
+It must also prove that every inhabited original fiber has an inhabited
+model fiber at \(c(x)\). These conditions imply selector correctness
+in Lean. To obtain the time bound, classification, representative
+selection, and transport must all be uniform on the encoded inputs,
+with polynomial bit cost including intermediate data. Hardt's theorem
+provides product charts for a fixed semialgebraic projection
+\cite[Theorem~4.1]{costeSemialgebraic}. For the projection onto
+\(E_{\mathrm{lift}}\) above, the charts exist in real and imaginary
+coordinates. A growing family of binary inputs needs its own effective
+construction and bounds.
+
+An alternative is to construct, in polynomial time from \((x,u)\), an
+explicit polynomial-size binary affine system \(Q_{x,u}v=b_{x,u}\)
+such that it is consistent exactly when some \(w\in W_x\) starts with
+\(u\). First test the empty prefix. From a feasible prefix \(u\), take
+\(u0\) when that extension is feasible and \(u1\) otherwise. After at
+most \(m(|x|)+1\) consistency tests the procedure returns a valid
+original witness or has certified emptiness. For the decoded affine
+HCP family the construction just appends coordinate equations. For a
+succinct verifier beyond this control, the proof obligation is to give
+the prefix construction and prove the equivalence for every prefix.

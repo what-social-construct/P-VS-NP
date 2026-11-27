@@ -3,6 +3,7 @@ module
 public import HCP.CoupledSignResidual
 public import PvsNP.AffineDisclosure
 public import PvsNP.AgreementCertificate
+public import PvsNP.BranchCertificate
 public import PvsNP.Compatibility
 public import PvsNP.DiscriminantIdeal
 public import PvsNP.EdgeDiscriminant
@@ -15,12 +16,14 @@ public import PvsNP.OrbitClosureSeparation
 public import PvsNP.OrientationContact
 public import PvsNP.OrientationDescent
 public import PvsNP.OrientationSquare
+public import PvsNP.PermanentLevelTarget
 public import PvsNP.PermanentReadout
 public import PvsNP.ReadoutGluing
 public import PvsNP.ReadoutPivotIdeal
 public import PvsNP.ReadoutResidual
 public import PvsNP.RealOrientation
 public import PvsNP.ScalarOrientation
+public import PvsNP.StratumSelector
 public import PvsNP.TransversePair
 public import PvsNP.TransversePairChart
 public import PvsNP.TransversePairLevel

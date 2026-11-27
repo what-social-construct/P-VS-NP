@@ -10,6 +10,17 @@ marks the Python realization at the decoded cochain boundary. **Derived**
 marks a written mathematical consequence. **Cited** marks an external
 theorem. **Target** marks a comparison still to be established here.
 
+## Theorem targets
+
+The [target statements and backward reductions](manuscript/03-complexity/theorem-targets.tex) specify what would finish each argument.
+
+| Target or reduction | Existing evidence | Remaining obligation |
+| --- | --- | --- |
+| The largest symmetric constant-permanent level space through $J_4$ over $\mathbb C$ has dimension two. | **Derived** lower bound from the [explicit two-plane](manuscript/03-complexity/gct.tex). **Lean** proves that the upper bound is equivalent to finding a nonzero coefficient among exactly 31 quadratic, cubic, or quartic terms for each independent symmetric frame with entry sum zero in each direction. [PermanentLevelTarget](lean/PvsNP/PermanentLevelTarget.lean) | **Target.** Exclude every such three-plane, or exhibit a complex frame disproving the target. |
+| The normalized star ideal $I_\star$ over $\mathbb F_5$ contains one. | **Derived and executable** chart coverage and **derived** proper specialization make this sufficient for complex exclusion. **Lean** proves the general equivalence with $1-aD\in I_\star$ and $D^N\in I_\star$ for some $a$ and $N\ge1$, including explicit multipliers combining them. [Star reduction](manuscript/03-complexity/gct-extension.tex) · [BranchCertificate](lean/PvsNP/BranchCertificate.lean) | **Target.** Supply both identities for the full chart. An alternative is a verified bound of seven on the dimension of its fixed-center $S_3$-invariants. The existing [closure checker](python/gct_permanent_closure.py) verifies proposed invariant product identities. |
+| For a specified binary verifier, produce a total polynomial-time selector of original witnesses. | **Lean** proves soundness and success exactly on inhabited fibers from supplied classification, model representatives, validity-preserving transport, representative completeness, and coverage. A fiber equivalence implies coverage. **Cited** Hardt triviality gives product charts for a fixed semialgebraic projection. [StratumSelector](lean/PvsNP/StratumSelector.lean) · [Coste and application](SOURCE-LEDGER.md#gct) | **Target** for a growing succinct family beyond the decoded affine control. Construct uniform data and prove polynomial bit cost, or give a uniform polynomial-time affine consistency reduction for every witness prefix. |
+| A prefix consistency test suffices for binary selection. | **Derived** in at most $m+1$ tests for padded witnesses of length $m$. **Executable** for the explicitly given [affine HCP system](python/affine_witness_selector.py). The all-verifier form of total polynomial-time selection is equivalent to $\mathsf P=\mathsf{NP}$ by decision and prefix search. [Prefix derivation](#witness-selection-under-prefix-restrictions) | A new family needs a proof that its prefix test decides extension to an original witness on every input. |
+
 ## Compatibility, descent, and faithful realization
 
 | Realization | Notation | Semantic role | Declaration or source | Status and scope |
