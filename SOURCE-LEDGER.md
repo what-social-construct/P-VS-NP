@@ -117,6 +117,19 @@ The reviewed local files are pinned by SHA-256.
 | `GaloisObstructionTheory/Hodge/Collision/Agreement.lean` | `24df316a759740f09287950f0c2130ed72aec382ead208273608aada4005d0dc` |
 | `GaloisObstructionTheory/Jacobian/General/GenericFiber/ResidualBaseChange.lean` | `1cdd25cb5d1eef0f5bb576c58b316df5a2e6b6b7a07b649d1b5e4cb207233bcc` |
 
+For the two reduced permanent sections, the
+[pinned decomposition-defect criterion](https://github.com/what-social-construct/galois-obstruction-theory/blob/4d104436d1c9020612cb671aaf4945fdb69befb7/GaloisObstructionTheory/Hodge/Collision/DecompositionDefect.lean)
+identifies the idempotent case by the overlap and contact ideals.
+The [local derivation](manuscript/03-complexity/collision-pencil-fiber.tex)
+takes the self-product of each section over the prime field. The
+[checker](python/gct_collision_fiber_slice.py) constructs its diagonal
+projector from the squarefree eliminant and verifies the field-factor
+projectors by the Chinese remainder theorem. The finite étale
+interpretation uses [Stacks, Tag 00U3](https://stacks.math.columbia.edu/tag/00U3).
+The rank exclusion comes from the separate permanent net. The
+witness-prefix equivalence and its algorithmic conditions are recorded
+in the [selector parity entries](SEMANTIC-PARITY.md).
+
 ## GCT
 
 The committed Galois Obstruction Theory

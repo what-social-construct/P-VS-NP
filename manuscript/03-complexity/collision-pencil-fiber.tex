@@ -45,6 +45,46 @@ directions from \(Z\). In the chart \(m=1\), the Jacobian ideal of \(C\)
 has length ten and support \(a=c=0,\ d=1,\ b^2+b+1=0\).
 The reduced section at infinity gives smoothness there.
 
+\paragraph{What the two sections decompose.}
+Let \(T\) be either of these finite sections of pure directions and write
+\(A=\mathcal O(T)=k[c]/(h)\) for its squarefree shape eliminant.
+The residue degrees give isomorphisms of \(k\)-algebras
+\[
+ \mathcal O(T_{d=4m})\simeq
+ k\times k\times\mathbb F_{5^2}\times\mathbb F_{5^{20}},
+ \qquad
+ \mathcal O(T_{d=a})\simeq\mathbb F_{5^6}\times\mathbb F_{5^{18}}.
+\]
+For each irreducible factor \(f\mid h\), the class of
+\((h/f)((h/f)^{-1}\bmod f)\) projects onto that field factor. These
+idempotents are orthogonal and sum to one. Each factor corresponds to
+one Frobenius orbit of geometric points. In particular the second
+section has 24 geometric points and no \(k\)-rational point.
+
+There is also an intrinsic diagonal decomposition for the map
+\(T\to\operatorname{Spec} k\). Its self-product has coordinate ring
+\(D=k[x,y]/(h(x),h(y))\), with diagonal ideal \(J=(x-y)\).
+The divided difference
+\[
+    e_\Delta=\frac{h(x)-h(y)}{x-y}\,h'(x)^{-1}\quad\text{in }D
+\]
+is defined since \(h\) is squarefree. It restricts to one on the
+diagonal and vanishes on all distinct pairs of roots. After splitting
+\(h\), these evaluations account for the entire ring. Descent gives
+\(J=(1-e_\Delta)\) and \(\operatorname{Ann}(J)=(e_\Delta)\). Hence
+\(J\cap\operatorname{Ann}(J)=0\) and \(J+\operatorname{Ann}(J)=D\),
+as in the Galois obstruction criterion \cite{gotCollisionDefect}.
+The residual algebra \(D/(e_\Delta)\) represents the 552 ordered
+distinct pairs over \(\bar k\), alongside 24 diagonal pairs.
+
+These products describe the two finite sections. The ambient pure
+curve is integral. The geometric common-line incidence introduces the
+further requirement that a direction support a two-space for the three
+quadrics. Its equivalence with the affine chart below concerns existence
+on this fixed face. Turning a decomposition of a witness family into
+a polynomial-time selector would additionally require a uniform algorithm
+that chooses and recovers a witness from each encoded yes-instance.
+
 \paragraph{Edge conditions on a surviving direction.}
 Every \(B\in Z\) with \(l(B)=0\) has all six edges nonzero. The
 permutations fixing vertex 2 have two edge orbits, represented by

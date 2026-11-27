@@ -51,10 +51,40 @@ def net_at_factor(a_poly, b_poly, factor, slope, intercept):
     return determinant_of_net(quotient_forms_at([scale*x for x in edges], field), field)
 
 
+def check_section_projectors(eliminant, factors):
+    """Check the field-factor and diagonal idempotents for one reduced section."""
+    projectors = []
+    for factor, multiplicity in factors:
+        assert multiplicity == 1
+        complement = eliminant.exquo(factor)
+        projectors.append((complement * complement.invert(factor)).rem(eliminant))
+    assert sum(projectors).rem(eliminant).is_one
+    for i, left in enumerate(projectors):
+        for j, right in enumerate(projectors):
+            expected = left if i == j else eliminant.zero
+            assert (left*right).rem(eliminant) == expected
+
+    algebra, x, y = ring("x,y", sp.GF(5), "lex")
+
+    def at(poly, variable):
+        return sum((int(c)*variable**n for (n,), c in poly.terms()), algebra.zero)
+
+    hx, hy = at(eliminant, x), at(eliminant, y)
+    relations = [hx, hy]
+    difference = (hx-hy).exquo(x-y)
+    inverse_derivative = eliminant.diff().invert(eliminant)
+    diagonal = (difference * at(inverse_derivative, x)).rem(relations)
+    assert ((x-y)*diagonal).rem(relations) == 0
+    assert (diagonal**2-diagonal).rem(relations) == 0
+    restriction = sum((c*x**(i+j) for (i,j), c in diagonal.items()), algebra.zero)
+    assert restriction.rem([hx]) == 1
+
+
 def check_section(slope, intercept, degrees):
     a_poly, b_poly, eliminant = shape_basis(slope, intercept)
     factors = eliminant.factor_list()[1]
     assert [(f.degree(), n) for f, n in factors] == [(e, 1) for e in degrees]
+    check_section_projectors(eliminant, factors)
     for factor, _ in factors:
         quintic = net_at_factor(a_poly, b_poly, factor, slope, intercept)
         rank = jacobian_rank(quintic, 9)
