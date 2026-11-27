@@ -1,0 +1,85 @@
+\paragraph{The quotient by vertex permutations.}
+Let \(S_3\) permute the vertices \(0,1,3\), fixing vertex 2. This action
+preserves the pure curve \(C\), since it permutes rows and columns of
+the permanent simultaneously and preserves the vertex-2 sum.
+It lifts to the normalization \(\widetilde C\).
+The smooth projective model of the invariant plane curve in \((u,v)\)
+is \(\widetilde C/S_3\) and has genus seven.
+
+Indeed, work on the dense open with distinct incident edges, normalized
+\(w=1\), and \(qu(v-3)\ne0\). The excluded edge and interpolation
+sections above are finite. The projective direction there is recovered
+from \(p,q,u,v\) by ordering the three roots of \(X^3+pX-q\) and
+setting \(y_i=x_i^2+vx_i+u\). After eliminating \(q\), the first
+remaining equation is quartic in \(p\) with leading coefficient 4.
+Thus the map to \((u,v)\) has finite fibers and dense image on the
+irreducible plane curve. Its first subresultant recovers \(p\)
+generically, then the quadratic equation recovers \(q\). The splitting
+field of the incident cubic therefore gives \(k(C)\) over \(k(u,v)\),
+of degree at most six. All six permutations act faithfully on the
+ordered roots and fix \(u,v\), proving \(k(C)^{S_3}=k(u,v)\).
+
+For the ramification, work over \(\bar k\). Use incident and opposite
+triples \(x=(x_0,x_1,x_3)\) and \(y=(y_0,y_1,y_3)\). A projective
+fixed point of a transposition must be in one of its two eigenspaces.
+For \((01)\), the incident triples scale respectively to \((1,1,-2)\)
+and \((1,-1,0)\), since the all-zero incident triple is excluded.
+The corresponding opposite triples are \((h,h,j)\) and \((h,-h,0)\).
+In both cases the three pure equations generate the unit ideal.
+For a three-cycle, the invariant eigenvalue would force \(x=0\).
+The other two eigenspaces have \(x=(1,\omega,\omega^2)\),
+\(y=vx\), for the two primitive cube roots \(\omega\).
+Substitution gives \(\omega^2+\omega+1=0\) and \(v^2(v+2)=0\).
+The two points with \(v=0\) are the singularities computed above.
+The three-cycle fixes each of their two branches, since its order is
+three. The two points with \(v=3\) are smooth. This gives six fixed
+points on \(\widetilde C\), each with stabilizer of order three, and
+three geometric branch values on the quotient. All ramification is
+tame in characteristic five. Riemann--Hurwitz \cite{stacksTameHurwitz} gives
+\[
+       2\cdot43-2=6(2g-2)+6(3-1),\qquad g=7.
+\]
+All inertia lies in \(A_3\), so the intermediate double cover
+\(\widetilde C/A_3\to\widetilde C/S_3\) is everywhere unramified
+and has source genus 13. Its function field adjoins the square root of
+\(-4p^3-27q^2\), since the Vandermonde product in the ordered roots
+changes sign under each odd permutation and squares to the discriminant.
+
+\paragraph{All three relabelings of the pencil.}
+Write \(Y=\sum_i y_i\), \(z_i=x_i-y_i\). The three distinct pencils
+are \([z_i:m_i]\) with \(m_i=Y+z_i\). The original pencil has
+\(i=3\). Every pencil excludes 136 geometric directions on \(C\)
+when its section at infinity is included. At \(Y=0\) all pencil values
+are 1, giving the 16 geometric points of \(d=a+m\).
+Elsewhere normalize \(Y=1\). Then \(\sum_i z_i=-1\), and \([z_i:1+z_i]\)
+is rational over \(\mathbb F_5\) exactly when \(z_i\) is rational.
+Two rational entries force all three to be rational. For the 25
+ordered triples in \(\mathbb F_5^3\) of sum \(-1\), substitution of
+\(y_i=x_i-z_i\) in the pure equations gives geometric points only
+for permutations of \((1,1,2)\) and \((1,4,4)\), respectively two and
+six per ordering. The triple intersection thus has \(16+6+18=40\)
+distinct points, and every pairwise intersection equals it. The three
+pencils together exclude \(3\cdot136-2\cdot40=328\) geometric
+directions. These counts concern points on the original pure curve.
+For the finite sections alone, the pattern \((1,4,4)\) contributes
+two values at infinity. The finite triple overlap has 22 points and
+the finite union has \(3\cdot112-2\cdot22=292\).
+
+This exclusion can be evaluated on the quotient. In the \(w=1\) chart
+put \(Y=3u-2p\) and
+\[
+ H(T)=\operatorname{Res}_X\!\left(X^3+pX-q,\,
+             T+X^2-(1-v)X+u\right)=\prod_i(T-z_i).
+\]
+Every surviving direction satisfies \(Y\ne0\) and
+\(H(\lambda Y)\ne0\) for all \(\lambda\in\mathbb F_5\).
+This condition tests the three pencils using the invariant coordinates.
+
+Vertex relabeling and Frobenius also act on pairs \((B,L)\) of a
+direction and a common line. Projection to \(B\) commutes with both
+actions, giving bijections of the line fibers over conjugate directions.
+On the free labeling locus, if \(F^e B=gB\) with \(g\in S_3\),
+transport around that quotient orbit sends a line over \(B\) to
+\(g^{-1}F^eL\). A choice returns to the same line exactly when this
+map fixes its two-dimensional subspace. Deciding geometric existence
+at the remaining quotient points still requires the line equations.

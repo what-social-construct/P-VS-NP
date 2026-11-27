@@ -168,8 +168,12 @@ $\operatorname{End}^0(A)\otimes_{\mathbb Q}\mathbb R$.
 For the mixed-degree and spectral comparisons, the complex linear
 realization uses a prime $\ell$ different from the characteristic and an
 abstract embedding $\overline{\mathbb Q}_\ell\hookrightarrow\mathbb C$.
-Please identify the hypotheses and any checked declaration separately from
-the cited theorem when the Galois project adopts this comparison.
+The later Galois revision `b998bb79107cb1c9ebdc0fc5020287d7452d4ea5`
+records the general positive-form equality criterion and its transport
+under a nonzero scalar pullback by a linear map. Those Lean declarations
+take positivity and the pullback identity as hypotheses. Their geometric
+verification for the Rosati and Tate forms is given by the cited written
+results. [Upstream comparison](https://github.com/what-social-construct/galois-obstruction-theory/blob/b998bb79107cb1c9ebdc0fc5020287d7452d4ea5/GaloisObstructionTheory/Hodge/LinearAlgebra/PolarizedDegreeComparison.lean)
 The [P-vs-NP calculation](manuscript/03-complexity/collision-normalization.tex)
 supplies a smooth model of genus 43, the traces of Frobenius and its
 square, and the degree form on the span of the identity and Frobenius.
@@ -599,6 +603,28 @@ calculation and verify its product reduces to one. The section lengths
 and multiplicities come from the original permanent equations by
 elimination. Together with the earlier exclusion at $m=0$, these give
 the prime-field pencil restriction in the manuscript.
+
+The [pencil overlap calculation](python/gct_collision_pencil_orbits.py)
+restricts the original permanent to the possible prime-field triples of
+normalized edge differences. The [vertex fixed-point calculation](python/gct_collision_vertex_orbits.py)
+restricts it to the projective eigenspaces of a transposition and a
+three-cycle. These finite computations supply the overlaps and fixed
+directions. The [quotient proof](manuscript/03-complexity/collision-vertex-orbits.tex)
+uses the two branches at each singularity, the quartic with constant
+leading coefficient in the invariant elimination, and its first
+subresultant. Over the algebraic closure the stabilizers give the inertia
+groups. Characteristic five makes the degree-six quotient tame, so each
+ramified point contributes its ramification index minus one.
+[Stacks, Galois extensions and ramification](https://stacks.math.columbia.edu/tag/09E3)
+· [Stacks, Riemann–Hurwitz](https://stacks.math.columbia.edu/tag/0C1B)
+
+The equivariant map in this application sends a pair consisting of a
+direction and a line to its direction. Its commuting squares under
+relabeling and Frobenius give the return-map test in the quotient proof.
+The general orbit-fiber identity appears in
+[OrbitFiberCard](https://github.com/what-social-construct/galois-obstruction-theory/blob/4f8a63cd946ab4a99d4fffe2bd42c1043f5c7d4a/GaloisObstructionTheory/Hodge/Correspondence/OrbitFiberCard.lean#L23).
+The quotient genus, overlap counts, and concrete transport argument are
+established here by the written derivations and executable checks.
 
 The [witness search](python/gct_common_line_witness.py) uses the existing
 [ten row-echelon charts](python/gct_collision_quadrics.py) and verifies

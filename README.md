@@ -180,6 +180,8 @@ python3 python/gct_collision_f25.py --verify-lines msolve
 python3 python/gct_collision_eliminant.py
 python3 python/gct_collision_fiber_slice.py
 python3 python/gct_collision_translated_sections.py
+python3 python/gct_collision_pencil_orbits.py
+python3 python/gct_collision_vertex_orbits.py
 python3 python/gct_common_line_witness.py
 python3 python/gct_collision_normalization.py
 python3 python/gct_collision_fiber_net.py
@@ -198,6 +200,9 @@ The five sections $d=a+rm$ for $r\in\mathbb F_5$ contain 112 distinct
 geometric directions. Residue-field certificates exclude a common line at
 every one of them. The witness checker also recovers an explicit line
 over $\mathbb F_{25}$ for a test net defined over $\mathbb F_5$.
+Relabeling the vertices gives three pencils whose prime-field values,
+including infinity, exclude 328 distinct directions. The smooth model
+of the invariant plane curve has genus seven. [Orbit and quotient calculation](manuscript/03-complexity/collision-vertex-orbits.tex)
 
 Use `--emit-edge-family` on `gct_permanent_hodge.py` with `cyclic`
 or `transposition` for the edge symmetry checks. The options
