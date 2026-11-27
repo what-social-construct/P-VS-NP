@@ -91,6 +91,20 @@ python3 python/gct_permanent_plucker.py --star-fourier > /tmp/gct-star-fourier.m
 gzip -dc gct_permanent_star_degree7.dual.gz | python3 python/gct_permanent_plucker.py --verify-path-dual -
 ~~~
 
+The permanent's quadratic form gives a corrected diagonal readout.
+Its determinant splits the star chart into a collision branch and an
+injective branch. The collision branch has a unique kernel line
+at each geometric point. The following Gröbner check excludes a
+two-plane in the kernel and returns the reduced basis `1`.
+
+~~~sh
+python3 python/gct_permanent_plucker.py --star-hodge collision > /tmp/gct-hodge-collision.ms
+python3 python/gct_permanent_plucker.py --star-hodge injective > /tmp/gct-hodge-injective.ms
+python3 python/gct_permanent_hodge.py --emit-collision-kernel > /tmp/gct-hodge-kernel.ms
+python3 python/gct_permanent_hodge.py --emit-chart > /tmp/gct-hodge-two-plane.ms
+msolve -f /tmp/gct-hodge-two-plane.ms -o /tmp/gct-hodge-two-plane.out -t 1 -g 2 -l 2
+~~~
+
 The exact Frobenius searches show that a nonempty fiber at five must
 have at least 48 geometric points. An upper bound of seven on the
 dimension of the star chart's invariant quotient would settle the
@@ -101,6 +115,31 @@ needed for a multiplication-closure check.
 python3 python/gct_permanent_frobenius.py
 python3 python/gct_permanent_plucker.py --star-invariants
 ~~~
+
+The centered Fourier chart replaces the quartics by 15 equations
+that reduce degree-four center-diagonal monomials to lower degree.
+The degree-seven obstruction below shows that expressing all 127
+generators in a seven-dimensional span requires a higher-degree
+ideal multiple in at least one identity.
+
+~~~sh
+python3 python/gct_permanent_plucker.py --star-fourier-center > /tmp/gct-star-center.ms
+gzip -dc gct_permanent_star_span_degree7.dual.gz | python3 python/gct_permanent_closure.py --degree-seven-obstruction -
+~~~
+
+Use `python3 python/gct_permanent_closure.py certificate.json` to
+replay a proposed closure certificate. The `basis` array must list
+one to seven invariant polynomials, starting with one. A polynomial
+is a list of terms `[coefficient, variable_indices]` with repeated,
+zero-based indices in the variable order printed by `--star`.
+The constant one is `[[1, []]]`.
+
+The `products` array gives one object for each generator from
+`--star-invariants` times each basis element, in generator-major
+order. Each object gives `coordinates` in the proposed basis and
+`multipliers` as pairs `[equation_index, polynomial]` in the order
+printed by `--star`. The checker uses these multiples of the original
+equations to verify the difference from the claimed basis combination.
 
 The exact degree-seven certificate search found a functional that
 takes the constant to one and annihilates every even monomial multiple

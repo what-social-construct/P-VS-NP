@@ -1,3 +1,4 @@
+\clearpage
 \section{Verification and provenance}
 \label{sec:verification}
 
@@ -100,6 +101,21 @@
   Section~\ref{sec:gct-path} derives the 48-point lower bounds and
   the invariant-algebra criterion. \path{python/gct_permanent_plucker.py}
   computes the generators for the multiplication checks. \\
+  \addlinespace
+  Invariant closure &
+  \path{PvsNP/InvariantClosure.lean} proves the abstract
+  finite dimension bound. \path{python/gct_permanent_closure.py}
+  checks supplied product identities and replays the degree-seven
+  obstruction. Section~\ref{sec:gct-path} proves the leading
+  boundary description and the center-diagonal rewrites. \\
+  \addlinespace
+  Hodge collision branches &
+  \path{python/gct_permanent_plucker.py} verifies the edge form and
+  exports the two branches. \path{python/gct_permanent_hodge.py}
+  generates the Witt chart whose exact reduced basis is \([1]\)
+  and the 17-variable collision system.
+  Section~\ref{sec:gct-path} proves the coverage, orientation descent,
+  and one-dimensional kernel statement. \\
   \addlinespace
   Complexity comparisons &
   Proof translation and polynomial boundedness use Cook--Reckhow.

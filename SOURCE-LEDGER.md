@@ -291,6 +291,42 @@ the matrix of 49,527 row orbits and 80,588 column orbits. Its
 reflection against all 98,336 weight-zero products. The degree-eight
 run ended after 155,700 of 209,809 rows without deciding the bound.
 
+The center-diagonal change of coordinates uses the isolated-row
+identity for the leading equations. [Python](python/gct_permanent_plucker.py)
+checks that the 15 replacement quartics have the stated monic center
+terms and verifies the order-three quadratic Hessian. The
+[written boundary argument](manuscript/03-complexity/gct-extension.tex)
+uses the existing order-three two-plane exclusion. A bounded native
+degree-seven comparison reproduced the rank 43,913 with the rewritten
+input and fewer modular coefficient updates.
+
+The [Hodge decomposition](manuscript/03-complexity/gct-extension.tex)
+uses the equal-disclosure pullback and residual convention recorded
+under [GOT](#got). The corrected diagonal projection is derived from
+the quadratic permanent coefficient. The exterior star pairing
+uses the restricted edge form, and the orientation factors come from
+adjoining a square root of its Gram determinant divided by four.
+The [star generator](python/gct_permanent_plucker.py) verifies the
+quadratic identity over the rationals and in the normalized frame
+at five. It checks the discriminant on the scalar edge-graph line
+and emits the collision and injective branch systems.
+
+The [kernel chart](python/gct_permanent_hodge.py) uses the Hadamard
+coordinates from the [permanent fiber computation](python/gct_permanent_fiber.py)
+and the written Witt chart coverage. [msolve v0.11.0](https://msolve.lip6.fr/)
+returns the reduced basis [1] over $\mathbb F_5$ in exact sparse mode
+on the six-variable system, including the field equation for $h$.
+The emitted input has SHA-256
+`4f2ac126324d02602f4e06ee96b9c14c68c28d90b420a25bbd41beed03b35e38`.
+The same Python module checks the Gram matrix on all 156 rational
+level two-planes at five. The proper specialization argument for the
+closed rank locus and the orbit bound on each branch are written
+derivations. The 17-variable collision chart fixes the first star
+coordinate of the kernel line and uses leaf symmetry for coverage.
+The executable verifies its kernel and quadratic pairing identities.
+A bounded msolve run on this larger system reached degree seven without
+deciding the ideal.
+
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
 It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)
@@ -306,6 +342,18 @@ for the degree-four generating bound. The [orbit-sum generator](python/gct_perma
 uses decomposables and leading parts of averaged equation multiples
 to choose 127 generators for the quotient by exact row reduction.
 The dimension-seven upper bound is a proof target.
+
+[Lean](lean/PvsNP/InvariantClosure.lean) proves the finite dimension
+criterion for stability under algebra generators. The
+[closure checker](python/gct_permanent_closure.py) replays supplied
+polynomial identities against the original star equations.
+The [degree-seven obstruction data](gct_permanent_star_span_degree7.dual.gz)
+stores 20 low-degree pairings obtained by exact invariant elimination.
+The checker independently verifies the identity pairing matrix and all
+98,336 weight-zero row products of the original Fourier generators.
+The written rank argument uses the 27-dimensional span of one and the
+selected degree-at-most-two orbit sums inside the 39-dimensional
+low-degree invariant space.
 
 The Homotopical Encryption local repository was reviewed at
 `1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3

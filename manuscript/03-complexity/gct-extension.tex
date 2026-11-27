@@ -399,6 +399,190 @@ orbit size. The executable checks it directly against all 98,336
 weight-zero products before reflection, ruling out a degree-seven
 identity in this chart.
 
+\paragraph{Center-diagonal rewrites.}
+For a pencil in the fixed star chart, write \(d\) for the center
+diagonal entry and \(C\) for the three-by-three leaf block.
+Both depend linearly on the pencil parameters. The star entries
+are normalized, so they disappear from the highest-degree terms
+in the free chart variables. If \(Q_j\) is the highest-degree
+part of \(q_j\), the isolated-row formula then gives
+\[
+ Q_2=2(e-d^2),\qquad Q_3=k+de,\qquad Q_4=dk,
+ \qquad e=\mathbf1^T\operatorname{cof}_{\rm per}(C)\mathbf1,
+ \quad k=\operatorname{per}(C),
+\]
+where \(d,C\) on the right denote their linear parts in the chart
+variables. In particular \(dQ_3-Q_4-d^2Q_2/2=d^4\).
+In the Fourier chart we can take the center entry of each frame
+column as a coordinate in place of the leaf trace. The sum-zero
+equation gives the leaf trace back, so this is an invertible affine
+change of coordinates. Replacing the quartic coefficients by those
+of \(d q_3-q_4-d^2q_2/2\) preserves the ideal with the original
+quadratic and cubic equations. The 15 new leading monomials are
+exactly the degree-four monomials in the three center coordinates.
+Their multinomial coefficients are units at five. Each of these
+monomials can therefore be rewritten with total degree at most three.
+
+On the geometric zero set of the leading equations, \(d^4=0\)
+as a polynomial in the pencil parameters, so all center coordinates
+vanish. The remaining conditions say that every leaf-block direction
+has entry sum, quadratic coefficient, and permanent all zero.
+The order-three two-plane exclusion forces the three leaf blocks to
+span at most a line. Conversely every frame of multiples of such a
+direction satisfies the leading equations. Thus their projective
+support is the Segre image of the order-three level-direction locus
+times \(\mathbb P^2\). The order-three locus is a quadric-cubic
+intersection in \(\mathbb P^4\). The quadratic Hessian determinant
+in the entry-sum-zero coordinates is \(3\) modulo five, and the
+diagonal direction \((1,\omega,\omega^2)\) vanishes on the quadric
+with permanent one. Hence this intersection has dimension two and
+the projective support of the leading equations has dimension four.
+
+For a block of order \(N\), put
+\(P_C(u)=\operatorname{per}(uJ_{N-1}+C)=\sum_j e_j u^{N-1-j}\).
+The expansion across the isolated row and column is
+\((u+d)P_C(u)+u^2P_C'(u)\), since the second term sums the leaf
+cofactors. Thus \(Q_j=(N-j)e_j+de_{j-1}\), with
+\(e_0=(N-1)!\) and \(Q_1=0\) on the tangent space. Telescoping gives
+\[
+ d^N=\sum_{j=2}^N\frac{(-1)^{j+1}}{(N-j)!}\,d^{N-j}Q_j.
+\]
+When \(N!\) is invertible, each coefficient of \(d^N\) gives the
+corresponding degree-\(N\) center monomial up to a unit.
+
+\paragraph{The Hodge collision locus and its Galois decomposition.}
+Let \(V\) be the symmetric entry-sum-zero tangent space and let
+\(T\) be its traceless diagonal subspace. Write \(x\) for the six
+off-diagonal entries of \(B\in V\), and \(r_i\) for its row sums.
+The quadratic permanent coefficient is
+\(q_2(B)=\operatorname{tr}(B^2)-2\sum_i r_i^2\), obtained by
+summing over pairs of positions in different rows and columns.
+The associated form on \(T\) is minus the standard dot product.
+Its orthogonal projection onto \(T\) is the corrected diagonal
+\[
+ z_i(B)=2r_i-B_{ii}+\operatorname{tr}(B)/4.
+\]
+Indeed \(\sum_i z_i=0\), and pairing \(B\) against a traceless diagonal
+gives minus the dot product with \(z\). The orthogonal complement is
+identified with edge space \(E\) by its off-diagonal entries. Write
+\(\Gamma\) for the vertex-edge incidence matrix and \(s=\sum_e x_e\).
+The representative with \(z=0\) has diagonal
+\(-2\Gamma x+(s/2)\mathbf 1\) and row sums
+\(-\Gamma x+(s/2)\mathbf 1\). Substitution gives
+\[
+  q_2(B)= x^{\mathsf T}G_E x-z(B)^{\mathsf T}z(B),
+  \qquad G_E=2I_6+2\Gamma^{\mathsf T}\Gamma-\mathbf 1\mathbf 1^{\mathsf T}.
+\]
+The determinant of \(G_E\) is \(6912\), a unit at five.
+
+For a level three-plane \(L\), use the injective edge projection to
+identify \(L\) with a three-plane \(U\subset E\). Let \(A:U\to T\)
+be the corrected diagonal readout in the normalized star frame, and
+let \(D=\det A\) using the first three diagonal coordinates on \(T\).
+The collision pairs are precisely
+\[
+ \bigl\{(u,u+v):u\in U,\ v\in\ker A\setminus\{0\}\bigr\}.
+\]
+The rank-drop equation on the chart is \(D=0\). The quadratic
+equations identify the edge Gram matrix \(G_U\) with
+\(A^{\mathsf T}(I_3+\mathbf 1\mathbf 1^{\mathsf T})A\), so
+\(\det G_U=4D^2\). The exterior Hodge star for \(G_E\) sends the
+Pl\"ucker line of \(U\) to that of \(U^\perp\). With coordinate volume
+\(\mathrm{vol}\), its determinant pairing is
+\(p_U\wedge *p_U=(\det G_U)\mathrm{vol}\) for the normalized frame
+wedge \(p_U\). It detects exactly the support of the collision locus,
+while its equation is the square of the readout determinant up to a unit.
+
+On the open set \(\det G_U\ne0\), the quadratic-stage lifts are
+isometries \(U\to T\) and form an orthogonal-group torsor. Its two
+geometric components have orientations
+\[
+ D=\pm\sqrt{\det G_U/4}.
+\]
+For rational \(U\) over \(\mathbb F_5\), a nonsquare discriminant
+excludes a rational lift and Frobenius exchanges these two components.
+A square discriminant gives two orientations defined over \(\mathbb F_5\),
+each with a rational quadratic-stage lift. To see sufficiency,
+diagonalize and rescale the forms to entries \(1\) and \(2\). A pair
+of \(2\)'s is congruent to a pair of \(1\)'s by the two-by-two Hadamard
+matrix, so the determinant square class determines the form.
+For an odd-degree extension of \(\mathbb F_5\), the determinant
+of \(G_E\) is still a nonsquare. In the orthogonal decomposition
+\(E=U\oplus U^\perp\), the two restricted determinants therefore
+have opposite square classes. At most one of the Hodge companion
+planes can admit a rational quadratic-stage lift.
+Over the edge-chart function field the orientation cover is
+geometrically nonsplit. Order the complementary triangle edges by
+opposite leaf and specialize the edge graph to \(cI_3\).
+Then \(\det G_U/4=3(c^2-c+1)^2(c^2+c+1)\) at five. The last
+factor has simple roots disjoint from the preceding factor.
+A polynomial square in the edge-chart function field would already
+be a square in its polynomial ring and would remain one on this line.
+The cubic and quartic equations cut the residual level condition
+inside the quadratic-stage lifts.
+After extending the edge field to contain a nonzero root
+\(d^2=\det G_U/4\), the two factors of the residual lift algebra
+are cut out by the idempotents \((1+D/d)/2\) and \((1-D/d)/2\).
+Either factor can vanish. For nonsquare radicand at a rational
+edge point they are exchanged by Frobenius.
+
+The full star equations with \(D=0\) give the closed collision
+branch. Adjoining an inverse with equation \(tD=1\) gives its open
+complement. Both branches are emitted by the executable. For the
+finite coordinate algebra \(R\) over \(\mathbb F_5\), the resulting
+partition of the support lifts to a product
+\(R/(D^m)\times R[D^{-1}]\) for sufficiently large \(m\).
+Indeed, the image and kernel of multiplication by \(D^m\) are
+complementary ideals once its ranks stabilize.
+The fixed-center leaf group \(S_3\) preserves \(D\), since a leaf
+permutation acts with the same determinant on \(T\) and on the star
+pivots. Thus the orientation extension descends to the invariant
+edge function field, where it is also nonsplit.
+Both supports are also preserved by the full vertex group,
+since the rank of \(A\) is independent of the frame.
+
+On the collision branch of the full level scheme, the readout has
+rank two. Rank at most one would give a level two-plane in
+\(\ker z\). To exclude it at five, use the orthonormal Hadamard
+basis with first vector \(\mathbf1/2\) and the three nontrivial
+Klein characters. In this basis the tangent matrix has top-left
+entry zero, arms \(b_i\), remaining diagonal \(d_i\), and opposite
+off-diagonal entries \(c_i\). The condition \(z=0\) gives
+\(c_i=3b_i\) and the quadratic is \(\sum_i(d_i^2+2b_i^2)\).
+Adjoining \(h^2=3\) gives three hyperbolic pairs by setting
+\(d_i=h(e_i+f_i)\) and \(b_i=e_i-f_i\). An isotropic two-plane
+has a nonzero minor in coordinates from distinct pairs.
+Otherwise its Pl\"ucker wedge would be supported on the three
+paired wedges. Decomposability would force at most one such
+coordinate nonzero, and the two-plane would be a hyperbolic pair.
+Vertex permutations permute the pairs and swap their two
+coordinates with even parity, so every such chart can be moved
+to the pivot \(e_1,e_2\). The unused third pair absorbs the parity.
+The two diagonal and one mixed quadratic equation then solve for
+three of the eight free frame entries. The executable checks this
+normalization and emits the remaining four cubic and five quartic
+equations, with \(h^2-3\) adjoined. The reduced msolve basis is
+\([1]\) over \(\mathbb F_5\). The closed scheme of level two-planes
+in \(\ker z\) is projective over \(\mathbb Z_{(5)}\), so emptiness
+at five also excludes complex points.
+
+Consequently a collision has a unique kernel line. The dimension
+of \(U\cap U^\perp\) can be larger if the form on \(A(U)\) is
+degenerate. In particular \(U=U^\perp\) cannot occur for a level
+three-plane, as it would force \(A(U)\) to be totally isotropic
+in the nondegenerate three-dimensional form on \(T\), of Witt
+index at most one.
+
+One can use that kernel line directly. In the star frame, some
+coordinate on the line is nonzero. Permute the leaves and
+normalize a generator \(B\) of the line to have \(B_{01}=1\).
+Its five other edge entries determine \(B\), since \(z(B)=0\).
+Complete it with the usual second and third star columns, each
+with six free entries. The resulting 17-variable system of 31
+permanent coefficient equations covers the collision branch up to
+leaf permutations. Every solution has a kernel direction by
+construction. Its emptiness and that of the injective branch remain open.
+
 \paragraph{Frobenius orbits and the invariant quotient.}
 The \(S_4\) action on the geometric level three-planes at five is
 free. For a transposition, a negative eigenvector has support
@@ -454,6 +638,11 @@ the reduced geometric fiber after extending scalars.
 Thus nonemptiness implies \(\dim_{\mathbb F_5} A^{S_3}\ge8\).
 An upper bound of seven on this dimension would prove geometric
 emptiness at five and hence nonexistence over \(\mathbb C\).
+The same lower bound of eight holds for each nonempty branch of
+the Hodge decomposition, since its support is stable under both
+\(S_4\) and Frobenius. One can therefore test the two invariant
+dimensions separately. Using \(R/(D)\) for the collision test
+suffices because it has the same support as \(R/(D^m)\).
 
 In the original star coordinates the leaves permute the rows and
 columns of two three-by-three arrays. The nonmodular Noether bound
@@ -470,6 +659,48 @@ suffices to exhibit a span of at most seven invariant classes
 containing one and closed under multiplication by these 127
 generators.
 Finding that span remains open.
+
+Lean proves the general closure step. Multiplication stability
+extends from the generators to the algebra they generate by induction.
+Applying it to \(1\) puts every algebra element in the proposed
+span and proves the finite dimension bound. The exact replay
+checker verifies each proposed product identity against the
+original star equations.
+
+\paragraph{A degree bound for closure certificates.}
+Consider the constant and the 26 selected invariant generators
+of degree at most two. Their orbit sums have disjoint support, so
+they span 27 dimensions in the 39-dimensional space of invariant
+polynomials through degree two. The stored data gives 20 functionals
+with identity pairing on 20 independent low-degree orbit sums.
+The verifier checks that they vanish on every weight-zero generator
+multiple of degree at most seven in the Fourier chart. Extending
+them by zero on the other rotation weights makes them vanish on
+the entire degree-seven Macaulay span. The equivariant Fourier
+change preserves the degree bounds, after adjoining \(\omega\)
+if necessary.
+
+The kernel of the pairing in low degree has dimension at most
+\(39-20=19\), so the 27-dimensional subspace has pairing rank at
+least eight. If a span with at most seven entries and first entry
+\(1\) closed under the generators using only degree-seven ideal
+multiples in its products with \(1\), the pairings of all these
+generators would lie in the span of at most seven pairing vectors.
+It follows that at least one of the identities expressing a
+generator in the proposed span must use an ideal multiple of
+degree eight or higher.
+
+In general, let \(M_d\) be the vector space of permitted ideal
+multiples through degree \(d\), and let \(U_0\) be the span of one
+and the proposed algebra generators. Any \(n\)-element closure
+certificate beginning with one and using only such multiples
+must put the image of \(U_0\) in an at most \(n\)-dimensional
+subspace of the vector-space quotient by \(M_d\).
+If this image has rank greater than \(n\), some generator identity
+requires an ideal multiple of degree at least \(d+1\). Taking \(d=n\)
+gives the \(n+1\) bound under this rank hypothesis. For example,
+the basis \(1,x,\ldots,x^{n-1}\) in \(k[x]/(x^n)\) closes under
+multiplication by \(x\) using the single degree-\(n\) relation.
 
 \paragraph{Path reversal and bounded-degree certificates.}
 Replace the three path pivots by \(B_{01}+B_{23}, B_{01}-B_{23}, B_{12}\).

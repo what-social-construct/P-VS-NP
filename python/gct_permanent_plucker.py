@@ -3,6 +3,7 @@
 import argparse
 import sys
 from itertools import combinations, combinations_with_replacement, permutations, product
+from math import factorial
 
 import numpy as np
 import sympy as sp
@@ -215,19 +216,81 @@ def extension_chart(pivots, extension_slot):
     return names, equations
 
 
-def edge_graph_chart(pivots):
-    """Return the full permanent equations for an off-diagonal pivot triple."""
+def edge_graph_frame(pivots, extra_names=()):
+    """Normalize a frame on an off-diagonal pivot triple."""
     remaining = tuple(slot for slot in COORDINATES if slot not in pivots)
-    names = tuple(f"{label}{i}{j}" for label in "abc" for i, j in remaining)
+    names = tuple(f"{label}{i}{j}" for label in "abc" for i, j in remaining) + extra_names
     coefficient_ring, *variables = ring(names, sp.GF(PRIME), "grevlex")
     entries = iter(variables)
     directions = [tangent_direction(
         coefficient_ring(int(slot == pivot)) if slot in pivots else next(entries)
         for slot in COORDINATES
     ) for pivot in pivots]
+    return names, coefficient_ring, directions
+
+
+def edge_graph_chart(pivots):
+    """Return the full permanent equations for an off-diagonal pivot triple."""
+    names, coefficient_ring, directions = edge_graph_frame(pivots)
     coefficients = pencil_coefficients(coefficient_ring, directions)
     assert all(sum(powers) >= 2 for powers in coefficients)
     return names, list(coefficients.values())
+
+
+def corrected_diagonal(direction):
+    """Project a tangent direction onto traceless diagonals in the q2 metric."""
+    trace = sum(direction[i, i] for i in range(4))
+    return tuple(2*sum(direction[tuple(sorted((i, j)))] for j in range(4))
+                 - direction[i, i] + trace/4 for i in range(4))
+
+
+def edge_metric(left, right):
+    """Entry of the induced q2 metric in the six edge coordinates."""
+    return 2*int(left == right) + 2*len(set(left) & set(right)) - 1
+
+
+def star_hodge_chart(branch):
+    """Return the collision or injective branch for the corrected readout."""
+    injective = branch == "injective"
+    names, coefficients, directions = edge_graph_frame(
+        EDGE_GRAPH_PIVOTS["star"], ("inverse_det",) if injective else ()
+    )
+    permanent_equations = pencil_coefficients(coefficients, directions)
+    columns = tuple(corrected_diagonal(direction) for direction in directions)
+    assert all(sum(column) == 0 for column in columns)
+    for i, j in combinations_with_replacement(range(3), 2):
+        gram_entry = sum(edge_metric(left, right) * directions[i][left] * directions[j][right]
+                         for left, right in product(OFF_DIAGONAL, repeat=2))
+        diagonal_pairing = sum(a*b for a, b in zip(columns[i], columns[j]))
+        powers = tuple(int(k == i) + int(k == j) for k in range(3))
+        assert (1 if i == j else 2)*(gram_entry - diagonal_pairing) == permanent_equations[powers]
+    readout = sp.Matrix(3, 3, lambda i, j: columns[j][i].as_expr())
+    determinant = coefficients.from_expr(readout.det())
+    equation = coefficients.gens[-1] * determinant - 1 if injective else determinant
+    return names, [*permanent_equations.values(), equation]
+
+
+def verify_hodge_metric():
+    """Check the tangent decomposition and an orientation-cover test line."""
+    direction = tangent_direction(sp.symbols("b:9"))
+    matrix = sp.Matrix(4, 4, lambda i, j: direction[tuple(sorted((i, j)))])
+    quadratic = permanent_difference(sp.ones(4), (matrix,)).coeff_monomial((2,))
+    metric = sp.Matrix([[edge_metric(left, right) for right in OFF_DIAGONAL]
+                        for left in OFF_DIAGONAL])
+    assert metric.det() == 6912
+    edges = sp.Matrix([direction[edge] for edge in OFF_DIAGONAL])
+    diagonal = sp.Matrix(corrected_diagonal(direction))
+    assert sp.expand(quadratic - edges.dot(metric*edges) + diagonal.dot(diagonal)) == 0
+    star = EDGE_GRAPH_PIVOTS["star"]
+    opposite = tuple(tuple(sorted({1, 2, 3} - {leaf})) for _, leaf in star)
+    parameter = sp.Symbol("c")
+    frame = sp.zeros(6, 3)
+    for i, (edge, opposite_edge) in enumerate(zip(star, opposite)):
+        frame[OFF_DIAGONAL.index(edge), i] = 1
+        frame[OFF_DIAGONAL.index(opposite_edge), i] = parameter
+    discriminant = sp.Poly((frame.T*metric*frame).det()/4, parameter, modulus=PRIME)
+    assert discriminant == sp.Poly(3*(parameter**2-parameter+1)**2
+                                   *(parameter**2+parameter+1), parameter, modulus=PRIME)
 
 
 def path_reversal_chart():
@@ -291,7 +354,7 @@ def four_cycle_chart(omitted_frequency):
     return names, list(equations.values()), weights
 
 
-def star_fourier_chart():
+def star_fourier_chart(center_diagonal=False):
     """Diagonalize leaf rotation in the fixed star chart and descend to F5."""
     names = tuple(f"{column}{kind}{mode}" for column, kind, mode in product("abc", "de", range(3)))
     extended, *variables, omega = ring((*names, "omega"), sp.GF(PRIME), "grevlex")
@@ -299,8 +362,12 @@ def star_fourier_chart():
     relation = omega**2 + omega + 1
     directions = []
     for pivot in range(3):
-        diagonal = variables[6*pivot:6*pivot+3]
+        diagonal = list(variables[6*pivot:6*pivot+3])
         opposite = variables[6*pivot+3:6*pivot+6]
+        if center_diagonal:
+            # The sum-zero condition determines the leaf trace from the center,
+            # the opposite-edge sum, and the normalized star entries.
+            diagonal[0] = -diagonal[0] - 2*opposite[0] - 2*int(pivot == 0)
         values = {}
         for i in range(3):
             values[0, i+1] = omega**((-i*pivot) % 3)/3
@@ -314,9 +381,10 @@ def star_fourier_chart():
         reduced = polynomial.rem([relation])
         assert all(term[-1] == 0 for term in reduced)
         equations[powers] = coefficients.from_dict({term[:-1]: value for term, value in reduced.items()})
+    if center_diagonal:
+        equations = rewrite_star_quartics(coefficients, equations)
     weights = [(mode-pivot) % 3 for pivot, _, mode in product(range(3), range(2), range(3))]
-    reflection = [6*(-pivot % 3) + 3*kind + (-mode % 3)
-                  for pivot, kind, mode in product(range(3), range(2), range(3))]
+    reflection = star_fourier_reflection()
     assert len(equations) == 31
     for (a, b, c), polynomial in equations.items():
         assert all((sum(power*weight for power, weight in zip(term, weights)) + b + 2*c) % 3 == 0
@@ -326,23 +394,55 @@ def star_fourier_chart():
     return names, list(equations.values()), weights
 
 
-def star_invariant_generators():
-    """Construct orbit sums generating the star's invariant algebra modulo its equations."""
+def star_fourier_reflection():
+    """Return the variable permutation for reflection in Fourier coordinates."""
+    return [6*(-pivot % 3) + 3*kind + (-mode % 3)
+            for pivot, kind, mode in product(range(3), range(2), range(3))]
+
+
+def rewrite_star_quartics(coefficients, equations):
+    """Replace the quartics by equations reducing fourth powers of the center coordinates."""
+    pencil, *parameters = ring("s,t,z", coefficients.to_domain(), "grevlex")
+    center = coefficients.gens[::6]
+    center_form = sum(parameter*entry for parameter, entry in zip(parameters, center))
+    quadratic, cubic, quartic = [
+        pencil.from_dict({powers: value for powers, value in equations.items() if sum(powers) == degree})
+        for degree in (2, 3, 4)
+    ]
+    rewritten = center_form*cubic - quartic - center_form**2*quadratic/2
+    result = equations.copy()
+    for powers in quartic:
+        leading = sp.prod(entry**degree for entry, degree in zip(center, powers))
+        multinomial = factorial(4) // sp.prod(factorial(degree) for degree in powers)
+        relation = rewritten[powers]/int(multinomial)
+        remainder = relation - leading
+        assert all(sum(term) <= 3 for term in remainder)
+        result[powers] = relation
+    return result
+
+
+def star_leaf_actions():
+    """Return the permutations of star-chart variables induced by leaf relabeling."""
     star = EDGE_GRAPH_PIVOTS["star"]
     coordinates = tuple((column, i, j) for column in range(1, 4)
                         for i, j in COORDINATES if (i, j) not in star)
-    names, equations = edge_graph_chart(star)
-    coefficients = equations[0].ring
     index_by_coordinate = {coordinate: index for index, coordinate in enumerate(coordinates)}
-    actions = [
+    return [
         tuple(index_by_coordinate[(permutation[column], *sorted((permutation[i], permutation[j])))]
               for column, i, j in coordinates)
         for permutation in PERMUTATIONS if permutation[0] == 0
     ]
 
+
+def star_invariant_generators(maximum_degree=4):
+    """Construct orbit-sum generators modulo the star equations through the given degree."""
+    names, equations = edge_graph_chart(EDGE_GRAPH_PIVOTS["star"])
+    coefficients = equations[0].ring
+    actions = star_leaf_actions()
+
     homogeneous = {}
     generators = []
-    for degree in range(1, 5):
+    for degree in range(1, maximum_degree+1):
         orbit_sums = []
         representatives = {}
         orbit_by_monomial = {}
@@ -561,6 +661,14 @@ def order_three_chart():
     return names, [coefficients.from_expr(value) for value in difference.coeffs()]
 
 
+def verify_order_three_quadratic():
+    """Check the rank of the leaf-block quadratic on the entry-sum-zero space."""
+    x, y, z, u, v = coordinates = sp.symbols("x y z u v")
+    leaf = sp.Matrix([[-2*(x+y+z)-u-v, x, y], [x, u, z], [y, z, v]])
+    quadratic = permanent_difference(sp.ones(3), (leaf,)).nth(2)
+    assert sp.hessian(quadratic, coordinates).det() % PRIME == 3
+
+
 def verify_isolated_row_identities():
     """Check the isolated-row coefficients and the determinant for adjacent edges."""
     d, e, f, p, q, r, w = sp.symbols("d e f p q r w")
@@ -702,8 +810,12 @@ def main():
                        help="emit the triangle radical-pencil system over F5")
     modes.add_argument("--order-three", action="store_true", help="emit the order-three level two-plane system")
     modes.add_argument("--star", action="store_true", help="emit the unrestricted star chart over F5")
+    modes.add_argument("--star-hodge", choices=("collision", "injective"),
+                       help="emit a corrected-diagonal collision or injective branch over F5")
     modes.add_argument("--star-fourier", action="store_true",
                        help="emit the star chart in coordinates adapted to leaf rotation")
+    modes.add_argument("--star-fourier-center", action="store_true",
+                       help="emit the Fourier star equations with center-diagonal quartic rewrites")
     modes.add_argument("--star-invariants", action="store_true",
                        help="list orbit sums generating the star invariant quotient over F5")
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
@@ -732,8 +844,13 @@ def main():
         system = order_three_chart()
     elif args.star:
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["star"])
+    elif args.star_hodge:
+        system = star_hodge_chart(args.star_hodge)
     elif args.star_fourier:
         names, equations, _ = star_fourier_chart()
+        system = names, equations
+    elif args.star_fourier_center:
+        names, equations, _ = star_fourier_chart(center_diagonal=True)
         system = names, equations
     elif args.star_invariants:
         _, generators = star_invariant_generators()
@@ -759,6 +876,8 @@ def main():
         verify_chart_data()
         verify_matching_direction_identities()
         verify_isolated_row_identities()
+        verify_order_three_quadratic()
+        verify_hodge_metric()
         verify_triangle_cofactor_rank()
         verify_characteristic_three_plane()
         names, equations = order_three_chart()
