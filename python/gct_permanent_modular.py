@@ -1,6 +1,6 @@
 """Exact modular certificates for permanent level planes.
 
-Run with python3 gct_permanent_modular.py. Requires SymPy and NumPy
+Run with python3 python/gct_permanent_modular.py. Requires SymPy and NumPy
 (integer arithmetic only).
 """
 

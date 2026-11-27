@@ -32,13 +32,13 @@
   \addlinespace
   Polynomial agreement certificates &
   \path{PvsNP/AgreementCertificate.lean} checks the affine comparison
-  for normalized coefficients. \path{polynomial_agreement_selector.py}
+  for normalized coefficients. \path{python/polynomial_agreement_selector.py}
   selects certificates over a prime field and checks the four-site examples. \\
   \addlinespace
   Finite Boolean agreement &
   Section~\ref{sec:boolean-agreement} proves the projection formula and
   identifies agreement with the tagged cross component.
-  \path{agreement_scheme.py} checks the two one-bit families by symbolic
+  \path{python/agreement_scheme.py} checks the two one-bit families by symbolic
   elimination and exhaustive evaluation. \\
   \addlinespace
   Orbit closures and finite symmetry &
@@ -48,7 +48,7 @@
   \addlinespace
   Permanent level spaces &
   Section~\ref{sec:gct} gives the coefficient pullback and the tangent
-  Hessian bound. \path{gct_permanent_fiber.py} checks the symmetric
+  Hessian bound. \path{python/gct_permanent_fiber.py} checks the symmetric
   rank-two pencil, its support bound, and the Hessian rank at \(J_4\). \\
   \addlinespace
   Three-plane constraints &
@@ -62,9 +62,9 @@
   \addlinespace
   Modular obstructions &
   Section~\ref{sec:gct-modular} gives the written specialization and
-  chart reductions. \path{gct_permanent_modular.py} checks rational
+  chart reductions. \path{python/gct_permanent_modular.py} checks rational
   points at 5 and 7 and the unit ideals for the two rank exclusions
-  at 11 and 23. \path{gct_permanent_involutions.py} checks the
+  at 11 and 23. \path{python/gct_permanent_involutions.py} checks the
   involution chart ideals at 11, and \path{gct_permanent_f25.cpp} checks
   the three extension-field charts. The cubic-field orbit bound is a
   written argument. \\
@@ -73,13 +73,13 @@
   \path{PvsNP/LevelSetExtension.lean} checks polynomial first variation
   and the hyperplane reduction. Section~\ref{sec:gct-extension} gives
   the dimension criterion and specialization argument.
-  \path{gct_permanent_extensions.py} checks the 156 prime-field two-planes
+  \path{python/gct_permanent_extensions.py} checks the 156 prime-field two-planes
   and their residual equations. \\
   \addlinespace
   Pl\"ucker cuts &
   Section~\ref{sec:gct-plucker} gives the extension-field example,
   the single-edge exclusion, and the 24-chart cover.
-  \path{gct_permanent_plucker.py} checks the example and generates
+  \path{python/gct_permanent_plucker.py} checks the example and generates
   the exact msolve inputs. Section~\ref{sec:gct-path} reduces the
   unrestricted problem to a single path chart using the checked
   opposite-edge systems. Exact bases for the matching and adjacent
@@ -95,10 +95,10 @@
   frequency two has a separate verified degree-eight bound. \\
   \addlinespace
   Frobenius orbits &
-  \path{gct_permanent_frobenius.py} checks the five twisted Witt
+  \path{python/gct_permanent_frobenius.py} checks the five twisted Witt
   searches and the double-transposition fixed sector.
   Section~\ref{sec:gct-path} derives the 48-point lower bounds and
-  the invariant-algebra criterion. \path{gct_permanent_plucker.py}
+  the invariant-algebra criterion. \path{python/gct_permanent_plucker.py}
   computes the generators for the multiplication checks. \\
   \addlinespace
   Complexity comparisons &

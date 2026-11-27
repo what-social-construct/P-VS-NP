@@ -71,7 +71,7 @@ with a trailing newline per line is
 
 The local [Lean bridge](lean/PvsNP/AgreementCertificate.lean) applies
 the affine collision square to the imported coefficient map. The
-[prime-field executable](polynomial_agreement_selector.py) implements
+[prime-field executable](python/polynomial_agreement_selector.py) implements
 the draft's row-reduction and degree search for these equations.
 
 ## GOT
@@ -128,7 +128,7 @@ gives the conditional border determinantal lower bound from a dimension
 bound. [`L-gct-231`](https://data.pequalnp.com/data/lemma/L-gct-231.c93684f58e76.json)
 asks for a symmetric three-dimensional level space at $J_4$. The
 [written derivation](manuscript/03-complexity/gct.tex) and
-[executable check](gct_permanent_fiber.py) give an exact two-dimensional
+[executable check](python/gct_permanent_fiber.py) give an exact two-dimensional
 example and the support-specific upper bound. The three-dimensional
 question is recorded as a conjecture. The written Hessian argument gives
 an overall upper bound of four in the symmetric order-four problem, with
@@ -162,7 +162,7 @@ generic collision algebra with $L\times N$, with first projection the
 diagonal map and $\operatorname{Gal}(N/K)\cong S_3$. For the permanent problem
 we adopt the method of isolating the equations left by an exact
 reduction. The Witt charts and the zero-row-sum exclusion are local
-derivations from permanent coefficients. The [executable](gct_permanent_fiber.py)
+derivations from permanent coefficients. The [executable](python/gct_permanent_fiber.py)
 generates the four remaining systems and checks the finite-field rank
 certificate used in the zero-row-sum argument.
 
@@ -170,7 +170,7 @@ The [modular obstructions](manuscript/03-complexity/gct-modular.tex) use
 the Stacks Project results [projective implies proper, Tag 01WC](https://stacks.math.columbia.edu/tag/01WC)
 and [valuative criterion for properness, Tag 0BX5](https://stacks.math.columbia.edu/tag/0BX5).
 The two geometric special-fiber exclusions are written reductions to
-unit-ideal checks. The [modular executable](gct_permanent_modular.py)
+unit-ideal checks. The [modular executable](python/gct_permanent_modular.py)
 checks the rank obstructions over the algebraic closures at 11 and 23
 via explicit chart equations and polynomial operations in the prime
 fields. It also checks absence of rational points at 5 and 7 by exact
@@ -178,7 +178,7 @@ enumeration and compatibility. The latter two checks supply the local
 and global arithmetic restrictions via the valuative criterion.
 
 The [three-cycle calculation](manuscript/03-complexity/gct-three-plane.tex)
-uses simultaneous index relabeling. The [permanent checker](gct_permanent_fiber.py)
+uses simultaneous index relabeling. The [permanent checker](python/gct_permanent_fiber.py)
 computes the fixed-sector ideals over $\mathbb Q$, $\mathbb F_5$,
 $\mathbb F_7$, and $\mathbb F_{11}$ and the eigencubic by exact expansion. The point count for
 the nonnormal cubic case is a written application of commuting relabeling
@@ -187,14 +187,14 @@ definition. [Sutherland, Section 2.1](https://math.mit.edu/~drew/ArithmeticEquiv
 supplies the unramified Frobenius cycle interpretation. The JC3 Paper I
 result concerns the generic extension of a degree-three Keller map.
 
-The [involution chart checks](gct_permanent_involutions.py) establish
+The [involution chart checks](python/gct_permanent_involutions.py) establish
 geometric emptiness of the relevant invariant-plane loci in
 characteristic 11. The written proof applies the same projective
 specialization as the rank exclusions. The [quadratic-field checker](gct_permanent_f25.cpp)
 uses an explicit Witt basis over $\mathbb F_{25}$ and exhausts the
 three representative charts by necessary column and pair tests.
 The ordinary-diagonal classification and its extension kernels
-are local derivations verified by [the coefficient checker](gct_permanent_fiber.py).
+are local derivations verified by [the coefficient checker](python/gct_permanent_fiber.py).
 
 The [two-plane extension reduction](manuscript/03-complexity/gct-extension.tex)
 uses [Stacks Project, Tag 0D4I](https://stacks.math.columbia.edu/tag/0D4I)
@@ -202,7 +202,7 @@ for upper semicontinuity of geometric fiber dimension of the proper
 rank locus. [Lean](lean/PvsNP/LevelSetExtension.lean) checks linearity
 of the first coefficient, the kernel dimension argument, and the
 hyperplane reduction for a downward-closed level predicate. The
-[executable](gct_permanent_extensions.py) checks all prime-field
+[executable](python/gct_permanent_extensions.py) checks all prime-field
 two-planes and the residual polynomials modulo 5. The geometric lift
 of this check fixes the given rational two-plane before specializing.
 
@@ -212,7 +212,7 @@ section and first-variation bound for `L-gct-231`.
 The [public follow-up](https://github.com/open-goat/pequalnp-proofs/discussions/37059#discussioncomment-19935662)
 records the two-edge exclusion and its specialization argument.
 
-The [Plücker-cut generator and checks](gct_permanent_plucker.py) use the
+The [Plücker-cut generator and checks](python/gct_permanent_plucker.py) use the
 same permanent coefficients as the extension checker. The finite-field
 counterexample to first-order cut emptiness is verified by direct
 expansion and a rank minor. The four one-edge extension systems were
@@ -234,7 +234,7 @@ system was exported for exact msolve and the run ended before a basis
 was produced.
 
 The matching-direction extension uses the same block identity and the
-previous single-edge exclusion. The [pencil generator](gct_permanent_plucker.py)
+previous single-edge exclusion. The [pencil generator](python/gct_permanent_plucker.py)
 checks the two polar identities over $\mathbb Q$ modulo $h^2-2$. All
 three normalized matching systems were checked over $\mathbb F_5$ with
 [msolve v0.11.0](https://msolve.lip6.fr/) in exact Gröbner mode
@@ -250,7 +250,7 @@ give unit bases over $\mathbb F_5$. The generator checks the identities
 over exact coefficients and emits the msolve systems.
 
 For triangle support, the same cofactor argument reduces to a
-rank-two radical pencil. The [generator and checker](gct_permanent_plucker.py)
+rank-two radical pencil. The [generator and checker](python/gct_permanent_plucker.py)
 check the five-variable rank exclusion by exact Gröbner basis and
 emit a 12-variable pencil with reduced msolve basis `[1]` modulo five.
 The [written incidence argument](manuscript/03-complexity/gct-extension.tex)
@@ -269,7 +269,7 @@ The subsequent exact degree-seven search uses the same 31 adapted
 generators over $\mathbb F_5$. Sparse row elimination gives rank
 130,832 for the 147,622 by 240,460 even matrix. The
 [stored functional](gct_permanent_path_degree7.dual.gz) and its
-[independent verifier](gct_permanent_plucker.py) certify separation of
+[independent verifier](python/gct_permanent_plucker.py) certify separation of
 the constant from the row span. The verifier checks every original row
 and needs only the functional, without the elimination transcript.
 
@@ -280,10 +280,10 @@ matrix for omitted frequency two was reduced exactly by sparse
 elimination grouped by the three column degrees. Its rank was
 260,865. The [degree-eight functional](gct_permanent_cycle_omit2_degree8.dual.gz)
 has 97,877 nonzero entries and was checked against all original rows
-by the [independent verifier](gct_permanent_plucker.py).
+by the [independent verifier](python/gct_permanent_plucker.py).
 
 The star Fourier coordinates use the $S_3$ action on the three leaves.
-The [generator](gct_permanent_plucker.py) verifies descent from
+The [generator](python/gct_permanent_plucker.py) verifies descent from
 $\mathbb F_{25}$, rotation weights, and reflection over exact
 coefficients. Degree-seven invariant elimination gives rank 43,913 in
 the matrix of 49,527 row orbits and 80,588 column orbits. Its
@@ -291,18 +291,18 @@ the matrix of 49,527 row orbits and 80,588 column orbits. Its
 reflection against all 98,336 weight-zero products. The degree-eight
 run ended after 155,700 of 209,809 rows without deciding the bound.
 
-The [Frobenius checker](gct_permanent_frobenius.py) constructs the
+The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
-It uses the existing [Witt chart enumeration](gct_permanent_modular.py)
+It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)
 with exact extension-field arithmetic for the twisted classes.
 The double-transposition positive sector uses four
-[involution charts](gct_permanent_involutions.py) at five. These
+[involution charts](python/gct_permanent_involutions.py) at five. These
 exclusions and the earlier support and three-cycle arguments give
 the 48-point lower bounds in the manuscript. The complex statement
 uses the finite free closure of the reduced generic fiber.
 The invariant-algebra criterion uses
 [Cziszter and Domokos, Theorem 10.3](https://arxiv.org/abs/1205.3011)
-for the degree-four generating bound. The [orbit-sum generator](gct_permanent_plucker.py)
+for the degree-four generating bound. The [orbit-sum generator](python/gct_permanent_plucker.py)
 uses decomposables and leading parts of averaged equation multiples
 to choose 127 generators for the quotient by exact row reduction.
 The dimension-seven upper bound is a proof target.
@@ -466,7 +466,7 @@ equivalence for monotone scans. Its cyclic incidence relation and example
 rows are those of [`L-meta-1990`](https://data.pequalnp.com/data/lemma/L-meta-1990.307c700bb206.json)
 and the full-function target [`L-meta-972`](https://data.pequalnp.com/data/lemma/L-meta-972.9ae53fe249f7.json).
 
-The local [gate-elimination experiment](contributions/pequalnp/incidence_gate_elimination.py)
+The local [gate-elimination experiment](python/incidence_gate_elimination.py)
 uses the constant-wire and reader conditions in the upstream
 [Lean proof of `L-meta-18649`](https://github.com/open-goat/pequalnp-proofs/blob/da164f9fce46e9d5fdbf7fd03514b202643e82ed/lean/PEqualNP/Outside/L_meta_18649.lean).
 It independently builds shortened AND/OR circuits for the two explicit

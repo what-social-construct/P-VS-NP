@@ -1,4 +1,5 @@
 __pycache__/
 lean/.lake/
 manuscript/.build/
-output/pdf/
+output/pdf/*
+!output/pdf/affine-witness-collisions.pdf

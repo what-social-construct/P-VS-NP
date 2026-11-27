@@ -1,6 +1,6 @@
 """Exact finite Boolean model of a computational agreement scheme.
 
-Run with: python3 agreement_scheme.py
+Run with: python3 python/agreement_scheme.py
 Requires SymPy. All polynomial computations are over F_2, modulo z^2-z
 for every parameter and input bit. This is a toy construction, not a
 complexity lower bound or a formal Lean proof.

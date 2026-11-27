@@ -13,7 +13,9 @@ uses a second affine family over a finite field. Its coefficient system
 supports fixed-degree certificate selection under a prefix and a search
 for the strongest certified error bound.
 
-Start with the [TeX manuscript](manuscript/main.tex) and the
+[Read the manuscript PDF](output/pdf/affine-witness-collisions.pdf)
+
+Start with the [TeX source](manuscript/main.tex) and the
 [semantic parity table](SEMANTIC-PARITY.md). The
 [source ledger](SOURCE-LEDGER.md) traces the mathematical claims to the Lean
 proofs, computations, and cited results.
@@ -25,6 +27,7 @@ Build the PDF with a TeX distribution that includes Latexmk and Biber.
 ~~~sh
 cd manuscript
 latexmk -pdf -outdir=.build main.tex
+cp .build/main.pdf ../output/pdf/affine-witness-collisions.pdf
 ~~~
 
 Build the Lean development from the repository root with Elan installed.
@@ -36,24 +39,24 @@ lake exe cache get
 lake build
 ~~~
 
-Run the examples from the repository root with Python 3.
+The [Python tools](python/) run from the repository root with Python 3.
 The Boolean agreement example uses SymPy.
 
 ~~~sh
-python3 affine_witness_selector.py
-python3 agreement_scheme.py
-python3 polynomial_agreement_selector.py
+python3 python/affine_witness_selector.py
+python3 python/agreement_scheme.py
+python3 python/polynomial_agreement_selector.py
 ~~~
 
 The permanent checks use SymPy. The modular certificates also use NumPy
 for exact integer arithmetic.
 
 ~~~sh
-python3 gct_permanent_fiber.py
-python3 gct_permanent_modular.py
-python3 gct_permanent_involutions.py
-python3 gct_permanent_extensions.py
-python3 gct_permanent_plucker.py
+python3 python/gct_permanent_fiber.py
+python3 python/gct_permanent_modular.py
+python3 python/gct_permanent_involutions.py
+python3 python/gct_permanent_extensions.py
+python3 python/gct_permanent_plucker.py
 ~~~
 
 The Plücker checker also exports exact input for msolve. Choose
@@ -68,24 +71,24 @@ The unrestricted path chart can also be exported in coordinates adapted
 to path reversal.
 
 ~~~sh
-python3 gct_permanent_plucker.py --single-edge 0 > /tmp/gct-edge.ms
+python3 python/gct_permanent_plucker.py --single-edge 0 > /tmp/gct-edge.ms
 msolve -g 2 -l 2 -f /tmp/gct-edge.ms -o /tmp/gct-edge.out
-python3 gct_permanent_plucker.py --matching 0 > /tmp/gct-matching.ms
-python3 gct_permanent_plucker.py --order-three > /tmp/gct-order-three.ms
-python3 gct_permanent_plucker.py --adjacent-edge 0 > /tmp/gct-adjacent.ms
-python3 gct_permanent_plucker.py --triangle-radical > /tmp/gct-triangle.ms
-python3 gct_permanent_plucker.py --chart u P v > /tmp/gct-plucker.ms
-python3 gct_permanent_plucker.py --star > /tmp/gct-star.ms
-python3 gct_permanent_plucker.py --path > /tmp/gct-path.ms
-python3 gct_permanent_plucker.py --path-reversal > /tmp/gct-path-reversal.ms
+python3 python/gct_permanent_plucker.py --matching 0 > /tmp/gct-matching.ms
+python3 python/gct_permanent_plucker.py --order-three > /tmp/gct-order-three.ms
+python3 python/gct_permanent_plucker.py --adjacent-edge 0 > /tmp/gct-adjacent.ms
+python3 python/gct_permanent_plucker.py --triangle-radical > /tmp/gct-triangle.ms
+python3 python/gct_permanent_plucker.py --chart u P v > /tmp/gct-plucker.ms
+python3 python/gct_permanent_plucker.py --star > /tmp/gct-star.ms
+python3 python/gct_permanent_plucker.py --path > /tmp/gct-path.ms
+python3 python/gct_permanent_plucker.py --path-reversal > /tmp/gct-path-reversal.ms
 ~~~
 
 The fixed star chart in Fourier coordinates has its own
 degree-seven functional. Its data header selects the star chart.
 
 ~~~sh
-python3 gct_permanent_plucker.py --star-fourier > /tmp/gct-star-fourier.ms
-gzip -dc gct_permanent_star_degree7.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
+python3 python/gct_permanent_plucker.py --star-fourier > /tmp/gct-star-fourier.ms
+gzip -dc gct_permanent_star_degree7.dual.gz | python3 python/gct_permanent_plucker.py --verify-path-dual -
 ~~~
 
 The exact Frobenius searches show that a nonempty fiber at five must
@@ -95,8 +98,8 @@ nonexistence question. The generator command lists the 127 orbit sums
 needed for a multiplication-closure check.
 
 ~~~sh
-python3 gct_permanent_frobenius.py
-python3 gct_permanent_plucker.py --star-invariants
+python3 python/gct_permanent_frobenius.py
+python3 python/gct_permanent_plucker.py --star-invariants
 ~~~
 
 The exact degree-seven certificate search found a functional that
@@ -105,7 +108,7 @@ of the path generators within the degree cap. Replay all 147,622
 pairings with
 
 ~~~sh
-gzip -dc gct_permanent_path_degree7.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
+gzip -dc gct_permanent_path_degree7.dual.gz | python3 python/gct_permanent_plucker.py --verify-path-dual -
 ~~~
 
 The data contains the degree cap followed by nonzero entries
@@ -118,8 +121,8 @@ degree-eight witness. Its data header includes the omitted frequency
 after the cap and selects the corresponding chart for replay.
 
 ~~~sh
-python3 gct_permanent_plucker.py --four-cycle 2 > /tmp/gct-cycle-2.ms
-gzip -dc gct_permanent_cycle_omit2_degree8.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
+python3 python/gct_permanent_plucker.py --four-cycle 2 > /tmp/gct-cycle-2.ms
+gzip -dc gct_permanent_cycle_omit2_degree8.dual.gz | python3 python/gct_permanent_plucker.py --verify-path-dual -
 ~~~
 
 The quadratic-field check uses a C++17 compiler.

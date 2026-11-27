@@ -1,6 +1,6 @@
 """Check exact polynomial constraints for symmetric permanent level planes at J4.
 
-Run with python3 gct_permanent_fiber.py. Requires SymPy. The identities
+Run with python3 python/gct_permanent_fiber.py. Requires SymPy. The identities
 are checked with exact coefficients and hold over the complex numbers.
 """
 
