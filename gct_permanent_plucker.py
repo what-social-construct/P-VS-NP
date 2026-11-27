@@ -290,15 +290,53 @@ def four_cycle_chart(omitted_frequency):
     return names, list(equations.values()), weights
 
 
+def star_fourier_chart():
+    """Diagonalize leaf rotation in the fixed star chart and descend to F5."""
+    names = tuple(f"{column}{kind}{mode}" for column, kind, mode in product("abc", "de", range(3)))
+    extended, *variables, omega = ring((*names, "omega"), sp.GF(PRIME), "grevlex")
+    coefficients, *_ = ring(names, sp.GF(PRIME), "grevlex")
+    relation = omega**2 + omega + 1
+    directions = []
+    for pivot in range(3):
+        diagonal = variables[6*pivot:6*pivot+3]
+        opposite = variables[6*pivot+3:6*pivot+6]
+        values = {}
+        for i in range(3):
+            values[0, i+1] = omega**((-i*pivot) % 3)/3
+            values[i+1, i+1] = sum(omega**((-i*k) % 3)*diagonal[k] for k in range(3))/3
+            edge = tuple(j+1 for j in range(3) if j != i)
+            values[edge] = sum(omega**((-i*k) % 3)*opposite[k] for k in range(3))/3
+        directions.append(tangent_direction(values[slot] for slot in COORDINATES))
+
+    equations = {}
+    for powers, polynomial in pencil_coefficients(extended, directions).items():
+        reduced = polynomial.rem([relation])
+        assert all(term[-1] == 0 for term in reduced)
+        equations[powers] = coefficients.from_dict({term[:-1]: value for term, value in reduced.items()})
+    weights = [(mode-pivot) % 3 for pivot, _, mode in product(range(3), range(2), range(3))]
+    reflection = [6*(-pivot % 3) + 3*kind + (-mode % 3)
+                  for pivot, kind, mode in product(range(3), range(2), range(3))]
+    assert len(equations) == 31
+    for (a, b, c), polynomial in equations.items():
+        assert all((sum(power*weight for power, weight in zip(term, weights)) + b + 2*c) % 3 == 0
+                   for term in polynomial)
+        reflected = {tuple(term[i] for i in reflection): value for term, value in polynomial.items()}
+        assert coefficients.from_dict(reflected) == equations[a, c, b]
+    return names, list(equations.values()), weights
+
+
 def verify_path_degree_dual(source):
     """Check a functional taking 1 to 1 and killing all bounded invariant products."""
     header = next(source, "").split()
     if len(header) not in (1, 2):
-        raise ValueError("Expected the degree cap and an optional omitted Fourier frequency.")
+        raise ValueError("Expected the degree cap and an optional Fourier chart.")
     degree_cap = int(header[0])
     if degree_cap < 2:
         raise ValueError("The degree cap must be at least two.")
-    if len(header) == 2:
+    if len(header) == 2 and header[1] == "star":
+        names, equations, weights = star_fourier_chart()
+        symmetry_order = 3
+    elif len(header) == 2:
         omitted_frequency = int(header[1])
         if omitted_frequency not in range(4):
             raise ValueError("The omitted frequency must be between zero and three.")
@@ -593,6 +631,8 @@ def main():
                        help="emit the triangle radical-pencil system over F5")
     modes.add_argument("--order-three", action="store_true", help="emit the order-three level two-plane system")
     modes.add_argument("--star", action="store_true", help="emit the unrestricted star chart over F5")
+    modes.add_argument("--star-fourier", action="store_true",
+                       help="emit the star chart in coordinates adapted to leaf rotation")
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
     modes.add_argument("--path-reversal", action="store_true",
                        help="emit the path chart in coordinates adapted to path reversal")
@@ -619,6 +659,9 @@ def main():
         system = order_three_chart()
     elif args.star:
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["star"])
+    elif args.star_fourier:
+        names, equations, _ = star_fourier_chart()
+        system = names, equations
     elif args.path:
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
     elif args.path_reversal:

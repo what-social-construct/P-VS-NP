@@ -332,10 +332,18 @@ a two-plane. As above, the constant last row on that kernel must
 vanish, and the upper blocks would give an excluded order-three
 level two-plane.
 
-An exact five-variable calculation over \(\mathbb F_5\) excludes
-cofactor rank at most one. It imposes the level coefficients of
-\(D\), all two-by-two minors of \(H\), and a variable inverting the
-product of the two nonpivot edge entries. Rank three is impossible
+Write \(a,b,c\) for the diagonal of \(C\) and \(p,q,r\) for its
+entries at \(01,02,12\). The principal cofactor minor
+\(H_{00}H_{11}-H_{01}^2\) equals
+\(ck-2cp(cp+2qr)\). Its cyclic versions and \(k=0\) show
+that cofactor rank at most one forces each of
+\(ar/(pq), bq/(pr), cp/(qr)\) to be zero or \(-2\).
+Writing these ratios as \(s,t,u\), the permanent equation is
+\(stu+s+t+u+2=0\). In characteristic five exactly one ratio
+must be \(-2\). Relabel so \(a=-2pq/r\) and \(b=c=0\).
+Then \(H_{00}H_{12}-H_{01}H_{02}=-2pqr^2\ne0\), a
+contradiction. The executable also checks this exclusion by an
+exact five-variable Gr\"obner basis. Rank three is impossible
 because the image has dimension at least two and is isotropic.
 For rank two the quotient by the one-dimensional radical is
 nondegenerate. Its isotropic subspaces have dimension at most one,
@@ -363,6 +371,33 @@ chart of this one fixed star. Since it is also proper over
 \(\mathbb Z_{(5)}\), it is finite over that base~\cite{stacksproperaffine}.
 The 18-variable star system now suffices for unrestricted
 nonexistence. Its ideal remains undecided.
+
+\paragraph{Permuting the leaves of the star.}
+Fix the center and act by \(S_3\) on the leaves. Over
+\(\mathbb F_{25}\) let \(\omega\) be a primitive cube root of unity.
+Take Fourier coordinates on the three star entries, the three leaf
+diagonal entries, and the three edges opposite the leaves. Normalize
+the three star frequencies to the identity. Each column with pivot
+frequency \(j\) then has six free coordinates with rotation weights
+\(k-j\) modulo three, for \(k=0,1,2\) on each of the two free
+triples. The remaining diagonal entry follows from the entry-sum
+condition. Frobenius sends \(\omega\) to \(\omega^{-1}\) and thus
+reflects the leaf indices in each normalized direction with the
+Fourier variables fixed. Permanent invariance therefore makes all
+31 coefficient polynomials descend to \(\mathbb F_5\). The
+executable checks this descent, the weights, and the reflection
+which exchanges frequencies one and two in both coordinates and
+frame columns.
+
+Averaging over the three rotations restricts a certificate to
+weight-zero products. Averaging further over reflection gives
+49,527 generator-product orbits and 80,588 monomial orbits at
+degree seven. Exact elimination in these coordinates produces
+a functional taking the constant to one. Its values on individual
+monomials are recovered by dividing the orbit-sum value by the
+orbit size. The executable checks it directly against all 98,336
+weight-zero products before reflection, ruling out a degree-seven
+identity in this chart.
 
 \paragraph{Path reversal and bounded-degree certificates.}
 Replace the three path pivots by \(B_{01}+B_{23}, B_{01}-B_{23}, B_{12}\).

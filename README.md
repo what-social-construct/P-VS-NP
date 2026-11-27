@@ -80,6 +80,14 @@ python3 gct_permanent_plucker.py --path > /tmp/gct-path.ms
 python3 gct_permanent_plucker.py --path-reversal > /tmp/gct-path-reversal.ms
 ~~~
 
+The fixed star chart in Fourier coordinates has its own
+degree-seven functional. Its data header selects the star chart.
+
+~~~sh
+python3 gct_permanent_plucker.py --star-fourier > /tmp/gct-star-fourier.ms
+gzip -dc gct_permanent_star_degree7.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
+~~~
+
 The exact degree-seven certificate search found a functional that
 takes the constant to one and annihilates every even monomial multiple
 of the path generators within the degree cap. Replay all 147,622

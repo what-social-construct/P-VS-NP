@@ -280,6 +280,15 @@ elimination grouped by the three column degrees. Its rank was
 has 97,877 nonzero entries and was checked against all original rows
 by the [independent verifier](gct_permanent_plucker.py).
 
+The star Fourier coordinates use the $S_3$ action on the three leaves.
+The [generator](gct_permanent_plucker.py) verifies descent from
+$\mathbb F_{25}$, rotation weights, and reflection over exact
+coefficients. Degree-seven invariant elimination gives rank 43,913 in
+the matrix of 49,527 row orbits and 80,588 column orbits. Its
+[functional](gct_permanent_star_degree7.dual.gz) is checked before
+reflection against all 98,336 weight-zero products. The degree-eight
+run ended after 155,700 of 209,809 rows without deciding the bound.
+
 The Homotopical Encryption local repository was reviewed at
 `1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3
 `lean/Proximity/Core/PolynomialAgreement/Boundary.lean` supplies
