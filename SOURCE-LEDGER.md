@@ -712,6 +712,14 @@ of section factors uses the three polar rows of the permanent net.
 The degree-two negative fiber and the eight-line control are direct
 calculations in this repository. [Permanent fiber](python/gct_collision_line_divisor_slopes.py) · [Extension control](python/gct_collision_polar_extension.py)
 
+A finite-field search on the invariant plane curve supplied the degree-six
+point of Proposition 5.8. The standalone certificate reconstructs that point
+in a specified power basis and tests the full transverse section. Its
+last Jacobian is taken on the moving base curve to determine the order
+of the one vanishing factor. The multiplicity and the improved bound use
+the preceding resultant product and field-of-definition propositions.
+[Degree-six replay](python/gct_collision_residual_candidate.py) · [Derivation](manuscript/03-complexity/common-line-decomposition.tex)
+
 The [Frobenius checker](python/gct_permanent_frobenius.py) constructs the
 fixed tangent spaces for all five conjugacy classes modulo five.
 It uses the existing [Witt chart enumeration](python/gct_permanent_modular.py)

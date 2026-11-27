@@ -141,7 +141,7 @@ preserved under a change of frame, adding multiples of \(B\) to its
 representatives, and permuting the vertices. It therefore defines a
 closed subfamily with the same ordering decomposition. For an individual
 recovered line these extra coefficients test that particular lift.
-The factorization of \((h)_0\) and the list of its nonempty line
+The complete factorization of \((h)_0\) and the list of its nonempty line
 fibers remain undetermined.
 
 \paragraph{A complete test over quadratic slopes.}
@@ -251,8 +251,8 @@ kernels of the base-ring maps to the incidence coordinate rings on the
 ten standard affine opens of \(\operatorname{Gr}(2,5)\). Each open
 normalizes a chosen invertible two-column minor to the identity and
 allows all six other entries to vary. This gives \(\mathcal I_Z\),
-including its infinitesimal thickness. The degree of \(L\) and the
-individual multiplicities \(a\) require that image calculation.
+including its infinitesimal thickness. This computes the individual
+multiplicities \(a\) once the chart kernels are known.
 
 \begin{proposition}[Fields of common lines on a transverse section]
 \label{prop:common-line-extension}
@@ -313,3 +313,57 @@ point above the original one. Flatness preserves the intersection
 of the affine-chart kernels defining the image. Thus the orders of
 the candidate, the image and their residual at every such point are
 \(n,a,n-a\), even when the image is nonreduced.
+
+\begin{proposition}[A simple excess point on the permanent face]
+\label{prop:common-line-excess-point}
+Let \(K=\mathbb F_5[t]/(t^6+t^5+t^4+1)\). For an integer with
+base-five digits \(a_i\), write \([a]=\sum_{i=0}^5 a_it^i\).
+The parameters
+\[
+      (p,q,u,v)=([14790],[13475],[6884],[332])
+\]
+define a degree-six closed point \(s\) on \(U\).
+It occurs with multiplicity one in \(V(j)\) and has empty geometric
+common-line fiber. The divisor \(V(j)-[s]\) contains the image \(Z\)
+and has degree at most \(1338\) over \(\mathbb F_5\).
+\end{proposition}
+
+\begin{proof}
+The finite-field certificate verifies the irreducible modulus, the
+pure equations and the open conditions at the displayed parameters.
+The slope lies in no proper subfield of \(K\). On \(H=0\) there are
+no points at \(D=0\), so \(B_D(s)\ne0\). In the chart \(D=1\), the
+three quadrics cut out eight simple points of relative degrees
+\(1,1,3,3\). In the certificate a separating coordinate \(X\) has a
+squarefree degree-eight equation. Its gcd with each \(Q_i(c_D)\),
+in order \(i=2,3,4\), is respectively \(X-[2032],1,1\).
+Thus one \(K\)-point gives a zero of the residual equation \(G\).
+Its polar two-space passes \(Q_2\) and fails both other restrictions.
+Proposition~\ref{prop:common-line-extension} excludes a common line
+over every extension of \(K\).
+
+To determine the order on the base, mark this section point \(x\)
+and a second vector \(y\) of its polar two-space, in the eight
+interpolation coordinates above. Impose the three pure equations,
+the three linear polars on each of \(x,y\), the equations
+\(H(x)=0,\ D(x)=1,\ Q_i(x)=b_i(x,y)=0\) for \(i=2,3,4\),
+and the two normalizations \((o_1(y),o_2(y))=(1,0)\).
+Here \(o_2(x)=[6560]\ne0\), and the two slots distinguish the
+two-space basis. These nineteen equations locally describe the
+étale section over the base curve with a uniquely determined \(y\).
+Upon adjoining \(Q_2(y)=0\), the evaluated Jacobian has rank twenty
+in the twenty coordinates \((p,q,u,v,x,y)\). Thus \(Q_2(y)\)
+has a simple zero along this branch.
+
+Étale locally the eight section points split. With \(D(x)=1\)
+and \(B_D\) a unit, the resultant product formula of
+Proposition~\ref{prop:common-line-residual} expresses \(j\) up to
+a unit as the product of the eight polar quadratic values for \(Q_2\).
+At the marked point \(c_D\) spans the intersection of its polar
+two-space with \(\ker D\), so it is a unit multiple of
+\(y-D(y)x\). Its quadratic value is therefore \(Q_2(y)\) up to a unit.
+All seven other values are units. This proves
+\(\operatorname{ord}_s(j)=1\). The fiber is empty and the incidence
+projection is projective, so \(s\) is outside the image. Removing
+this one closed point subtracts six from the degree bound 1344.
+\end{proof}
