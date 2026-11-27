@@ -345,6 +345,59 @@ with `-t 1 -g 2 -l 2`. The transposition exclusion also uses the
 previous adjacent-edge result at `a=b`. These permanent results have
 written and executable evidence.
 
+The [Lean umbrella](lean/PvsNP.lean) now exports the field-extension
+and residual proofs. [QuadraticDVRParity.lean](lean/PvsNP/QuadraticDVRParity.lean)
+ports the JC3 source identified above from Lean 4.28.0 to this project's
+4.35.0. The port adds module-system imports and updates the simplification
+of the valuation equality. The [upstream MIT notice](lean/PvsNP/LICENSE-JC3)
+accompanies it. [ScalarOrientation.lean](lean/PvsNP/ScalarOrientation.lean)
+uses that theorem on the scalar orientation equation and verifies the two
+normalized roots explicitly as $\pm2(c-1)$.
+
+[ReadoutResidual.lean](lean/PvsNP/ReadoutResidual.lean) copies
+`comap_annihilator_map_quotient_eq_colon` from the Galois repo's
+[OffDiagonal.lean](https://github.com/what-social-construct/galois-obstruction-theory/blob/4d104436d1c9020612cb671aaf4945fdb69befb7/GaloisObstructionTheory/Hodge/Collision/OffDiagonal.lean#L41).
+The source file has SHA-256
+`6417b50f17ce23dcbad0d0b8f689ede672e2b09c99a68e91152dee429823c599`.
+The copied theorem identifies the diagonal annihilator with the first
+colon. The local proofs compute the colon, the punctured-family image
+kernel and the base-change identity over arbitrary commutative rings.
+[ReadoutPivotIdeal.lean](lean/PvsNP/ReadoutPivotIdeal.lean) computes the
+first colon directly from the three rows of a matrix on a unit-minor chart.
+[PermanentReadout.lean](lean/PvsNP/PermanentReadout.lean) verifies
+the cofactor parameter on a unit pivot and transfers the Gram determinant
+identity to a field-degree bound. [OrientationDescent.lean](lean/PvsNP/OrientationDescent.lean)
+constructs the Frobenius action on the coefficient extension of a lift
+algebra. The absence of a degree-two full lift is supplied by the
+existing extension-field enumeration.
+
+[EdgeDiscriminant.lean](lean/PvsNP/EdgeDiscriminant.lean) computes the
+Gram matrix of the explicit six-edge form in both test families.
+[EdgeStabilizer.lean](lean/PvsNP/EdgeStabilizer.lean) identifies the
+simultaneous relabeling equations and derives the orbit sizes from
+the two geometric exclusions. The cyclic and transposition emptiness
+results still use the external Gröbner calculations above.
+
+For the fixed pair of transverse edge columns, the twelve generators in
+[TransversePairData.lean](lean/PvsNP/TransversePairData.lean) come from
+the six-variable `--emit-edge-family transverse-pair` system, whose
+SHA-256 is `9f8b87c79b4c5b2aff3be155595dc277237f13478a1fa20b593a0fc5d552a0e4`.
+Bounded polynomial elimination over
+$\mathbb F_5$ supplied the twelve multipliers, with 755 nonzero terms
+in total. [TransversePairChart.lean](lean/PvsNP/TransversePairChart.lean)
+independently forms the four-by-four permanent from its permutations
+and checks the declared coefficient expansion modulo five. Its
+`sparseExpr_eval` lemma identifies each reflected coefficient with
+ordinary polynomial evaluation on the six free diagonal entries.
+[TransversePairCertificate.lean](lean/PvsNP/TransversePairCertificate.lean)
+checks that the 14,018 term products combine to the constant one modulo
+five. [TransversePair.lean](lean/PvsNP/TransversePair.lean) proves that
+this computation preserves polynomial evaluation and derives absence of
+a common zero over every field of characteristic five.
+[TransversePairLevel.lean](lean/PvsNP/TransversePairLevel.lean) takes
+the coefficients in the two polynomial parameters and applies this
+identity to the permanent of the fixed pair.
+
 The [kernel chart](python/gct_permanent_hodge.py) uses the Hadamard
 coordinates from the [permanent fiber computation](python/gct_permanent_fiber.py)
 and the written Witt chart coverage. [msolve v0.11.0](https://msolve.lip6.fr/)

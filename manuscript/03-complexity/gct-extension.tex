@@ -640,13 +640,12 @@ the discriminant at five is
 \(\det(X^{\mathsf T}G_E X)/4=3(t^2-2)\).
 At the two conjugate roots of \(t^2=2\), the Gram matrix has rank
 two and all 20 three-row minors of \(X\) are nonzero.
-These edge planes therefore pass every test for full rank on a
-triple of edges. Nonetheless the last two columns alone admit
-no level lift. Keeping their six free diagonal entries, the
-three quadratic, four cubic and five quartic coefficients give
-reduced Gr\"obner basis \([1]\) at five. This also excludes any
-choice of the first complementary edge column with the other
-two columns fixed.
+Fix the last two columns. Their six free diagonal entries give twelve
+level equations \(f_i=0\), three quadratic, four cubic and five quartic.
+Their reduced Gr\"obner basis at five is \([1]\). The certificate
+\(\sum_{i=1}^{12}h_i f_i=1\) in the six-variable polynomial ring
+over \(\mathbb F_5\) excludes a lift of this pair over every extension
+field, for every choice of the first complementary edge column.
 
 For a three-cycle of the leaves, the edge plane is stable exactly
 when \(C\) commutes with its cyclic permutation matrix. These \(C\)

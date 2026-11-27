@@ -39,6 +39,11 @@ lake exe cache get
 lake build
 ~~~
 
+The permanent proofs are available through `import PvsNP`.
+The [parity table](SEMANTIC-PARITY.md) identifies the checked
+minor-chart algebra, orientation descent, field-degree bound,
+and edge-chart calculations, with the external inputs to each.
+
 The [Python tools](python/) run from the repository root with Python 3.
 The Boolean agreement example uses SymPy.
 
@@ -178,6 +183,7 @@ c++ -O3 -std=c++17 gct_permanent_f25.cpp -o /tmp/gct_permanent_f25
 ~~~
 
 The imported Homotopical Encryption Lean sources retain their
-[MIT notice](lean/LICENSE). The
+[MIT notice](lean/LICENSE). The quadratic valuation proof adapted from
+JC3 retains its [MIT notice](lean/PvsNP/LICENSE-JC3). The
 [source ledger](SOURCE-LEDGER.md) identifies the copied modules,
 revisions, and local source snapshots.

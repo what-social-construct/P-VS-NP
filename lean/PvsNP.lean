@@ -4,11 +4,21 @@ public import HCP.CoupledSignResidual
 public import PvsNP.AffineDisclosure
 public import PvsNP.AgreementCertificate
 public import PvsNP.Compatibility
+public import PvsNP.EdgeDiscriminant
+public import PvsNP.EdgeStabilizer
 public import PvsNP.FiniteSymmetry
 public import PvsNP.IncidenceObservations
 public import PvsNP.InvariantClosure
 public import PvsNP.LevelSetExtension
 public import PvsNP.OrbitClosureSeparation
+public import PvsNP.OrientationDescent
+public import PvsNP.PermanentReadout
+public import PvsNP.ReadoutPivotIdeal
+public import PvsNP.ReadoutResidual
+public import PvsNP.ScalarOrientation
+public import PvsNP.TransversePair
+public import PvsNP.TransversePairChart
+public import PvsNP.TransversePairLevel
 
 @[expose] public section
 
