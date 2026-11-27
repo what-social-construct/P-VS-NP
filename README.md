@@ -179,6 +179,7 @@ The chart remains open. [Proof and remaining target](manuscript/03-complexity/co
 python3 python/gct_collision_f25.py --verify-lines msolve
 python3 python/gct_collision_eliminant.py
 python3 python/gct_collision_fiber_slice.py
+python3 python/gct_collision_normalization.py
 python3 python/gct_collision_fiber_net.py
 python3 python/gct_collision_face.py
 python3 python/gct_collision_subresultant.py

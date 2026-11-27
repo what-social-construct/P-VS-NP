@@ -170,8 +170,10 @@ realization uses a prime $\ell$ different from the characteristic and an
 abstract embedding $\overline{\mathbb Q}_\ell\hookrightarrow\mathbb C$.
 Please identify the hypotheses and any checked declaration separately from
 the cited theorem when the Galois project adopts this comparison.
-P-vs-NP owns the smooth model of the degree-24 curve, its Frobenius
-data and any proposed link between Jacobian endomorphisms and the
+The [P-vs-NP calculation](manuscript/03-complexity/collision-normalization.tex)
+supplies a smooth model of genus 43, the traces of Frobenius and its
+square, and the degree form on the span of the identity and Frobenius.
+P-vs-NP also owns any proposed link from Jacobian endomorphisms to the
 common-line condition. The latter link is open. The reference is the written argument
 in the notes prepared for Christopher D. Long, revision
 `117cb4e316eb7977ff7144e68ab8fe7c8c1f0f21`.
@@ -570,6 +572,23 @@ The [curve checker](python/gct_collision_fiber_slice.py) reconstructs the
 two hyperplane sections, their Jacobian ranks over their residue fields
 and the singular scheme. The disjoint sections certify geometric
 integrality by the component-degree argument in the manuscript.
+The [local normalization calculation](python/gct_collision_normalization.py)
+works over the quadratic residue field at the two geometric singularities.
+It uses the original permanent equations to determine a square tangent
+cone and a critical value of order six. The [smooth-model proof](manuscript/03-complexity/collision-normalization.tex)
+derives the branch contact and genus and describes the smooth model by
+three blowups at the successive reduced singular loci. Completion preserves the local
+normalization defect. The Jacobian of the smooth projective model has
+dimension equal to the genus and Tate-module rank twice that dimension.
+[Stacks, delta and completion](https://stacks.math.columbia.edu/tag/0C3W)
+· [Stacks, Picard groups of curves](https://stacks.math.columbia.edu/tag/03RN)
+
+The point counts give traces of Frobenius and its square. Applying
+the cited trace identity on the span of Frobenius and the identity gives
+$Q_H(F-1)=270/43$. This comparison is a written derivation for the
+normalized curve and its polarized Jacobian. The general degree form
+and its source are recorded in the [Galois handoff](#handoff-to-galois-collision).
+
 The [edge-face checker](python/gct_collision_fiber_net.py) excludes the
 geometric support of both edge-orbit sections using polar sextic unit
 identities. The [vertex-symmetry calculation](python/gct_collision_face.py)

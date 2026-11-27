@@ -1,0 +1,84 @@
+\paragraph{The smooth model and its Jacobian.}
+The normalization \(\nu:\widetilde C\to C\) has genus 43. Each of the
+two geometric singularities has two smooth branches with intersection
+multiplicity three. The branches at either point are already defined
+over its residue field \(K=\mathbb F_{25}\).
+
+To see this, write \(s^2+s+1=0\) and work at
+\((a,b,c,d)=(0,s,0,1)\) in the chart \(m=1\). Set \(t=d-1\), and let
+\[
+ M=\det\frac{\partial(q_2,q_4)}{\partial(a,b)},\qquad
+ G=\det\frac{\partial(q_2,q_4,q_3)}{\partial(a,b,c)}.
+\]
+At this point \(M=-2s-1\ne0\). The formal implicit function theorem
+solves \(q_2=q_4=0\) for \(a,b-s\) in \(K[[c,t]]\). Write \(F(c,t)\)
+for \(q_3\) on this smooth surface. The chain rule gives \(G=M F_c\)
+on the surface. The determinant
+\(\det\bigl(\partial(q_2,q_4,G)/\partial(a,b,c)\bigr)\) at the point
+is \(-1\). In particular \(F_{cc}(0,0)=-1/M^2=2\), and there is a
+unique formal critical arc \(c=c_0(t)\) with \(F_c=0\), \(c_0(0)=0\).
+
+The following rows give the coefficients of \(t,\ldots,t^6\) on this
+arc. Direct substitution in the original permanent equations gives
+\(q_2=q_4=G=0\bmod t^7\) and \(q_3=-2t^6\bmod t^7\).
+\[
+\begin{array}{c|rrrrrr}
+ & t&t^2&t^3&t^4&t^5&t^6\\ \hline
+ a   &1&1&0&2&0&-2\\
+ b-s &2&s-2&-2s-1&2-s&2-s&2-s\\
+ c   &s&2-s&2-s&2s+1&-2s-1&s-2
+\end{array}
+\]
+Thus after translation by \(c_0(t)\) the equation is
+\(X^2U(X,t)-t^6 V(t)=0\) with \(U(0,0)=1\) and \(V(0)=2\).
+The unit \(2U/V\) has a square root with constant term one, since
+2 is invertible. The new coordinate \(Y=X\sqrt{2U/V}\) gives
+\[
+        \widehat{\mathcal O}_{C_K,(0,s,0,1)}
+                   \simeq K[[Y,t]]/(Y^2-2t^6).
+\]
+Indeed \((2s+1)^2=2\). Evaluation along the branches
+\(Y=\pm(2s+1)t^3\) identifies this ring with the pairs of series in
+\(K[[t]]\times K[[t]]\) congruent modulo \(t^3\). Its normalization
+is the whole product, and the quotient has length three. Completion
+preserves this delta invariant \cite{stacksDeltaCompletion}. Frobenius
+gives the same calculation at the conjugate singularity. By the
+normalization exact sequence and the previously computed arithmetic
+genus, \(g(\widetilde C)=49-3-3=43\). One can construct this model over \(\mathbb F_5\) by blowing up the
+reduced singular locus three times, taking the new reduced singular
+locus as center at each step. In the completed charts put
+\(Y=tY_1,\ Y_1=tY_2,\ Y_2=tY_3\) successively. The strict transforms
+satisfy \(Y_1^2=2t^4,\ Y_2^2=2t^2,\ Y_3^2=2\). The first two transforms
+each have a unique singular point above the center. At the third step
+the two tangent directions are finite and distinct. The centers are
+Frobenius-stable and the morphisms are isomorphisms off those centers.
+The resulting smooth projective geometrically connected curve is the
+normalization.
+
+The Jacobian has dimension 43. For each prime \(\ell\ne5\) its Tate
+module has rank 86 \cite{stacksPicardCurves}. The computed point counts
+on \(C\) are 18 over \(\mathbb F_5\) and 64 over \(\mathbb F_{25}\).
+The two singular points and their four branch points are all defined
+over \(\mathbb F_{25}\), with none rational over \(\mathbb F_5\).
+The counts on \(\widetilde C\) are consequently 18 and 66. If \(\pi\)
+is the fifth-power Frobenius on its Jacobian, the curve trace formula
+gives \(\operatorname{Tr}(\pi)=-12\) and
+\(\operatorname{Tr}(\pi^2)=-40\). Its zeta numerator
+\(\det(1-T\pi\mid V_\ell\operatorname{Jac}(\widetilde C))\) has degree
+86 and begins \(1+12T+92T^2\) \cite{longCurveFrobenius}.
+For an ample line bundle \(L\) on the projective Jacobian over
+\(\mathbb F_5\), let \(H\) be the numerical class of the symmetric
+ample bundle \(L\otimes[-1]^*L\). Frobenius pulls back \(H\) to \(5H\),
+so \(\pi^\dagger\pi=[5]\) for its Rosati adjoint. For rational \(a,b\)
+the trace identity \(2gQ_H(u)=\operatorname{Tr}(u^\dagger u)\) and
+\(\operatorname{Tr}(\pi^\dagger)=\operatorname{Tr}(\pi)\) give
+\[
+ Q_H(a\,1+b\pi)=a^2-\frac{12}{43}ab+5b^2,\qquad
+ Q_H(\pi-1)=\frac{270}{43}.
+\]
+This computes the positive degree form on the span of the identity
+and Frobenius \cite{longAbelianComparison}. Its discriminant is
+\((12/43)^2-20<0\), so two rational linear combinations of these
+endomorphisms agree exactly when their two coefficients agree. Applying its equality
+test to the common-line condition still requires constructing two
+endomorphisms and proving that their equality detects that incidence.

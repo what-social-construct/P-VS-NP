@@ -65,16 +65,49 @@ def projective_orbits(directions, multiply, frobenius):
     return orbits
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--verify-lines", metavar="MSOLVE", help="also replay the 40 common-line Gröbner bases")
-    args = parser.parse_args()
+def projective_census():
+    """Return the finite-field arithmetic and all normalized pure directions."""
     _, _, add, multiply, frobenius = extension_tables((3, 0))
     directions = normalized_directions(add.astype(np.uint8), multiply.astype(np.uint8))
     orbits = projective_orbits(directions, multiply, frobenius)
     lines = set().union(*orbits)
     assert {p for p in lines if all(v < 5 for v in p)} == rational_level_lines()
     assert len(directions) == 904 and len(lines) == 964 and len(orbits) == 31
+    return add, multiply, directions, orbits, lines
+
+
+def pure_curve_point_counts():
+    """Count projective points of the integral curve over F5 and F25."""
+    add, _, _, _, lines = projective_census()
+    face = {p for p in lines if add[p[1], add[p[3], p[5]]] == 0}
+    infinity = {p for p in face if add[p[2], add[p[4], p[5]]] == 0}
+    # Our first nonzero edge is 1, so Frobenius fixes the projective
+    # point exactly when all six entries lie in the prime field.
+    prime_points = {p for p in face if all(x < 5 for x in p)}
+    assert (len(prime_points & infinity), len(infinity)) == (12, 24)
+    assert (len(prime_points), len(face)) == (18, 64)
+    return len(prime_points), len(face)
+
+
+def normalization_frobenius_prefix(curve_counts, singular_counts, branch_counts):
+    """Replace the singular points by the points above them over each field."""
+    c1, c2 = curve_counts
+    s1, s2 = singular_counts
+    b1, b2 = branch_counts
+    n1, n2 = c1 - s1 + b1, c2 - s2 + b2
+    # The curve trace formula and the second Newton identity give the
+    # first coefficients of det(1 - Frobenius*T) on the smooth model.
+    trace, trace_square = 5 + 1 - n1, 5**2 + 1 - n2
+    second, remainder = divmod(trace**2-trace_square, 2)
+    assert remainder == 0
+    return (n1, n2), (trace, trace_square), (1, -trace, second)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--verify-lines", metavar="MSOLVE", help="also replay the 40 common-line Gröbner bases")
+    args = parser.parse_args()
+    add, multiply, directions, orbits, lines = projective_census()
     quadratic_ranks, companion_ranks = Counter(), Counter()
     line_cell_representatives = set()
     for orbit in orbits:
