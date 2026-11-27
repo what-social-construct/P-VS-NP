@@ -1,0 +1,28 @@
+{
+  "revision": "4f8a63cd946ab4a99d4fffe2bd42c1043f5c7d4a",
+  "exports": [
+    {
+      "source": "GaloisObstructionTheory/Hodge/LinearAlgebra/OrbitMatrices.lean",
+      "destination": "GaloisObstructionTheory/Hodge/LinearAlgebra/OrbitMatrices.lean",
+      "sha256": "07349c8b74bdba9a3d305561e79d79719c5aaa1a8fa959bba096a6a0d1347619"
+    },
+    {
+      "source": "GaloisObstructionTheory/Hodge/LinearAlgebra/InvariantMatrixAlgebra.lean",
+      "destination": "GaloisExport/PermutationCommutant.lean",
+      "lines": [
+        33,
+        92
+      ],
+      "sha256": "fcd3667dfff55bdb9986ed7d173a01c4cf770da497a53ce15186aca3a76ab1c9"
+    },
+    {
+      "source": "GaloisObstructionTheory/Hodge/Collision/OffDiagonal.lean",
+      "destination": "GaloisExport/QuotientAnnihilator.lean",
+      "lines": [
+        38,
+        70
+      ],
+      "sha256": "35e2092653fe851eecec6fa60bc00dd65958c395dbbdbcbb5fd1cb3e9ee4e671"
+    }
+  ]
+}

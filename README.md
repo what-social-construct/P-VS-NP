@@ -46,6 +46,22 @@ lake exe cache get
 lake build
 ~~~
 
+The public Lean build includes the reviewed Galois sources for orbit
+coordinates, permutation commutation and the quotient-annihilator theorem.
+The existing `PvsNP` imports also work. Run these checks from the repository root.
+
+~~~sh
+python3 python/galois_exports.py
+python3 python/galois_exports.py --upstream ../galois-obstruction-theory
+~~~
+
+The first command verifies the checked-in bytes. The second also compares
+them with Git objects at the recorded revision in a local Galois checkout.
+To update the export, review the upstream revision, source ranges and
+SHA-256 digests, update the lock file, then add `--restore` to the second
+command and run the Lean build. [Export lock](lean/galois-exports.json) ·
+[Ownership and handoff](SOURCE-LEDGER.md#handoff-to-galois-collision)
+
 The permanent proofs are available through `import PvsNP`.
 The [parity table](SEMANTIC-PARITY.md) identifies the checked
 minor-chart algebra, orientation descent, field-degree bound,

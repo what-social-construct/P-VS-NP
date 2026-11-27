@@ -6,6 +6,10 @@ package PvsNP
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "56a005855ea17e0b0958f73ec801ae140b0a1679"
 
+lean_lib GaloisObstructionTheory where
+  roots := #[`GaloisObstructionTheory.Hodge.LinearAlgebra.OrbitMatrices,
+    `GaloisExport.PermutationCommutant, `GaloisExport.QuotientAnnihilator]
+
 @[default_target]
 lean_lib PvsNP where
   roots := #[`PvsNP, `Axioms, `CVP, `HCP, `Hardness, `Helfer, `Laplacian,

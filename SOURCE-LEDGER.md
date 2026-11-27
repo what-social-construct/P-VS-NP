@@ -11,7 +11,7 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | [HE-P1-Text](#he-p1-text) | Homotopical Encryption Paper 1 at `62f20ff` | Fresh-sign normal form, explicit residual, cost gap, disclosure and oracle scope | Originating cochain and residual data |
 | [HE-P3](#he-p3) | Homotopical Encryption Paper 3 local §8 draft based on `62f20ff` | Normalized certificate coefficients, degree feasibility, completeness, and sharpness | Finite-field selector and certificate collision square |
 | [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 and proof spine | Tagged graph pullback, idempotent comparison, and first-colon quotient | Agreement square and affine residual calculation |
-| [GCT](#gct) | Galois Obstruction Theory at `ad5e755`, published geometric complexity results, and PEqualNP GCT rows | Orbit coordinates, polynomial separation, multiplicity comparison, and permanent level spaces | Finite symmetry and geometric complexity in Section 4 |
+| [GCT](#gct) | Pinned Galois orbit and commutant exports, published geometric complexity results, and PEqualNP GCT rows | Orbit coordinates, polynomial separation, multiplicity comparison, and permanent level spaces | Finite symmetry and geometric complexity in Section 4 |
 | [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
 | [LOGIC](#logic) | Open Logic Text, release `2e19d09` | First-order completeness and arithmetic incompleteness | Semantic kernel examples |
 | [CR](#cr) | Cook and Reckhow, JSL 44 (1979) | Proof systems, p-simulation, polynomial boundedness | Resource-bounded comparison |
@@ -130,16 +130,62 @@ The rank exclusion comes from the separate permanent net. The
 witness-prefix equivalence and its algorithmic conditions are recorded
 in the [selector parity entries](SEMANTIC-PARITY.md).
 
+### Handoff to Galois collision
+
+P-vs-NP consumes three reviewed Lean exports from Galois Obstruction Theory
+at `4f8a63cd946ab4a99d4fffe2bd42c1043f5c7d4a`. Both checkouts pin
+Lean 4.35.0 and Mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`.
+The [export lock](lean/galois-exports.json) records each upstream path,
+the selected line range where applicable, the public destination and its
+SHA-256. Every exported proof block already appeared in P-vs-NP at
+[0f4dac1](https://github.com/what-social-construct/P-VS-NP/tree/0f4dac164889b7b82ec904d363fa61b9fc486a4f).
+The public package builds from the tracked sources. The
+[export verifier](python/galois_exports.py) also supports replay against
+the pinned Git objects.
+
+| Shared result | Source of the implementation | P-vs-NP responsibility |
+| --- | --- | --- |
+| Orbit coordinates | [Canonical orbit-matrix module](lean/GaloisObstructionTheory/Hodge/LinearAlgebra/OrbitMatrices.lean), complete file | Preserve the [old import](lean/PvsNP/GaloisOrbitMatrices.lean) and the finite-rank specialization. |
+| Permutation commutant | [Five declarations](lean/GaloisExport/PermutationCommutant.lean) from `Hodge/LinearAlgebra/InvariantMatrixAlgebra.lean`, originally contributed from P-vs-NP at `96fa380` | Preserve the public [action and commutation API](lean/PvsNP/FiniteSymmetry.lean) and apply it to finite symmetry. The export retains its MIT attribution. |
+| Quotient annihilator | [Selected theorem](lean/GaloisExport/QuotientAnnihilator.lean) from `Hodge/Collision/OffDiagonal.lean` for arbitrary ideals in a commutative ring | Apply it to the [readout normal form, base change and punctured image](lean/PvsNP/ReadoutResidual.lean), including nonreduced coefficient rings. |
+
+**For the Galois maintainer.** Please return a stable module path and a
+full commit hash for any narrow public export of these declarations.
+Three further candidate modules are ready for review in the public
+[P-vs-NP revision](https://github.com/what-social-construct/P-VS-NP/tree/0f4dac164889b7b82ec904d363fa61b9fc486a4f/lean/PvsNP):
+[BranchCertificate](lean/PvsNP/BranchCertificate.lean) combines two
+ideal-membership certificates over a commutative ring,
+[InvariantClosure](lean/PvsNP/InvariantClosure.lean) bounds dimension
+from a generator-stable span over a field, and
+[AffineDisclosure](lean/PvsNP/AffineDisclosure.lean) identifies
+equal-disclosure pairs over a ring with a kernel-direction product.
+P-vs-NP owns these implementations until an upstream revision adopts them.
+
+The requested realization comparison concerns a positive-dimensional
+abelian variety over an algebraically closed field with a symmetric ample
+class $H$. Positivity gives $Q_H(u-v)=0$ exactly when $u=v$ on
+$\operatorname{End}^0(A)\otimes_{\mathbb Q}\mathbb R$.
+For the mixed-degree and spectral comparisons, the complex linear
+realization uses a prime $\ell$ different from the characteristic and an
+abstract embedding $\overline{\mathbb Q}_\ell\hookrightarrow\mathbb C$.
+Please identify the hypotheses and any checked declaration separately from
+the cited theorem when the Galois project adopts this comparison.
+P-vs-NP owns the smooth model of the degree-24 curve, its Frobenius
+data and any proposed link between Jacobian endomorphisms and the
+common-line condition. The latter link is open. The reference is the written argument
+in the notes prepared for Christopher D. Long, revision
+`117cb4e316eb7977ff7144e68ab8fe7c8c1f0f21`.
+[Rosati form and its domain](https://github.com/long-mathematics/abelian-degree-polynomials/blob/117cb4e316eb7977ff7144e68ab8fe7c8c1f0f21/papers/abelian_comparison_streamlined.tex#L33-L81)
+· [Frobenius on curve Jacobians](https://github.com/long-mathematics/abelian-degree-polynomials/blob/117cb4e316eb7977ff7144e68ab8fe7c8c1f0f21/papers/curve_rh_single_scale.tex#L45-L56)
+· [Verification scope](https://github.com/long-mathematics/abelian-degree-polynomials/tree/117cb4e316eb7977ff7144e68ab8fe7c8c1f0f21#current-papers--choose-by-mathematical-scope)
+
 ## GCT
 
-The committed Galois Obstruction Theory
-[`OrbitMatrices.lean`](https://github.com/what-social-construct/galois-obstruction-theory/blob/ad5e75521550e4a1dbcbe47150305e9624001915/GaloisObstructionTheory/Hodge/LinearAlgebra/OrbitMatrices.lean)
-is copied byte-for-byte to [the local orbit-coordinate module](lean/PvsNP/GaloisOrbitMatrices.lean).
-Its SHA-256 is `07349c8b74bdba9a3d305561e79d79719c5aaa1a8fa959bba096a6a0d1347619`.
-Both projects pin Lean 4.35.0 and Mathlib `56a0058`.
-The [local Lean bridge](lean/PvsNP/FiniteSymmetry.lean) adds the inverse
-pullback action on coefficient functions, the commutation equivalence,
-and the dimension formula. The separate [closure criterion](lean/PvsNP/OrbitClosureSeparation.lean)
+The orbit-coordinate proof first reviewed at `ad5e755` has SHA-256
+`07349c8b74bdba9a3d305561e79d79719c5aaa1a8fa959bba096a6a0d1347619`.
+The [shared Lean exports](#handoff-to-galois-collision) provide the orbit
+basis and commutant at the current pin. [FiniteSymmetry](lean/PvsNP/FiniteSymmetry.lean)
+deduces the dimension formula from that basis. The separate [closure criterion](lean/PvsNP/OrbitClosureSeparation.lean)
 uses Mathlib's `MvPolynomial.vanishingIdeal` and `zeroLocus`.
 
 [Bürgisser, Ikenmeyer, and Panova, Theorem 1.4](https://arxiv.org/html/1604.06431v3)
@@ -383,12 +429,12 @@ accompanies it. [ScalarOrientation.lean](lean/PvsNP/ScalarOrientation.lean)
 uses that theorem on the scalar orientation equation and verifies the two
 normalized roots explicitly as $\pm2(c-1)$.
 
-[ReadoutResidual.lean](lean/PvsNP/ReadoutResidual.lean) copies
+[ReadoutResidual.lean](lean/PvsNP/ReadoutResidual.lean) delegates to the pinned export of
 `comap_annihilator_map_quotient_eq_colon` from the Galois repo's
 [OffDiagonal.lean](https://github.com/what-social-construct/galois-obstruction-theory/blob/4d104436d1c9020612cb671aaf4945fdb69befb7/GaloisObstructionTheory/Hodge/Collision/OffDiagonal.lean#L41).
 The source file has SHA-256
 `6417b50f17ce23dcbad0d0b8f689ede672e2b09c99a68e91152dee429823c599`.
-The copied theorem identifies the diagonal annihilator with the first
+The shared theorem identifies the diagonal annihilator with the first
 colon. The local proofs compute the colon, the punctured-family image
 kernel and the base-change identity over arbitrary commutative rings.
 [ReadoutPivotIdeal.lean](lean/PvsNP/ReadoutPivotIdeal.lean) computes the
