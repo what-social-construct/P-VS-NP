@@ -398,6 +398,42 @@ a common zero over every field of characteristic five.
 the coefficients in the two polynomial parameters and applies this
 identity to the permanent of the fixed pair.
 
+The gluing square specializes the overlap and contact ideals in
+[Galois Obstruction Theory, DecompositionDefect.lean](https://github.com/what-social-construct/galois-obstruction-theory/blob/4d104436d1c9020612cb671aaf4945fdb69befb7/GaloisObstructionTheory/Hodge/Collision/DecompositionDefect.lean),
+reviewed at checkout `234b30818b07f690240ebef4006413ced73e1329`.
+The file was last changed at `4d104436`. The [Gödel squares register](https://github.com/what-social-construct/galois-obstruction-theory/blob/234b30818b07f690240ebef4006413ced73e1329/research/sequel/README.md)
+supplies the distinction between commuting maps and faithful realization.
+[ReadoutGluing.lean](lean/PvsNP/ReadoutGluing.lean) gives a local proof of
+the pullback for the determinant normal form.
+[DiscriminantIdeal.lean](lean/PvsNP/DiscriminantIdeal.lean) compares its
+image ideal with the pulled-back Gram discriminant over nonreduced rings.
+[OrientationSquare.lean](lean/PvsNP/OrientationSquare.lean) checks the
+two explicit rational Gram factorizations at the transverse frame and
+two distinct factorizations with the same orientation.
+[TransverseRestriction.lean](lean/PvsNP/TransverseRestriction.lean)
+identifies the reflected permanent with Mathlib's matrix permanent and
+specializes the three-parameter polynomial to the certified pair.
+
+The same Galois checkout contained an untracked working file
+`GaloisObstructionTheory/Hodge/Boundary/Examples/SquareCover.lean`,
+reviewed SHA-256 `63f91d1cf54113a269561b466a7d203d202cf9019cb6da7efe5a2f72c5ba6367`.
+It derives the branch contact ideal from the diagonal and residual
+evaluations of the square cover. [OrientationContact.lean](lean/PvsNP/OrientationContact.lean)
+computes the polynomial first colon locally and identifies the evaluated
+ideal with the previously checked punctured-readout image.
+
+Michel Coste's [*An Introduction to Semialgebraic Geometry*](https://arxiv.org/abs/2611.31550v1)
+is dated October 2002 (arXiv v1 posted 2026-11-23). Theorem 2.3 gives
+closure under real coordinate projection. Applied to the real and
+imaginary components of the integer star equations, it places the
+complex lift image in the semialgebraic category. Theorem 4.1 states
+Hardt's triviality theorem. A point of each nonempty model fiber gives
+a section in its product coordinates. The manuscript cites both
+theorems and leaves the partition and full-lift selector uncomputed.
+[RealOrientation.lean](lean/PvsNP/RealOrientation.lean) checks the
+explicit positive-root section for the transverse orientation pencil and the
+finite sum-of-squared-norms test used to encode complex common zeros.
+
 The [kernel chart](python/gct_permanent_hodge.py) uses the Hadamard
 coordinates from the [permanent fiber computation](python/gct_permanent_fiber.py)
 and the written Witt chart coverage. [msolve v0.11.0](https://msolve.lip6.fr/)

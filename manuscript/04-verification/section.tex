@@ -124,19 +124,20 @@
   first colon of the three readout equations.
   \path{PvsNP/ReadoutResidual.lean} checks the punctured-family
   image kernel and base change.
+  \path{PvsNP/ReadoutGluing.lean} proves the pullback.
+  The square-cover contact ideal is \((2D)\).
   \path{PvsNP/OrientationDescent.lean} constructs the complementary
   projectors and their coefficientwise Frobenius action. The field-degree
   bound takes the degree-two exclusion as an input. \\
   \addlinespace
   Edge charts &
-  \path{PvsNP/EdgeDiscriminant.lean} checks the scalar and transverse
-  Gram determinants. \path{PvsNP/ScalarOrientation.lean} applies the
-  quadratic valuation obstruction and gives both normalized roots at
-  a double zero. For the fixed transverse pair
-  \path{PvsNP/TransversePairLevel.lean} proves that the permanent
-  differs from \(24\) using the coefficient certificate.
-  \path{PvsNP/EdgeStabilizer.lean} proves the orbit
-  sizes from the two geometric symmetry exclusions. \\
+  \path{PvsNP/EdgeDiscriminant.lean} checks both Gram determinants.
+  The scalar-line proofs apply the valuation obstruction and compute
+  the roots at a double zero. On the transverse line Lean checks both
+  orientations at zero modulo five and the positive real root.
+  \path{PvsNP/TransverseRestriction.lean} specializes the permanent to
+  the certified two-column pencil. \path{PvsNP/EdgeStabilizer.lean}
+  derives the orbit sizes from the two symmetry exclusions. \\
   \addlinespace
   Complexity comparisons &
   Proof translation and polynomial boundedness use Cook--Reckhow.

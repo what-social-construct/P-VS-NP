@@ -618,6 +618,35 @@ have \(\lambda\ne0\) and their scheme-theoretic image in the
 star chart is exactly \(V(D)\). The same calculation works after
 any scalar extension, since the unit-minor cover pulls back.
 
+The diagonal and the first-colon residual meet along the zero section
+over \(V(D)\). Absorb the free \(u\)-coordinates into \(R\), put
+\(\bar R=R/(D)\), and write \(H=R[\lambda]/(D\lambda)\).
+The coordinate rings form the pullback square
+\[
+\begin{CD}
+ H @>{\lambda\mapsto 0}>> R\\
+ @V{\bmod D}VV @VV{\bmod D}V\\
+ \bar R[\lambda] @>{\lambda\mapsto 0}>> \bar R .
+\end{CD}
+\]
+In fact \(p\mapsto(p(0),\bar p)\) identifies \(H\) with the pairs
+\((r,q)\) satisfying \(\bar r=q(0)\). A lift of \(q\) can be given
+constant term \(r\), and the two restrictions have common kernel
+\((D\lambda)\) in \(R[\lambda]\). The square holds over nonreduced
+bases as well. Since \(\det G_U=4D^2\), pulling back the Gram zero
+ideal gives \((D)^2\) when \(4\) is a unit. It has the same radical
+as the collision ideal \((D)\). For the local Gram model
+\(A=\operatorname{diag}(1,1,\epsilon)\) over
+\(\mathbb F_5[\epsilon]/(\epsilon^2)\), the Gram ideal is zero
+and the collision ideal is \((\epsilon)\ne0\).
+
+The orientation cover recovers the unsquared ideal by a different
+operation. After choosing the first root \(D\), the other coordinate
+\(y\) satisfies \(y^2=D^2\). Taking the first colon by the monic
+diagonal equation \(y-D\) gives \((y+D)\). Restriction to \(y=D\)
+therefore gives the contact ideal \((2D)\). When \(2\) is invertible
+this equals the image ideal \((D)\) of distinct readout pairs.
+
 One can use that kernel line directly. In the star frame, some
 coordinate on the line is nonzero. Permute the leaves and
 normalize a generator \(B\) of the line to have \(B_{01}=1\).
@@ -646,6 +675,46 @@ Their reduced Gr\"obner basis at five is \([1]\). The certificate
 \(\sum_{i=1}^{12}h_i f_i=1\) in the six-variable polynomial ring
 over \(\mathbb F_5\) excludes a lift of this pair over every extension
 field, for every choice of the first complementary edge column.
+
+At \(t=0\) this gives an explicit test of what the orientation square
+retains. On field-valued points it reads
+\[
+\begin{CD}
+ \{(U,d):\det G_U=4d^2\} @>{(U,d)\mapsto d}>> \mathbb A^1\\
+ @VVV @VV{d\mapsto 4d^2}V\\
+ \{\text{edge frames }U\} @>{U\mapsto\det G_U}>> \mathbb A^1 .
+\end{CD}
+\]
+At \(X(0)\) over \(\mathbb F_5\), the readout
+\(A=\left(\begin{smallmatrix}1&0&0\\2&0&4\\3&3&0\end{smallmatrix}\right)\)
+satisfies the Gram equation and has determinant \(3\). Its negative
+realizes the other root \(2\).
+Cyclically permuting the three rows also preserves the Gram matrix
+and determinant, so one orientation can have distinct Gram realizations.
+Setting the first pencil parameter to zero gives the certified
+two-column permanent above. Hence neither orientation extends to a
+full level lift, even over an extension field.
+
+Over \(\mathbb R\) the same integral frame gives an elementary
+semialgebraic selection problem. Its radicand is
+\(\delta(t)=643t^2-2900t+14764\), and
+\[
+ 643\,\delta(t)=(643t-1450)^2+7390752>0.
+\]
+Thus \(d^2=\delta(t)\) has two disjoint real graphs over the entire
+parameter line. The inequality \(d>0\) selects one root uniquely.
+For the full complex star chart one can instead write each integral
+level equation \(f_j=0\) in real and imaginary coordinates and impose
+\(\sum_j((\Re f_j)^2+(\Im f_j)^2)=0\).
+Projection onto the real and imaginary parts of the edge coordinates
+then gives the semialgebraic set of frames admitting a complex lift
+by Tarski--Seidenberg \cite[Theorem~2.3]{costeSemialgebraic}.
+Hardt's theorem gives a finite semialgebraic partition on which the
+projection has product form \(C_i\times F_i\to C_i\)
+\cite[Theorem~4.1]{costeSemialgebraic}. Choosing \(w_i\in F_i\)
+on each nonempty piece gives a section \(u\mapsto(u,w_i)\) in those
+coordinates. Determining the nonempty pieces for the full system and
+bounding the cost of finding witnesses from encoded inputs remain open.
 
 For a three-cycle of the leaves, the edge plane is stable exactly
 when \(C\) commutes with its cyclic permutation matrix. These \(C\)

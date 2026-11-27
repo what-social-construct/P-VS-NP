@@ -87,11 +87,20 @@ theorem scalar_gram_no_orientation_of_odd_order
   exact ScalarOrientation.no_orientation_of_odd_order π hπ u m c hh hodd
     ⟨D, mul_left_cancel₀ h₄ hD.symm⟩
 
+/-- The transverse orientation radicand in integer coefficients. -/
+def transverseRadicand (v : R) : R := 643*v^2 - 2900*v + 14764
+
+/-- The determinant identity before reduction modulo five. -/
+theorem transverse_gram_det_integral (v : R) :
+    (graphGram (transverseGraph v)).det = 4 * transverseRadicand v := by
+  rw [transverse_gram, det_fin_three]
+  simp only [cons_val, of_apply, transverseRadicand]
+  ring
+
 /-- Two conjugate roots of v²=2 are zeros of the transverse discriminant. -/
 theorem transverse_gram_det [CharP R 5] (v : R) :
     (graphGram (transverseGraph v)).det = 4 * (3 * (v^2-2)) := by
-  rw [transverse_gram, det_fin_three]
-  simp only [cons_val, of_apply]
+  rw [transverse_gram_det_integral, transverseRadicand]
   ring_nf
   reduce_mod_char!
 

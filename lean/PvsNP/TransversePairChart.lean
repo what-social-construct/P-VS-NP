@@ -3,6 +3,7 @@ module
 public import Init.Grind.Ring.CommSolver
 public import Mathlib.Algebra.Ring.GrindInstances
 public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fintype.Perm
 public import PvsNP.TransversePairData
 
 @[expose] public section
@@ -33,19 +34,16 @@ def direction (second : Bool) (i j : Nat) : Expr := Id.run do
     | _, _ => 0
   return .num entry
 
+/-- One entry of the pencil J₄+sB+tC in the six free diagonal coordinates. -/
+def pairEntry (i j : Fin 4) : Expr :=
+  .add (.num 1) (.add (.mul (.var 6) (direction false i j))
+                     (.mul (.var 7) (direction true i j)))
+
 /-- Permanent of J₄+sB+tC as a ring expression. The first six variables
 are the free diagonal entries, and variables 6 and 7 are s and t. -/
 def transversePermanent : Expr :=
-  let rows := List.range 4
-  let permutations := rows.flatMap fun i => rows.flatMap fun j =>
-    rows.flatMap fun k => rows.filterMap fun l =>
-      if i != j && i != k && i != l && j != k && j != l && k != l then
-        some [i,j,k,l]
-      else none
-  sumExpr (permutations.map fun perm =>
-    prodExpr (perm.zipIdx.map fun (j,i) =>
-      .add (.num 1) (.add (.mul (.var 6) (direction false i j))
-                           (.mul (.var 7) (direction true i j)))))
+  sumExpr ((permsOfList ([0, 1, 2, 3] : List (Fin 4))).map fun σ =>
+    prodExpr (List.ofFn fun j => pairEntry (σ j) j))
 
 def sparseExpr (p : List (Nat × Nat)) : Expr :=
   sumExpr (p.map fun (a,k) =>
