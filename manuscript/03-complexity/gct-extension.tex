@@ -353,3 +353,33 @@ seven. The same bound holds over field extensions of
 \(\mathbb F_5\) by extending \(\lambda\) linearly.
 The existence of a higher-degree identity and the full path ideal
 remain undecided.
+
+\paragraph{A four-cycle certificate search.}
+Projection of every candidate onto the four-cycle \(01,12,23,30\)
+is injective by the matching exclusion. Over \(\mathbb F_5\), take
+\(\zeta=2\), and on the four edge entries \(x_i=B_{i,i+1}\) with
+indices modulo four use Fourier coordinates
+\(\widehat x_k=\sum_i\zeta^{ik}x_i\).
+They are invertible coordinates, so some three of them give a
+normalized frame. Cycle rotation acts on \(\widehat x_k\) by
+\(\zeta^k\). Reflection exchanges the frequencies \(k\) and \(-k\)
+up to nonzero scale, so the omitted frequency can be taken as
+\(0,1,2\).
+
+For pivot frequencies \(p_1,p_2,p_3\), restoring the normalized
+frame after rotation scales column \(j\) by \(\zeta^{-p_j}\).
+In each column the six free coordinates are three nonconstant
+diagonal frequencies, the omitted edge frequency, and the sum and
+difference of the two opposite edges. Their rotation weights are
+\(1,2,3,k,0,2\) minus \(p_j\) modulo four, where \(k\) is the omitted
+frequency. A generator at pencil exponent \(\alpha\) has weight
+\(-\sum_j p_j\alpha_j\). Averaging over the four rotations hence
+restricts a bounded identity for one to products of weight zero.
+
+For the chart omitting frequency two, the degree-eight matrix of
+these products has 313,629 rows and 390,755 columns. Exact sparse
+elimination yields a functional with value one on the constant
+and zero on every row. The executable regenerates and checks all
+pairings. Thus this chart's generators admit no identity through
+degree eight, including after extending the coefficient field.
+The other charts and unrestricted existence remain open.

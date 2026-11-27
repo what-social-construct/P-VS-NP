@@ -87,9 +87,18 @@ gzip -dc gct_permanent_path_degree7.dual.gz | python3 gct_permanent_plucker.py -
 ~~~
 
 The data contains the degree cap followed by nonzero entries
-`key residue` over `F5`. For exponents in path-reversal variable order,
-`key` packs each exponent into three bits, starting at the least
-significant end. Unlisted monomials have value zero.
+`key residue` over `F5`. In generator variable order, `key` packs
+each exponent into enough bits to hold the degree cap, starting at
+the least significant end. Unlisted monomials have value zero.
+
+The four-cycle chart omitting Fourier frequency two has a separate
+degree-eight witness. Its data header includes the omitted frequency
+after the cap and selects the corresponding chart for replay.
+
+~~~sh
+python3 gct_permanent_plucker.py --four-cycle 2 > /tmp/gct-cycle-2.ms
+gzip -dc gct_permanent_cycle_omit2_degree8.dual.gz | python3 gct_permanent_plucker.py --verify-path-dual -
+~~~
 
 The quadratic-field check uses a C++17 compiler.
 

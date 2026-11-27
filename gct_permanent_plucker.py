@@ -46,6 +46,7 @@ PATH_REVERSAL_ODD = frozenset(
     6*column + slot for column in range(3) for slot in range(6)
     if (slot in (1, 2, 4)) != (column == 1)
 )
+FOUR_CYCLE_EDGES = ((0, 1), (1, 2), (2, 3), (0, 3))
 
 
 def cut_values(left, right):
@@ -257,12 +258,60 @@ def path_reversal_chart():
     return names, list(coefficients_by_degree.values())
 
 
+def four_cycle_chart(omitted_frequency):
+    """Normalize three Fourier coordinates on a four-cycle over F5."""
+    pivots = tuple(frequency for frequency in range(4) if frequency != omitted_frequency)
+    coordinates = ("d1", "d2", "d3", "e", "o0", "o2")
+    names = tuple(f"{column}{coordinate}" for column, coordinate in product("abc", coordinates))
+    coefficients, *variables = ring(names, sp.GF(PRIME), "grevlex")
+    directions = []
+    weights = []
+    # Two is a primitive fourth root of unity in F5.
+    inverse_fourier = [[2**((-i*k) % 4) for k in range(4)] for i in range(4)]
+    for column, pivot in enumerate(pivots):
+        d1, d2, d3, free_edge, opposite_sum, opposite_difference = variables[6*column:6*(column+1)]
+        cycle = [free_edge if j == omitted_frequency else coefficients(int(j == pivot)) for j in range(4)]
+        diagonal = [-2*(cycle[0] + opposite_sum), d1, d2, d3]
+        direction = {
+            (0, 2): (opposite_sum + opposite_difference)/2,
+            (1, 3): (opposite_sum - opposite_difference)/2,
+        }
+        for i, (edge, row) in enumerate(zip(FOUR_CYCLE_EDGES, inverse_fourier)):
+            direction[edge] = sum(value*factor for value, factor in zip(cycle, row))/4
+            direction[i, i] = sum(value*factor for value, factor in zip(diagonal, row))/4
+        directions.append(direction)
+        weights.extend((frequency-pivot) % 4 for frequency in (1, 2, 3, omitted_frequency, 0, 2))
+    equations = pencil_coefficients(coefficients, directions)
+    assert len(equations) == 31
+    for powers, polynomial in equations.items():
+        pivot_weight = sum(power*pivot for power, pivot in zip(powers, pivots))
+        assert all((sum(power*weight for power, weight in zip(term, weights)) + pivot_weight) % 4 == 0
+                   for term in polynomial)
+    return names, list(equations.values()), weights
+
+
 def verify_path_degree_dual(source):
-    """Check a functional taking 1 to 1 and killing all bounded even products."""
-    degree_cap = int(next(source, "0"))
+    """Check a functional taking 1 to 1 and killing all bounded invariant products."""
+    header = next(source, "").split()
+    if len(header) not in (1, 2):
+        raise ValueError("Expected the degree cap and an optional omitted Fourier frequency.")
+    degree_cap = int(header[0])
     if degree_cap < 2:
         raise ValueError("The degree cap must be at least two.")
-    names, equations = path_reversal_chart()
+    if len(header) == 2:
+        omitted_frequency = int(header[1])
+        if omitted_frequency not in range(4):
+            raise ValueError("The omitted frequency must be between zero and three.")
+        names, equations, weights = four_cycle_chart(omitted_frequency)
+        symmetry_order = 4
+    else:
+        names, equations = path_reversal_chart()
+        weights = [int(i in PATH_REVERSAL_ODD) for i in range(len(names))]
+        symmetry_order = 2
+
+    def weight_of(powers):
+        return sum(power*weight for power, weight in zip(powers, weights)) % symmetry_order
+
     width = degree_cap.bit_length()
     mask = (1 << width) - 1
     values = {}
@@ -271,25 +320,25 @@ def verify_path_degree_dual(source):
         if not 0 <= key < 1 << (width*len(names)) or key in values or not 0 < residue < PRIME:
             raise ValueError("Invalid or duplicate nonzero dual entry.")
         powers = tuple((key >> (width*i)) & mask for i in range(len(names)))
-        if sum(powers) > degree_cap or sum(powers[i] for i in PATH_REVERSAL_ODD) % 2:
-            raise ValueError("Dual entries must index even monomials within the degree cap.")
+        if sum(powers) > degree_cap or weight_of(powers):
+            raise ValueError("Dual entries must index invariant monomials within the degree cap.")
         values[key] = residue
     if values.get(0) != 1:
         raise ValueError("The functional must take the constant monomial to one.")
 
     degrees = [max(map(sum, equation)) for equation in equations]
-    multipliers = [([], []) for _ in range(degree_cap - min(degrees) + 1)]
-    for degree, by_parity in enumerate(multipliers):
+    multipliers = [[[] for _ in range(symmetry_order)] for _ in range(degree_cap - min(degrees) + 1)]
+    for degree, by_weight in enumerate(multipliers):
         for indices in combinations_with_replacement(range(len(names)), degree):
-            parity = sum(i in PATH_REVERSAL_ODD for i in indices) % 2
-            by_parity[parity].append(sum(1 << (width*i) for i in indices))
+            weight = sum(weights[i] for i in indices) % symmetry_order
+            by_weight[weight].append(sum(1 << (width*i) for i in indices))
     count = 0
     for index, (equation, degree) in enumerate(zip(equations, degrees)):
-        parity = sum(next(iter(equation))[i] for i in PATH_REVERSAL_ODD) % 2
+        multiplier_weight = -weight_of(next(iter(equation))) % symmetry_order
         terms = [(sum(power << (width*i) for i, power in enumerate(powers)), int(coefficient))
                  for powers, coefficient in equation.items()]
         for multiplier_degree in range(degree_cap-degree+1):
-            for multiplier in multipliers[multiplier_degree][parity]:
+            for multiplier in multipliers[multiplier_degree][multiplier_weight]:
                 # The degree bound prevents carries between adjacent exponent fields.
                 value = sum(coefficient*values.get(key+multiplier, 0) for key, coefficient in terms)
                 if value % PRIME:
@@ -483,6 +532,8 @@ def main():
     modes.add_argument("--path", action="store_true", help="emit the unrestricted path chart over F5")
     modes.add_argument("--path-reversal", action="store_true",
                        help="emit the path chart in coordinates adapted to path reversal")
+    modes.add_argument("--four-cycle", type=int, choices=range(4), metavar="OMITTED",
+                       help="emit the four-cycle chart omitting the given Fourier frequency")
     modes.add_argument("--verify-path-dual", type=argparse.FileType("r"), metavar="FILE",
                        help="check a bounded-degree functional for the path chart")
     args = parser.parse_args()
@@ -504,13 +555,16 @@ def main():
         system = edge_graph_chart(EDGE_GRAPH_PIVOTS["path"])
     elif args.path_reversal:
         system = path_reversal_chart()
+    elif args.four_cycle is not None:
+        names, equations, _ = four_cycle_chart(args.four_cycle)
+        system = names, equations
     elif args.verify_path_dual is not None:
         try:
             with args.verify_path_dual as source:
                 degree, rows = verify_path_degree_dual(source)
         except ValueError as error:
             parser.error(str(error))
-        print(f"Checked {rows:,} even products over F{PRIME}. No path certificate through degree {degree}.")
+        print(f"Checked {rows:,} invariant products over F{PRIME}. No unit-ideal identity through degree {degree}.")
         return
     else:
         verify_chart_data()

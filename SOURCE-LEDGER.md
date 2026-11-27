@@ -131,6 +131,16 @@ example and the support-specific upper bound. The three-dimensional
 question is recorded as a conjecture. The written Hessian argument gives
 an overall upper bound of four in the symmetric order-four problem, with
 the rank-nine calculation checked by the executable.
+The desk's [negated twin `L-gct-232`](https://pequalnp-desk.pequalnp.workers.dev/desk/row?gap=L-gct-232)
+is the matching outside theorem for a nonexistence result. It asks for
+the full Lean statement in `PEqualNP.Outside.L_gct_232`. The
+[public contribution rules](https://github.com/open-goat/pequalnp-proofs/blob/aecf602ea3c8da01533a13d2ca03b633689f3033/CONTRIBUTING.md)
+require an exact statement and a single-file proof.
+The posted proposition elaborates against `PEqualNP.Defs` at that
+revision with Lean 4.36.0 and Mathlib `fc4f59e`. The same revision's
+[submission script](https://github.com/open-goat/pequalnp-proofs/blob/aecf602ea3c8da01533a13d2ca03b633689f3033/tools/pnp.sh)
+supports taking an exact eligible row with `next --unit`, checking
+the proof, and submitting the checked file. The full proof remains open.
 
 The [three-plane constraints](manuscript/03-complexity/gct-three-plane.tex)
 are local written derivations from permanent coefficients, the
@@ -247,6 +257,15 @@ generators over $\mathbb F_5$. Sparse row elimination gives rank
 [independent verifier](gct_permanent_plucker.py) certify separation of
 the constant from the row span. The verifier checks every original row
 and needs only the functional, without the elimination transcript.
+
+The four-cycle Fourier charts use the matching exclusion to ensure
+that projection has rank three. The rotation action and averaging
+are derived in the manuscript. The 313,629 by 390,755 weight-zero
+matrix for omitted frequency two was reduced exactly by sparse
+elimination grouped by the three column degrees. Its rank was
+260,865. The [degree-eight functional](gct_permanent_cycle_omit2_degree8.dual.gz)
+has 97,877 nonzero entries and was checked against all original rows
+by the [independent verifier](gct_permanent_plucker.py).
 
 The Homotopical Encryption local repository was reviewed at
 `1ed8d55b67f266414cb7b1c55858f8b5566d4013`. Its Paper 3
