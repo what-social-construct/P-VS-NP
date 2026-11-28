@@ -186,9 +186,9 @@ closed subscheme \(\mathcal F_{\rm lev}\subseteq\mathcal F\), with labeled
 incidence \(T\times_U\mathcal F_{\rm lev}\).
 \end{proof}
 
-Whether \(\mathcal F_{\rm lev}\) has a geometric point on this face
-remains open. The complete factorization of \((h)_0\) and the list of
-its nonempty common-line fibers are also undetermined.
+Theorem~\ref{thm:fixed-face-level-empty} below excludes geometric points
+of \(\mathcal F_{\rm lev}\) on this face. The complete factorization of
+\((h)_0\) and the list of its nonempty common-line fibers remain undetermined.
 
 \paragraph{A complete test over quadratic slopes.}
 For each of the ten monic irreducible quadratics \(v^2+sv+t\) over
@@ -603,8 +603,173 @@ map has degree six and \(Y\) is a unit. The schematic vanishing on the
 level incidence thus gives \(\deg Z_{\rm lev}\le24\cdot156/6=624\).
 \end{proof}
 
-For a second cut one may vary the hyperplane. Every full level line
-meets \(H+TD=0\), so the same adapted-frame identity makes every
-coefficient in \(T\) of \(R_{H+TD}\) vanish on \(Z_{\rm lev}\).
-Computing their common zero scheme on \(U\) could narrow the candidate
-set further. A surviving point still requires the full level-plane test.
+\begin{proposition}[The coefficient scheme of the hyperplane pencil]
+\label{prop:level-pencil-scheme}
+On \(U\) write the normalized binary resultant as
+\[
+ P(\lambda,\mu)=R_{\lambda H+\mu D}/Y^{156}
+       =\sum_{i=0}^{24}c_i\lambda^{24-i}\mu^i,\qquad
+ E_{\rm pen}=V_U(c_0,\ldots,c_{24}).
+\]
+Then \(Z_{\rm lev}\subseteq E_{\rm pen}\subseteq V_U(r_H)\) as
+schemes. For a geometric base point \(s\), let
+\[
+ X_s=V(Q_2,Q_3,Q_4,q_3(\widetilde x))\subset\mathbb P(W_s).
+\]
+The support of \(E_{\rm pen}\) consists exactly of the points where
+\(\dim X_s\ge1\) or \(X_s\cap V(H,D)\ne\varnothing\).
+\end{proposition}
+
+\begin{proof}
+The change-of-lift formula makes the ideal of the three quadrics and
+the cubic independent of the lift. Vertex relabelings preserve it, so
+these equations define a closed companion family over \(U\).
+The resultant has degree 24 in its linear input. The adapted-frame
+identity in Proposition~\ref{prop:cubic-level-bound} holds with
+indeterminate \(\lambda,\mu\), so each coefficient vanishes on the
+level incidence. Also \(c_0=r_H\). The coefficient ideal commutes
+with base change. At each closed point of the smooth curve \(U\),
+its order is the minimum of the orders of the \(c_i\), counting an
+identically zero coefficient as having infinite order.
+
+On a geometric fiber, \(P(\lambda,\mu)=0\) means that \(X_s\) meets
+the indicated hyperplane. A point in the pencil center belongs to
+every member. A positive-dimensional projective component also meets
+every member \cite{stacksProjectiveIntersection}. Otherwise \(X_s\)
+has finite support disjoint from the center. Each of its points then
+specifies just one parameter \([\lambda:\mu]\), so some member of the
+geometric pencil misses \(X_s\). This proves the support assertion.
+\end{proof}
+
+One can generate the coefficient ideal after extending constants to
+\(\mathbb F_{25}\) by taking \(P(1,t)\) at the 25 distinct \(t\) in
+that field. The degree-24 Vandermonde matrix is invertible, even after
+further base change to a nonreduced algebra. Faithful flatness recovers
+the original ideal by contraction. Once these coefficients are expressed
+in an affine presentation of \(U\), a Gröbner basis for the curve and
+coefficient equations, with the chart denominators inverted, tests the
+whole pencil simultaneously.
+
+\paragraph{A Gröbner basis for one labeled fiber.}
+At \(B=(1,1,3,0,3,4)\) on \(C\), the four previous unit bases place
+the entire cubic companion scheme in \(H\ne0\). Set \(H=1\) and
+take \(d=D/H\) as the last affine coordinate. In lexicographic order
+the leading monomials of the four-equation ideal are \(a,b,c,d^{24}\).
+The reduced basis expresses \(a,b,c\) as polynomials in \(d\); hence
+the whole fiber algebra is \(\mathbb F_5[d]/(g)\) for a monic
+polynomial \(g\) of degree 24. Its factorization has the form
+\[
+           g(d)=(d-1)(d-2)^2g_{10}(d)g_{11}(d)
+\]
+with the indicated two higher factors irreducible of degrees 10 and 11.
+In particular the fiber algebra decomposes into the four factors
+\[
+ \mathbb F_5 \ \times\ \mathbb F_5[\epsilon]/(\epsilon^2)
+       \ \times\ \mathbb F_{5^{10}}\ \times\ \mathbb F_{5^{11}}.
+\]
+With the scalar normalization \(P(1,0)=1\), the pencil polynomial on
+this fiber is \(\mu^{24}g(-\lambda/\mu)\), interpreted homogeneously.
+Indeed this is the determinant of multiplication by \(\lambda+\mu d\)
+in the fiber algebra, or equivalently the product of the hyperplane
+values with the local lengths as exponents. The two rational pencil
+members \(H-D\) and \(H+2D\) meet the fiber with multiplicities one
+and two in the pencil polynomial. The coefficient ideal is the unit
+ideal at this specialization on the labeled curve.
+
+\begin{proposition}[Exclusion of the pencil center on the eligible face]
+\label{prop:level-pencil-center}
+The cubic companion family \(X\) has empty intersection with \(V(H,D)\)
+over \(U\). The pencil defines a finite morphism
+\(X\to\mathbb P^1_U\), and
+\[
+               |E_{\rm pen}|=\{s\in U:\dim X_{\overline{\kappa(s)}}=1\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Write \(m_i\) for the sum of off-diagonal entries incident to vertex
+\(i\). On the face \(m_2(B)=0\) and \(m_0(B)+m_1(B)+m_3(B)=2Y\).
+Since \(Y\) is a unit on \(U\), we may relabel the outer vertices and
+scale so that \(m_3(B)=1\). Subtracting \(m_3(X')B\) from a lift
+\(X'\) of a center point fixes \(m_3(X')=0\) and preserves \(H,D\).
+In edge order \(01,02,03,12,13,23\), put
+\[
+ e(a,b,c,d;m)=(a,-b-d,m-c-d,b,c,d).
+\]
+The edges of \(B\) are \(e(a,b,c,d;1)\), with diagonal given by
+the corrected-kernel formula. The edges of \(X'\) are
+\(e(x,y,z,w;0)\). Write \(X'_{11}=e,\ X'_{33}=f\); the center
+condition gives \(X'_{00}=-e-f\), and the zero entry sum determines
+\(X'_{22}\). These coordinates identify the projective center search
+before imposing the polars with \([x:y:z:w:e:f]\in\mathbb P^5\).
+
+In each of the six cells, set the first nonzero coordinate to one
+and all preceding coordinates to zero. From
+\(\operatorname{per}(J_4+sB+tX')-\operatorname{per}(J_4)\)
+take all coefficients with \(t\)-degree at most two, together with the
+coefficient of \(s^0t^3\). These impose the pure equations, the polars,
+the three quadrics and the cubic defining \(X\). Over \(\mathbb F_5\)
+the reduced Gröbner basis of each cell ideal is \([1]\), keeping
+\(a,b,c,d\) as variables throughout. The cells cover all geometric
+center points and hence the center scheme is empty.
+
+The forms \(H,D\) now give a morphism \([H:D]\) on \(X\).
+It is proper since \(X\) is projective over \(U\) and the target is
+separated over \(U\). On each geometric fiber one linear combination
+of \(H,D\) vanishes and a complementary combination is everywhere
+nonzero. The fiber is closed in the affine complement of that latter
+hyperplane. It is also proper over its field, hence finite.
+A proper morphism with finite fibers is finite
+\cite{stacksproperaffine,stacksProperFiniteFibers}. Thus
+\(\dim X_{\overline{\kappa(s)}}\le1\), and the support assertion follows
+from Proposition~\ref{prop:level-pencil-scheme}.
+\end{proof}
+
+\begin{theorem}[No level three-plane on the fixed face at five]
+\label{thm:fixed-face-level-empty}
+Over \(\overline{\mathbb F}_5\) no full constant-permanent three-plane
+through \(J_4\) has a corrected-kernel direction on the face
+\([m_2:m_3]=[0:1]\). On its eligible quotient \(U\) one has
+\[
+   \mathcal F_{\rm lev}=\varnothing,\qquad Z_{\rm lev}=\varnothing,
+   \qquad \deg Z_{\rm lev}=0,\qquad R_{\rm lev}=Z.
+\]
+\end{theorem}
+
+\begin{proof}
+A full plane through the kernel direction \(B\) would give a projective
+line in the cubic companion fiber. Every possible common line on the
+face is covered by \(U\), by Theorem~\ref{thm:common-line-decomposition}.
+Choose a point of this line in \(H=0\). By
+Proposition~\ref{prop:level-pencil-center}, \(D\) is nonzero there.
+Normalize \(B\) by \(m_3(B)=1\) after an outer relabeling if needed.
+Scale the chosen direction \(X'\) to \(D(X')=1\) and add a multiple
+of \(B\) to achieve \(m_3(X')=0\). The latter operation preserves
+\(D(X')=1\) and \(H(X')=0\).
+
+The edges of \(B,X'\) are now \(e(a,b,c,d;1)\) and \(e(x,y,z,w;0)\)
+as in the center calculation. With \(S\) the sum of the six edges of
+\(X'\), its diagonal entries in vertex order \(0,1,2,3\) are
+\((1-e-f,e,-1-2S,f)\). These are ten free affine variables in all.
+Since \(B\) and \(X'\) belong to the proposed level plane, every
+nonconstant coefficient of
+\(\operatorname{per}(J_4+sB+tX')-\operatorname{per}(J_4)\) must
+vanish. The linear coefficients vanish by the entry-sum condition.
+The quadratic, cubic and quartic terms give \(3+4+5=12\)
+generators. Their reduced Gröbner basis over \(\mathbb F_5\) is
+\([1]\) in the ten-variable polynomial ring. Thus the normalized
+companion does not exist over any field extension.
+
+The full level incidence therefore has no geometric points and is the
+empty scheme. Its image is empty, so the common-line image equals
+the residual divisor defined after Proposition~\ref{prop:level-existence-image}.
+The quadratic common-line ideal and the unrestricted three-plane
+problem still require their own calculations.
+\end{proof}
+
+In particular, any corrected-kernel direction of a full level three-plane
+in characteristic five would satisfy \(\prod_{i=0}^{3}m_i(B)\ne0\).
+If one vertex sum is zero and another is nonzero, a permutation sends
+them to \(m_2,m_3\), placing the direction on the excluded face. If
+all sums are zero, the earlier exclusion of the base \(m_2=m_3=0\)
+already rules out even a quadratic common line.

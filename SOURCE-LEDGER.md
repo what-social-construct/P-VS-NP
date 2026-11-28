@@ -728,6 +728,41 @@ certificate computes four unit ideals over $\mathbb F_5$.
 [Exact specialization](python/gct_collision_line_divisor.py) ·
 [D'Andrea and Dickenstein](https://doi.org/10.1016/S0022-4049(00)00145-6)
 
+For the pencil $\lambda H+\mu D$, the coefficient equations use
+the degree 24 of the resultant in the hyperplane coefficients. The
+[Lean proof](lean/PvsNP/CommonLineInterpolation.lean) identifies
+the ideal from 25 evaluations and its behavior under base change,
+using [Mathlib's polynomial content ideal](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Polynomial/ContentIdeal.lean).
+At the labeled direction the [fiber computation](python/gct_collision_line_divisor.py)
+uses exact Gröbner reduction, conversion to lexicographic order and
+factorization over the prime field. The pencil norm uses the determinant
+of multiplication in the degree-24 algebra.
+[SymPy polynomial reference](https://docs.sympy.org/latest/modules/polys/reference.html) ·
+[Stacks, norms](https://stacks.math.columbia.edu/tag/0BCX)
+
+The [center equations](python/gct_collision_pencil_center.py) are
+coefficients of the original permanent on the $m_3(B)=1$ face. Six
+unit Gröbner bases computed by msolve 0.11.0 exclude all geometric
+center points there. Relabeling covers the eligible quotient where
+$Y$ is a unit. The support and finiteness conclusions use projective
+intersection and the proper morphism criterion.
+[msolve](https://msolve.lip6.fr/) · [Projective intersection](https://stacks.math.columbia.edu/tag/0B2R) ·
+[Proper morphisms with finite fibers](https://stacks.math.columbia.edu/tag/02LS)
+
+For the full level test the center exclusion permits normalizing
+$H(X)=0$, $D(X)=1$ and $m_3(X)=0$. The ten affine variables comprise
+four coordinates of $B$ and six of $X$. The
+[solver input generator](python/gct_collision_pencil_center.py) emits
+all twelve coefficients of total degrees two through four. The
+SHA-256 of its ASCII output with `--emit-level` is
+`b5c586614ae802a9549809b56d11262cefd233c8bc24dad03fbdad9393a11d8c`.
+An independent symbolic evaluation by the row-subset formula for the
+permanent at the 25 pairs $(s,t)\in\mathbb F_5^2$, followed by
+interpolation, matched all twelve input polynomials. The
+`--verify-level` replay computes the reduced basis `[1]` with msolve
+0.11.0 in characteristic five. The [theorem](manuscript/03-complexity/common-line-decomposition.tex)
+uses this calculation for the full level incidence on the fixed face.
+
 The residual proposition uses irreducibility and multidegrees of the
 universal homogeneous resultant. On a transverse section its eight
 evaluation factors give the auxiliary square. Specialization in the
