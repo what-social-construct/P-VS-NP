@@ -1,4 +1,4 @@
-"""Certify nonvanishing of the vertex-invariant common-line resultant at five."""
+"""Certify nonvanishing of the common-line and level-plane resultants at five."""
 
 from itertools import combinations
 
@@ -10,7 +10,7 @@ from gct_collision_fiber_net import polar_sextic_certificate
 from gct_collision_kernel_reduction import COORDINATES, evaluate
 from gct_collision_quadrics import polar_equations, quotient_forms_at
 from gct_collision_slice import face_edges, kernel_from_edges
-from gct_permanent_plucker import tangent_direction
+from gct_permanent_plucker import pencil_coefficients, tangent_direction
 
 
 def invariant_covectors(tangent):
@@ -29,6 +29,30 @@ def adapted_grams(grams, diagonal, incident, field):
             return [(frame * DomainMatrix(q, (5, 5), field) * frame.transpose()).to_list()
                     for q in grams]
     raise ValueError("D and H are dependent on the polar kernel")
+
+
+def check_cubic_section(edges, basis, incident_row, field):
+    """Exclude a projective common zero of H, the three quadrics, and q3."""
+    inclusion = DomainMatrix(basis, (5, 9), field)
+    section = DomainMatrix([list(incident_row)], (1, 5), field).nullspace() * inclusion
+    assert section.shape == (4, 9)
+    algebra, *parameters = ring("a,b,c,d", field)
+    tangent = tangent_direction(sum(t*c for t, c in zip(parameters, column))
+                                for column in zip(*section.to_list()))
+    assert invariant_covectors(tangent)[0] == 0
+    base = kernel_from_edges(algebra(x) for x in edges)
+    coefficients = pencil_coefficients(algebra, (base, tangent))
+    equations = [coefficients[i, 2, 0].as_expr() for i in range(3)]
+    equations.append(coefficients[0, 3, 0].as_expr())
+    for pivot in algebra.symbols:
+        variables = [v for v in algebra.symbols if v != pivot]
+        chart = [f.subs(pivot, 1) for f in equations]
+        assert list(sp.groebner(chart, *variables, modulus=5, order="grevlex")) == [1]
+    # The cubic carries no twist in B; each quadratic has multiplicity 12.
+    degree = 24*5 + 12*(0+1+2)
+    assert degree == 156
+    print(f"The four cubic-section charts are empty at (1,1,3,0,3,4). "
+          f"Degree {degree}, quotient bound {24*degree//6}.")
 
 
 def check_line_divisor():
@@ -66,6 +90,7 @@ def check_line_divisor():
     assert degree == 440
     print(f"The common-line resultant is nonzero at (1,1,3,0,3,4). "
           f"Degree {degree}, divisor length {24*degree}, quotient bound {24*degree//6}.")
+    check_cubic_section(edges, basis, incident_row, field)
 
 
 if __name__ == "__main__":

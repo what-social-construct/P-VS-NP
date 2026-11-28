@@ -547,3 +547,64 @@ The cokernel is the full level algebra. Over the algebraic closure,
 the cokernel exactly when every generator vanishes on it. The inverse
 of Proposition~\ref{prop:common-line-extension} identifies each such
 factor with one line, counted before choosing an ordering.
+
+\begin{proposition}[A cubic bound for the full level image]
+\label{prop:cubic-level-bound}
+On the fixed characteristic-five face let \(H\) be the invariant
+incident-edge sum above. There is a nonzero section on the labeled
+curve \(C\) given locally by
+\[
+ R_H=\operatorname{Res}_x(H,Q_2,Q_3,Q_4,q_3(\widetilde x)),
+\]
+where \(\widetilde x\) is a lift from the rank-five quotient \(W\) to the
+polar kernel and \(q_3\) is the cubic term of the permanent at \(J_4\).
+The function \(r_H=R_H/Y^{156}\) descends to the quotient and is regular
+on \(U\). The full level image satisfies
+\[
+             Z_{\rm lev}\subseteq V_U(r_H),\qquad
+             \deg Z_{\rm lev}\le 624.
+\]
+\end{proposition}
+
+\begin{proof}
+A level three-plane through \(B\) gives a two-space \(P\) in \(W\).
+Every lift of a vector of \(P\) lies in the level plane, so the three
+quadrics and \(q_3(\widetilde x)\) vanish on \(P\). Its projective
+line meets \(H=0\). To retain scheme structure, work in a frame adapted
+to \(P\). Take independent coefficients for forms of degrees \(2,2,2,3\)
+vanishing on \(\langle e_1,e_2\rangle\), and
+arbitrary coefficients for \(H\). Over the fraction field of this
+polynomial coefficient ring, \(H(e_2)e_1-H(e_1)e_2\) is a common
+nonzero root. The resultant is therefore zero in the coefficient ring.
+Specialization proves the same identity on the full incidence, including
+over nonreduced rings and where \(H\) vanishes on all of \(P\).
+
+Changing a lift by \(\ell(x)B\) adds \(\ell(x)Q_3(x)\) to
+\(q_3(\widetilde x)\), since \(q_3(B)\) and the first polar of
+\(q_3\) vanish. Adding this multiple of an earlier input preserves
+the resultant: on the generic simple intersection of the first four
+forms the product of the eight evaluated cubic values is unchanged.
+The identity extends to all coefficients by polynomiality.
+The input degrees have product 24, and their coefficient multidegrees
+are \(24,12,12,12,8\) \cite{dandreaDickensteinResultant}. With
+\(M=\det W^*\), the determinant character contributes \(M^{24}\) and
+the three quadric twists contribute \(\mathcal O_C(12(0+1+2))\).
+As \(M\) is \(\mathcal O_C(5)\) up to the vertex sign character, the
+result is an invariant section of \(\mathcal O_C(24\cdot5+36)
+=\mathcal O_C(156)\). Division by \(Y^{156}\) gives the descent.
+
+At the labeled pure direction \(B=(1,1,3,0,3,4)\), restricting to
+\(H=0\) in the quotient gives three quadrics and a cubic in four
+homogeneous coordinates. Setting each coordinate in turn to one gives
+the unit ideal on all four charts over \(\mathbb F_5\), so \(R_H\)
+is nonzero on the integral curve \(C\). Its pullback to the normalization
+has zero divisor of degree \(24\cdot156\). Above \(U\) the ordering
+map has degree six and \(Y\) is a unit. The schematic vanishing on the
+level incidence thus gives \(\deg Z_{\rm lev}\le24\cdot156/6=624\).
+\end{proof}
+
+For a second cut one may vary the hyperplane. Every full level line
+meets \(H+TD=0\), so the same adapted-frame identity makes every
+coefficient in \(T\) of \(R_{H+TD}\) vanish on \(Z_{\rm lev}\).
+Computing their common zero scheme on \(U\) could narrow the candidate
+set further. A surviving point still requires the full level-plane test.

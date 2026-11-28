@@ -717,6 +717,17 @@ Mathlib revision.
 [Kernel support](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/AlgebraicGeometry/IdealSheaf/Basic.lean#L844) ·
 [Nullstellensatz](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Nullstellensatz.lean#L149)
 
+The cubic degree bound uses the same labeled pure curve, determinant
+line of the polar quotient and six-sheet ordering cover. Requiring a
+full level plane adds the cubic term of the permanent to the three
+quadrics on the invariant hyperplane. D'Andrea and Dickenstein give the
+resultant multidegrees. Gauge independence, vanishing on the level
+incidence and degree on the quotient are derived here. The specialization
+certificate computes four unit ideals over $\mathbb F_5$.
+[Cubic bound](manuscript/03-complexity/common-line-decomposition.tex) ·
+[Exact specialization](python/gct_collision_line_divisor.py) ·
+[D'Andrea and Dickenstein](https://doi.org/10.1016/S0022-4049(00)00145-6)
+
 The residual proposition uses irreducibility and multidegrees of the
 universal homogeneous resultant. On a transverse section its eight
 evaluation factors give the auxiliary square. Specialization in the
