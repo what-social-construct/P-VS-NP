@@ -188,7 +188,8 @@ incidence \(T\times_U\mathcal F_{\rm lev}\).
 
 Theorem~\ref{thm:fixed-face-level-empty} below excludes geometric points
 of \(\mathcal F_{\rm lev}\) on this face. The complete factorization of
-\((h)_0\) and the list of its nonempty common-line fibers remain undetermined.
+\((h)_0\) remains undetermined. Theorem~\ref{thm:fixed-face-quadratic-empty}
+will exclude common lines above every one of its points.
 
 \paragraph{A complete test over quadratic slopes.}
 For each of the ten monic irreducible quadratics \(v^2+sv+t\) over
@@ -767,8 +768,8 @@ companion does not exist over any field extension.
 The full level incidence therefore has no geometric points and is the
 empty scheme. Its image is empty, so the common-line image equals
 the residual divisor defined after Proposition~\ref{prop:level-existence-image}.
-The quadratic common-line ideal and the unrestricted three-plane
-problem still require their own calculations.
+The quadratic common-line ideal is treated separately in
+Theorem~\ref{thm:fixed-face-quadratic-empty}.
 \end{proof}
 
 In particular, any corrected-kernel direction of a full level three-plane
@@ -780,7 +781,7 @@ already rules out even a quadratic common line.
 
 \paragraph{Irreducible components of the residual.}
 The ambient pure curve \(C\) is geometrically
-integral. On the smooth quotient \(U\), the surviving divisor
+integral. On the smooth quotient \(U\), the divisor
 \(R_{\rm lev}=Z\) is finite. For each closed point \(s\) of its support
 write \(a_s\) for its multiplicity and \(d_s=[\kappa(s):\mathbb F_5]\).
 Its decomposition into local schemes over \(\mathbb F_5\) is
@@ -806,7 +807,9 @@ In each local factor a fixed element reduces to a scalar in
 which is zero by iterating Frobenius. Each local factor therefore
 contributes one dimension, including when \(a_s>1\). Dimension one
 is equivalent to a single irreducible component over \(\mathbb F_5\);
-dimension zero is the empty case. The set of supporting orbits of
-\(Z\) and their multiplicities are undetermined. As a separate check,
+dimension zero is the empty case, which the following calculation
+establishes for \(Z\). As a separate check,
 on the explicitly computed degree-24 companion fiber this dimension
 is four, including the rational double point as one component.
+
+\input{03-complexity/common-line-image-certificate}

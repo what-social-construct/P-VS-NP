@@ -769,10 +769,26 @@ combines the local divisor description on the smooth quotient with the
 It counts Frobenius orbits in the support while retaining the multiplicities
 in the local rings. The numerical Frobenius rank in the
 [degree-24 companion algebra](python/gct_collision_line_divisor.py) concerns the
-labeled test direction. The fixed-subspace dimension of the common-line
-image algebra is still unknown.
+labeled test direction. The empty image computed below has fixed-subspace
+dimension zero.
 [Stacks, divisors on smooth curves](https://stacks.math.columbia.edu/tag/0B9D) ·
 [Stacks, finite étale schemes over a field](https://stacks.math.columbia.edu/tag/03QR)
+
+The [fixed-face certificate](manuscript/03-complexity/common-line-image-certificate.tex)
+uses three cofactor sections of weights 336, 344 and 352. Its
+[input](python/data/common_line_samples_f5_7.txt) consists of 450 labeled
+points obtained by specializing the existing pure plane equation at
+degree-seven slopes, splitting the incident cubic and scaling by \(Y\).
+The [C++17 evaluator](gct_common_line_resultants.cpp) computes the net
+from the original permanent. The [Python checker](python/gct_common_line_image_algebra.py)
+checks the pure equations and orbit sizes, recovers the three sections
+over $\mathbb F_5$, verifies the 78 multiplication identities and computes
+the three determinants and their pairwise gcds. The replay used Python
+3.9.6, NumPy 2.0.2, SymPy 1.14.0 and python-flint 0.6.0. The geometric
+degree test and the inference from two coprime determinants to the empty
+incidence are written derivations. The proof of finiteness over the
+complex numbers uses the closed projective flag model of the earlier
+slice calculation. [Degrees on curves](https://stacks.math.columbia.edu/tag/0AYQ) · [Projective intersection](https://stacks.math.columbia.edu/tag/0B2R)
 
 The residual proposition uses irreducibility and multidegrees of the
 universal homogeneous resultant. On a transverse section its eight

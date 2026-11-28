@@ -1,0 +1,127 @@
+\begin{theorem}[Empty quadratic common-line image]
+\label{thm:fixed-face-quadratic-empty}
+Over \(\mathbb F_5\) the face \([m_2:m_3]=[0:1]\) has empty
+quadratic common-line incidence. On its eligible quotient \(U\),
+\[
+             Z=Z_{\rm lev}=R_{\rm lev}=0 .
+\]
+In particular the residual has degree zero and its support contains
+zero Frobenius orbits.
+\end{theorem}
+
+\begin{proof}
+Write \(k=\mathbb F_5\). Use the three quadrics of the net in turn
+to test the same polar cofactor \(c(x)\). For \(i=2,3,4\) put
+\[
+  B_D^2 G_i=\operatorname{Res}_x(H,Q_2,Q_3,Q_4,Q_i(c(x))),
+  \qquad d_i=336+8(i-2).
+\]
+Proposition~\ref{prop:common-line-residual} constructs \(G_2\).
+Its auxiliary-square proof applies to all three forms. At a generic
+section point \(x\), write the polar kernel as \(\langle x,y\rangle\).
+Since \(Q_i(x)=b_i(x,y)=0\), evaluating \(Q_i\) on the cofactor
+produces the factor \(D(x)^2\) for each of the eight points. The same
+universal polynomial division and cancellation on the framed incidence
+give \(G_i=0\) on every common line, including specializations where
+\(B_D=0\). Replacing \(Q_2(c)\) by \(Q_i(c)\) adds the coefficient
+twist \(\mathcal O_C(i-2)\) to the sextic, whose resultant degree is
+eight. Thus \(G_i\) is an invariant section of \(\mathcal O_C(d_i)\).
+Every possible common line is covered by \(Y\ne0\) by
+Theorem~\ref{thm:common-line-decomposition}. There we use
+\(g_i=G_i/Y^{d_i}\).
+
+\emph{Exact section values.}
+Write \(x_0,x_1,x_2\) for the edges incident to vertex 2 and \(y_j\)
+for the opposite edge paired with \(x_j\). Then \(\sum x_j=0\) and
+\(Y=\sum y_j\). The calculation uses the affine frame \(Y=1\)
+and the invariant parameter \(t=x_0x_1x_2\) in this frame.
+At each supplied pure point, expand
+\(\operatorname{per}(J_4+sB+uX)\) to obtain the three polar rows
+and the three Gram matrices. In the nine-dimensional tangent space,
+let \(M\) have rows consisting of the three polars, a coordinate
+functional \(\ell\) with \(\ell(B)\ne0\), three more coordinate rows,
+and \(D,H\), in that order. Choose the three rows so \(M\) is
+invertible. The last five columns of \(M^{-1}\) give an adapted
+frame of \(W_B\); the volume in this frame is
+\(\pm\ell(B)/\det M\) by expansion along the polar and gauge rows.
+
+In the adapted frame let \(\beta\) be the ternary resultant of the
+quadrics at \(D=H=0\). At every sample it is nonzero, so \(H=0,D=1\)
+contains the whole length-eight section with affine algebra \(A_B\).
+The homogeneous resultant product formula, with multiplicities
+\cite{jouanolouResultant},
+gives the following scalar in the fixed ambient trivialization:
+\[
+   g_i(B)=\left(\frac{\det M}{\ell(B)}\right)^{48}
+             \beta^4\,\det\!\left(m_{Q_i(c)}:A_B\to A_B\right).
+\]
+Indeed the sextic gives \(\beta^6\) before canceling \(\beta^2\).
+The determinant twist of \(G_i\) is \((\det W^*)^{48}\) for every
+\(i\). The evaluator computes \(\beta\) by the ternary Macaulay
+determinant quotient and reduces multiples of the three quadrics
+through degree four to obtain the eight-dimensional multiplication
+matrices.
+
+\emph{Certification on the entire curve.}
+Use the field \(k[w]/(w^7+3w+3)\) for the sample evaluations.
+The checker substitutes all 450 labeled points in the pure equations.
+Each has three distinct incident edges. Permuting the three edge pairs
+and applying Frobenius gives \(450\cdot6\cdot7=18\,900\) distinct
+geometric points of \(C\), as checked on the normalized coordinates.
+The resultant evaluation also agrees in two frames at each of the
+six labelings of every sample.
+Fit each \(g_i\) by an invariant polynomial \(P_i\) using the columns
+\(t^j b_h\), where the \(b_h\) are orbit sums of monomials in
+\(x_0,x_1,y_0,y_1\), \(b_0=1\), and \(3j+\deg b_h\le d_i\).
+The twelve orbit sums have degrees
+\[
+              0,2,2,3,3,4,4,5,5,6,6,8 .
+\]
+They are obtained by row reduction of the orbit sums modulo the pure
+equations and \(Y=x_0x_1x_2=0\). The checker verifies the weight of
+every recovered term and all 450 equalities in the extension field.
+Homogenize \(P_i\) with \(Y\) to degree \(d_i\). Its difference
+from \(G_i\) vanishes on all the permuted and conjugate points by
+invariance and descent to \(k\). A nonzero section of
+\(\mathcal O_C(d_i)\) has zero divisor of degree \(24d_i\)
+\cite{stacksCurveDegrees}, since
+\(C\) is geometrically integral of degree 24. Even the largest
+bound is \(24\cdot352=8\,448\). Thus each recovered polynomial
+equals the true section on \(Y=1\).
+
+\emph{Exclusion by two coprime determinants.}
+In the coordinate ring of this chart, reduce the 78 products
+\(b_h b_j\), \(h\le j\), modulo the pure equations. The resulting
+identities express each product in the \(b_h\) with coefficients in
+\(k[t]\). They give a \(12\times12\) polynomial matrix \(M_i(t)\)
+for multiplication by \(P_i\), and \(N_i(t)=\det M_i(t)\).
+In particular, at any geometric base point \(s\), evaluation gives
+\[
+ (b_h(s))_h\,M_i(t(s))=g_i(s)\,(b_h(s))_h .
+\]
+This row is nonzero because \(b_0=1\). A common line above \(s\)
+would force all three \(N_i(t(s))\) to vanish. Exact polynomial
+arithmetic over \(k\) gives
+\[
+  (\deg N_2,\deg N_3,\deg N_4)=(1344,1372,1406),
+  \qquad \gcd(N_2,N_3)=\gcd(N_2,N_4)=\gcd(N_3,N_4)=1 .
+\]
+Already the first pair excludes every value of \(t\) over
+\(\overline k\). Consequently \(\mathcal F\) and its labeled
+pullback have no geometric points and are empty schemes. Their
+images and the residual divisor are zero.
+\end{proof}
+
+\paragraph{Finiteness of kernel directions.}
+The entire projective locus of pure kernel directions admitting a
+quadratic common line is finite over \(\overline{\mathbb F}_5\) and
+over \(\mathbb C\). Indeed the theorem excludes \(m_2=0,m_3\ne0\)
+at five, and Proposition~\ref{prop:kernel-curve} excludes
+\(m_2=m_3=0\). The projective flag incidence used there, now with
+the single equation \(m_2=0\), has empty special fiber over
+\(\mathbb Z_{(5)}\). Properness gives an empty generic fiber as well.
+In both characteristics the closed direction image therefore misses
+a hyperplane in \(\mathbb P^5\). A projective scheme contained in
+this affine complement is finite over its field. By symmetry any
+surviving direction has all four vertex sums nonzero. Existence
+of such a direction off the hyperplanes remains open.

@@ -167,13 +167,13 @@ orbits under vertex permutations and Frobenius. A quintic rank test and
 these orbits using the quadratic completion equations. A second replay
 checks a degree-four identity for one for each orbit's companion system.
 A fixed projective three-space slice contains just 24 such points.
-Its exclusion bounds the entire quadratic direction locus by a curve
-over the algebraic closure and over the complex numbers. The two
-linear forms defining the slice give a finite fiber above $[0:1]$.
-Over the algebraic closure at five, this fiber lies on a geometrically
-integral degree-24 curve. Up to vertex relabeling, one chart with 16
-variables and 18 equations decides whether it contains a common line.
-The chart remains open. [Proof and remaining target](manuscript/03-complexity/collision-kernel-quadrics.tex)
+On the pencil face $[m_2:m_3]=[0:1]$, the pure directions form an open
+of a geometrically integral degree-24 curve. Imposing a common line
+gives the empty scheme. Together with the slice exclusion, this makes
+the entire quadratic kernel-direction locus finite over both
+$\overline{\mathbb F}_5$ and $\mathbb C$. Whether any direction survives
+with all four vertex sums nonzero remains open.
+[Direction locus](manuscript/03-complexity/collision-kernel-quadrics.tex) · [Fixed-face proof](manuscript/03-complexity/common-line-image-certificate.tex)
 
 ~~~sh
 python3 python/gct_collision_f25.py --verify-lines msolve
@@ -235,18 +235,39 @@ $Q_2$ candidate fails $Q_3$ and $Q_4$. Removing this point lowers the
 bound on the degree of the common-line image to 1,338. The other two
 closed points above its slope, of degrees 24 and 42, have nonzero
 resultant. Taking the schematic closure after removing that slope
-therefore removes precisely the degree-six factor. Which remaining
-candidates support a line is open. [Decomposition and closure](manuscript/03-complexity/common-line-decomposition.tex) · [Slope check](python/gct_collision_slope_closure.py) · [Ordered witness recovery](python/gct_collision_incidence_descent.py)
+therefore removes precisely the degree-six factor. The other two
+cofactor equations exclude lines above all remaining candidates.
+[Decomposition and closure](manuscript/03-complexity/common-line-decomposition.tex) · [Slope check](python/gct_collision_slope_closure.py) · [Ordered witness recovery](python/gct_collision_incidence_descent.py)
 
-On this characteristic-five face the common-line image decomposes as
-$Z=Z_{\rm lev}+R_{\rm lev}=0+R_{\rm lev}$. Six exact Gröbner bases
-exclude a cubic companion in the pencil center. A seventh excludes a
-level companion in the remaining normalized chart. Over $\mathbb F_5$,
-each irreducible piece of the residual is a thickened closed point.
-Every such point splits into at least three geometric points. The
-number of arithmetic components, including the possibility of zero,
-remains open. Replay the level exclusion with msolve 0.11.0.
-[Fixed-face theorem](manuscript/03-complexity/common-line-decomposition.tex) · [Checker](python/gct_collision_pencil_center.py)
+**The fixed-face residual has zero Frobenius orbits.** A common line
+would give a simultaneous zero of three univariate polynomials over
+$\mathbb F_5$. Their degrees are 1,344, 1,372 and 1,406, and already
+the first two have gcd one. The calculation recovers the cofactor
+sections from exact values on 18,900 distinct geometric points of
+the labeled curve. The largest degree bound for the zero divisor of
+a nonzero difference is 8,448, so these values determine the sections
+on the whole curve. This proves $Z=Z_{\rm lev}=R_{\rm lev}=0$.
+[Proof](manuscript/03-complexity/common-line-image-certificate.tex) · [Resultant evaluator](gct_common_line_resultants.cpp) · [Algebra checker](python/gct_common_line_image_algebra.py)
+
+Replay the quadratic calculation from the repository root with C++17,
+NumPy, SymPy and python-flint. The five input columns encode
+$x_0,x_1,y_0,y_1,y_2$ with $Y=1$ as seven base-five digits, constant
+coefficient first, in $\mathbb F_5[w]/(w^7+3w+3)$.
+
+~~~sh
+c++ -std=c++17 -O3 gct_common_line_resultants.cpp -o /tmp/common-line-resultants
+/tmp/common-line-resultants < python/data/common_line_samples_f5_7.txt > /tmp/common-line-values.txt
+python3 python/gct_common_line_image_algebra.py /tmp/common-line-values.txt
+~~~
+
+Pass the optional flag `--emit-norms /tmp/common-line-norms.json` to
+write the three norm polynomials and a Bézout identity for the first
+pair. Coefficient arrays begin with the constant term.
+
+The earlier full-level exclusion has a separate replay. Six exact
+Gröbner bases exclude a cubic companion in the pencil center. A
+seventh excludes a level companion in the normalized chart. These
+commands use msolve 0.11.0. [Level theorem](manuscript/03-complexity/common-line-decomposition.tex) · [Checker](python/gct_collision_pencil_center.py)
 
 ~~~sh
 python3 python/gct_collision_pencil_center.py --verify msolve
