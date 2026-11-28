@@ -9,7 +9,7 @@ manuscript sources are in the [bibliography](manuscript/references.bib).
 | --- | --- | --- | --- |
 | [HE-P1-Code](#he-p1-code) | Homotopical Encryption at `e619391` | Fresh-sign and residual Lean import closure | Copied source proofs and fixed-mask cost comparison |
 | [HE-P1-Text](#he-p1-text) | Homotopical Encryption Paper 1 at `62f20ff` | Fresh-sign normal form, explicit residual, cost gap, disclosure and oracle scope | Originating cochain and residual data |
-| [HE-P3](#he-p3) | Homotopical Encryption Paper 3 local §8 draft based on `62f20ff` | Normalized certificate coefficients, degree feasibility, completeness, and sharpness | Finite-field selector and certificate collision square |
+| [HE-P3](#he-p3) | Homotopical Encryption Paper 3, §8 at `1ed8d55` and §6 at `b3a731f` | Agreement certificates and the eight-site matching census | Finite-field selector, certificate collision square, and comparison of labeled incidences |
 | [GOT](#got) | Local Galois Obstruction Theory manuscript, §4 and proof spine | Tagged graph pullback, idempotent comparison, and first-colon quotient | Agreement square and affine residual calculation |
 | [GCT](#gct) | Pinned Galois orbit and commutant exports, published geometric complexity results, and PEqualNP GCT rows | Orbit coordinates, polynomial separation, multiplicity comparison, and permanent level spaces | Finite symmetry and geometric complexity in Section 4 |
 | [GODEL](#godel) | Grabmayr and Goldfarb | Coding and substitution, fixed-point lemma | Exact tracking and provability comparisons |
@@ -89,6 +89,17 @@ The local [Lean bridge](lean/PvsNP/AgreementCertificate.lean) applies
 the affine collision square to the imported coefficient map. The
 [prime-field executable](python/polynomial_agreement_selector.py) implements
 the draft's row-reduction and degree search for these equations.
+
+At the [reviewed revision `b3a731f`](https://github.com/what-social-construct/homotopical-encrypt/tree/b3a731fd83a3e342f444fc8ed4dd87f3eb8343a7),
+Paper 1 and the 40 Lean files in its import closure still match the pins above.
+In Paper 3 the new census classifies the 105 perfect matchings of the
+eight-site Reed–Solomon example over $\mathbb F_{17}$. The upstream Lean
+theorem counts restricted quadrics by type. The paper derives the
+coordinate algebra of the finite part and distinguishes labeled incidences
+from their images after forgetting the matching. We use that distinction
+to compare the census with the labeled common-line incidence for the permanent.
+[Lean census](https://github.com/what-social-construct/homotopical-encrypt/blob/b3a731fd83a3e342f444fc8ed4dd87f3eb8343a7/lean/Proximity/MCA/Syndrome/Seventeen/MatchingCensus.lean#L300-L310) ·
+[Paper 3 derivation](https://github.com/what-social-construct/homotopical-encrypt/blob/b3a731fd83a3e342f444fc8ed4dd87f3eb8343a7/papers/paper3/sections/06-mca-target.tex#L414-L471)
 
 ## GOT
 
