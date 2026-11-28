@@ -10,6 +10,7 @@ public import PvsNP.DiscriminantIdeal
 public import PvsNP.EdgeDiscriminant
 public import PvsNP.EdgeStabilizer
 public import PvsNP.FiniteSymmetry
+public import PvsNP.GeometricExistence
 public import PvsNP.IncidenceObservations
 public import PvsNP.InvariantClosure
 public import PvsNP.LevelSetExtension

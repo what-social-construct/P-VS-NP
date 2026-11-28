@@ -696,6 +696,27 @@ so the coefficient recovery also applies after nonreduced base change.
 [Permanent calculation](manuscript/03-complexity/common-line-decomposition.tex) ·
 [Vandermonde determinant in the pinned Mathlib revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Vandermonde.lean#L220-L238)
 
+For a polynomial level-plane family the geometric existence locus is the
+support of its scheme-theoretic image. The calculation assumes a closed
+family in a relative Grassmannian. Projectivity makes the image closed,
+and the affine chart kernels give its scheme structure. The residue-field
+test uses the weak Nullstellensatz for a finite type algebra over a
+field. On the fixed face, the divisor subtraction uses the local rings
+of the smooth curve, and the rank formula uses the transverse rank-eight
+section algebra with $B_D$ invertible.
+[Existence proposition](manuscript/03-complexity/common-line-decomposition.tex) ·
+[Stacks, projective morphisms](https://stacks.math.columbia.edu/tag/01WC) ·
+[Stacks, scheme-theoretic image](https://stacks.math.columbia.edu/tag/01R5) ·
+[Stacks, Hilbert Nullstellensatz](https://stacks.math.columbia.edu/tag/00FV)
+
+The [Lean existence equalities](lean/PvsNP/GeometricExistence.lean)
+use the fiber homeomorphism, the support formula for the kernel ideal
+sheaf, and the description of maximal polynomial ideals in the pinned
+Mathlib revision.
+[Fiber](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/AlgebraicGeometry/Fiber.lean#L101) ·
+[Kernel support](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/AlgebraicGeometry/IdealSheaf/Basic.lean#L844) ·
+[Nullstellensatz](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/RingTheory/Nullstellensatz.lean#L149)
+
 The residual proposition uses irreducibility and multidegrees of the
 universal homogeneous resultant. On a transverse section its eight
 evaluation factors give the auxiliary square. Specialization in the

@@ -11,7 +11,8 @@ from gct_collision_face import (descended_net, interpolated_tangent, ordered_ker
                                 residual_system, specialization_polars)
 from gct_collision_kernel_reduction import evaluate
 from gct_collision_ordering_fibers import ordering_factors
-from gct_collision_quadrics import quadratic_field
+from gct_collision_fiber_net import polar_sextic_inverse
+from gct_collision_quadrics import common_line_form_cells, line_frame, quadratic_field
 from gct_common_line_witness import (
     LineWitness, common_line_witness, extension_of_degree, field_elements, horner, verifies_line,
 )
@@ -41,13 +42,17 @@ def level_residual_values(frame, field):
     """
     if field.characteristic() != 5:
         raise ValueError("the thirteen-point test is defined in characteristic five")
+    return _level_samples(frame, field.one)
+
+
+def _level_samples(frame, one):
     base, x, y = frame
     residuals = []
     for s, t, u in LEVEL_SAMPLES:
-        entries = {ij: field.one + s*base[ij] + t*x[ij] + u*y[ij] for ij in base}
+        entries = {ij: one + s*base[ij] + t*x[ij] + u*y[ij] for ij in base}
         value = sum(sp.prod(entries[min(i, j), max(i, j)] for i, j in enumerate(order))
                     for order in PERMUTATIONS)
-        residuals.append(value - field(24))
+        residuals.append(value - 24*one)
     return tuple(residuals)
 
 
@@ -57,22 +62,17 @@ def embed(value, source, root, target):
     return target(int(value))
 
 
-def split_witness_data(values, coefficients, witness):
-    """Embed the net witness and its coefficient embedding into a cubic splitting field."""
-    source = witness.field
-    values = tuple(embed(a, coefficients, witness.coefficient_root, source) for a in values)
+def _split_parameters(values, source):
+    """Choose a coefficient embedding and order the three incident roots."""
     relative = ordering_factors(source, values[0], values[1])[0]
     target = source if relative == 1 else extension_of_degree(getattr(source, "rank", 1)*relative)
-    rows = witness.rows
-    root = witness.coefficient_root
+    image = getattr(source, "generator", source.zero)
     if relative > 1:
         image = target.zero
         if isinstance(source, MonogenicFiniteExtension):
             modulus = source.modulus.all_coeffs()
             image = next(t for t in field_elements(target) if not horner(modulus, t, target))
         values = tuple(embed(a, source, image, target) for a in values)
-        rows = [[embed(a, source, image, target) for a in row] for row in rows]
-        root = embed(root, source, image, target)
     p, q, _, _ = values
     roots = []
     for a in field_elements(target):
@@ -83,17 +83,22 @@ def split_witness_data(values, coefficients, witness):
                 break
     if len(set(roots)) != 3 or any(a**3+p*a != q for a in roots):
         raise ArithmeticError("failed to split a separable incident cubic")
-    return target, root, values, tuple(roots), rows
+    return target, image, values, tuple(roots)
 
 
-def find_ordered_line(values, field):
-    """Search a pure w=1 quotient point for geometric quadratic line incidence.
+def split_witness_data(values, coefficients, witness):
+    """Embed the net witness and its coefficient embedding into a cubic splitting field."""
+    source = witness.field
+    values = tuple(embed(a, coefficients, witness.coefficient_root, source) for a in values)
+    target, image, values, roots = _split_parameters(values, source)
+    rows, root = witness.rows, witness.coefficient_root
+    if target != source:
+        rows = [[embed(a, source, image, target) for a in row] for row in rows]
+        root = embed(root, source, image, target)
+    return target, root, values, roots, rows
 
-    The result contains a chosen coefficient embedding, ordered roots, and
-    the three original matrices over a finite extension. None certifies an
-    empty geometric fiber. Field enumeration and chart search have no
-    polynomial bit-cost bound here.
-    """
+
+def _pure_parameters(values, field):
     if field != sp.GF(5) and not (isinstance(field, MonogenicFiniteExtension) and
                                  field.domain == sp.GF(5) and field.modulus.is_irreducible):
         raise ValueError("expected F5 or a simple finite extension of F5")
@@ -105,6 +110,18 @@ def find_ordered_line(values, field):
     algebra, *_ = ring(symbols, sp.GF(5))
     if any(evaluate(algebra.from_expr(f), values) for f in equations):
         raise ValueError("invariant parameters fail the pure permanent equations")
+    return values
+
+
+def find_ordered_line(values, field):
+    """Search a pure w=1 quotient point for geometric quadratic line incidence.
+
+    The result contains a chosen coefficient embedding, ordered roots, and
+    the three original matrices over a finite extension. None certifies an
+    empty geometric fiber. Field enumeration and chart search have no
+    polynomial bit-cost bound here.
+    """
+    values = _pure_parameters(values, field)
     _, forms = descended_net(specialization_polars(), values, field)
     witness = common_line_witness(forms, field)
     if witness is None:
@@ -117,6 +134,51 @@ def find_ordered_line(values, field):
 def lift_row(row, inclusion):
     """Send a polar-kernel row to the eight interpolation coordinates."""
     return [sum(a*b for a, b in zip(row, column)) for column in zip(*inclusion)]
+
+
+def _matrix_in_span(row, directions):
+    return {ij: sum(a*d[ij] for a, d in zip(row, directions)) for ij in directions[0]}
+
+
+def _has_level_line(forms, field, base, directions):
+    """Test the joint ideals on all ten geometric RREF cells of the polar net."""
+    for pivots, _, equations in common_line_form_cells(forms, field):
+        algebra = equations[0].ring
+        gram = sp.groebner([f.as_expr() for f in equations], *algebra.symbols,
+                           modulus=5, order="grevlex")
+        if list(gram) == [1]:
+            continue
+        # The last variable presents the coefficient field modulo its defining polynomial.
+        def lift(matrix):
+            return {ij: embed(c, field, algebra.gens[-1], algebra) for ij, c in matrix.items()}
+
+        rows = line_frame(pivots, algebra.gens[:-1], algebra.one, algebra.zero)
+        lifted = [lift(d) for d in directions]
+        frame = [lift(base), *(_matrix_in_span(row, lifted) for row in rows)]
+        extra = [gram.reduce(f.as_expr())[1] for f in _level_samples(frame, algebra.one)]
+        if not any(extra) or list(sp.groebner([*gram, *extra], *algebra.symbols,
+                                              modulus=5, order="grevlex")) != [1]:
+            return True
+    return False
+
+
+def level_three_plane_exists(values, field):
+    """Decide whether any geometric level three-plane lies over a pure quotient point.
+
+    The decision is over the algebraic closure. It gives no rationality or
+    running-time bound. Testing one incident line would only decide its own lift.
+    """
+    values = _pure_parameters(values, field)
+    polars = specialization_polars()
+    inclusion, forms = descended_net(polars, values, field)
+    if polar_sextic_inverse(forms, field) is not None:
+        return False
+    target, _, values, roots = _split_parameters(values, field)
+    if target != field:
+        inclusion, forms = descended_net(polars, values, target)
+    base = ordered_kernel(roots, *values[2:])
+    directions = [interpolated_tangent(roots, slots) for slots in inclusion]
+    return _has_level_line(forms, target, base, directions)
 
 
 def ordered_line_frame(values, roots, rows, field):
@@ -236,7 +298,32 @@ def check_level_residual_values():
     print("Verified the invertible 13-point permanent test and the level and quartic controls.")
 
 
+def check_level_existence():
+    field = sp.GF(5)
+    assert not level_three_plane_exists((4, 4, 4, 4), field)
+
+    # Four geometric lines, with independent choices of two signs. Map the
+    # first two net coordinates to multiples of a pure-quartic diagonal.
+    # This synthetic map distinguishes the signs without using a face witness.
+    forms = [sp.diag(*q).tolist() for q in
+             ((-1, 1, 0, 0, 0), (0, 0, -1, 1, 0), (0, 0, 0, 0, 1))]
+    first = common_line_witness(forms, field, field)
+    x, y = first.rows
+    assert x[0] == field.one and x[1]**2 == field.one
+    slots = tuple(combinations_with_replacement(range(4), 2))
+    diagonal = {ij: field((1, -1, 2, -2)[ij[0]] if ij[0] == ij[1] else 0) for ij in slots}
+    zero = dict.fromkeys(slots, field.zero)
+    scaled = {ij: x[1]*a for ij, a in diagonal.items()}
+    directions = [scaled, diagonal, zero, zero, zero]
+    frame = [zero, _matrix_in_span(x, directions), _matrix_in_span(y, directions)]
+    assert any(level_residual_values(frame, field))
+    assert _has_level_line(forms, field, zero, directions)
+    assert not _has_level_line(forms, field, zero, [diagonal, zero, zero, zero, zero])
+    print("Verified geometric level existence on a four-line control and an empty face fiber.")
+
+
 if __name__ == "__main__":
     check_transport()
     check_extension_transport()
     check_level_residual_values()
+    check_level_existence()
