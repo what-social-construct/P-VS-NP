@@ -238,12 +238,14 @@ resultant. Taking the schematic closure after removing that slope
 therefore removes precisely the degree-six factor. Which remaining
 candidates support a line is open. [Decomposition and closure](manuscript/03-complexity/common-line-decomposition.tex) · [Slope check](python/gct_collision_slope_closure.py) · [Ordered witness recovery](python/gct_collision_incidence_descent.py)
 
-The full constant-permanent three-plane locus on this characteristic-five
-face is **empty**. Six exact Gröbner bases exclude a cubic companion in
-the pencil center. A seventh unit basis excludes a level companion in
-the remaining normalized chart. Thus the full level image has degree
-zero, even though the quadratic common-line fibers still require study.
-Replay both calculations with msolve 0.11.0.
+On this characteristic-five face the common-line image decomposes as
+$Z=Z_{\rm lev}+R_{\rm lev}=0+R_{\rm lev}$. Six exact Gröbner bases
+exclude a cubic companion in the pencil center. A seventh excludes a
+level companion in the remaining normalized chart. Over $\mathbb F_5$,
+each irreducible piece of the residual is a thickened closed point.
+Every such point splits into at least three geometric points. The
+number of arithmetic components, including the possibility of zero,
+remains open. Replay the level exclusion with msolve 0.11.0.
 [Fixed-face theorem](manuscript/03-complexity/common-line-decomposition.tex) · [Checker](python/gct_collision_pencil_center.py)
 
 ~~~sh

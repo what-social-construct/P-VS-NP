@@ -763,6 +763,17 @@ interpolation, matched all twelve input polynomials. The
 0.11.0 in characteristic five. The [theorem](manuscript/03-complexity/common-line-decomposition.tex)
 uses this calculation for the full level incidence on the fixed face.
 
+The [residual component formula](manuscript/03-complexity/common-line-decomposition.tex)
+combines the local divisor description on the smooth quotient with the
+[exclusion of slopes in $\mathbb F_{25}$](python/gct_collision_line_divisor_slopes.py).
+It counts Frobenius orbits in the support while retaining the multiplicities
+in the local rings. The numerical Frobenius rank in the
+[degree-24 companion algebra](python/gct_collision_line_divisor.py) concerns the
+labeled test direction. The fixed-subspace dimension of the common-line
+image algebra is still unknown.
+[Stacks, divisors on smooth curves](https://stacks.math.columbia.edu/tag/0B9D) ·
+[Stacks, finite étale schemes over a field](https://stacks.math.columbia.edu/tag/03QR)
+
 The residual proposition uses irreducibility and multidegrees of the
 universal homogeneous resultant. On a transverse section its eight
 evaluation factors give the auxiliary square. Specialization in the

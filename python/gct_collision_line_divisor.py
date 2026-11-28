@@ -62,6 +62,14 @@ def check_cubic_section(edges, basis, incident_row, diagonal_row, field):
     d = coordinates[-1]
     g = sp.Poly(lex[-1], d, modulus=5)
     assert g.is_monic
+    # Compute Frobenius minus identity on the full quotient, including the double point.
+    length = g.degree()
+    rows = []
+    for i in range(length):
+        difference = sp.Poly(d**(5*i) - d**i, d, modulus=5).rem(g)
+        rows.append([field.convert(difference.nth(j)) for j in range(length)])
+    fixed_dimension = length - DomainMatrix(rows, (length, length), field).rank()
+    assert fixed_dimension == 4
     _, factors = g.factor_list()
     rational_factors = [(factor, m) for factor, m in factors if factor.degree() == 1]
     assert {int(-factor.TC()) % 5: m for factor, m in rational_factors} == {1: 1, 2: 2}
@@ -76,6 +84,7 @@ def check_cubic_section(edges, basis, incident_row, diagonal_row, field):
     print(f"Normalized pencil coefficients in increasing t degree: {binary_coefficients}")
     print("The degree-24 H,D pencil has factors of degrees 1,1,10,11 with "
           "multiplicities 1,2,1,1. Its rational zeros are H-D and H+2D.")
+    print(f"The Frobenius fixed subspace of the companion algebra has dimension {fixed_dimension}.")
     # The cubic carries no twist in B; each quadratic has multiplicity 12.
     degree = 24*5 + 12*(0+1+2)
     assert degree == 156

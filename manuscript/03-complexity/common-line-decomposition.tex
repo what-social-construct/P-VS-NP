@@ -725,15 +725,19 @@ A proper morphism with finite fibers is finite
 from Proposition~\ref{prop:level-pencil-scheme}.
 \end{proof}
 
-\begin{theorem}[No level three-plane on the fixed face at five]
+\begin{theorem}[Level and residual decomposition on the fixed face at five]
 \label{thm:fixed-face-level-empty}
-Over \(\overline{\mathbb F}_5\) no full constant-permanent three-plane
-through \(J_4\) has a corrected-kernel direction on the face
-\([m_2:m_3]=[0:1]\). On its eligible quotient \(U\) one has
+On the eligible quotient \(U\) of the characteristic-five face
+\([m_2:m_3]=[0:1]\), the common-line image has the divisor decomposition
 \[
-   \mathcal F_{\rm lev}=\varnothing,\qquad Z_{\rm lev}=\varnothing,
-   \qquad \deg Z_{\rm lev}=0,\qquad R_{\rm lev}=Z.
+           Z=Z_{\rm lev}+R_{\rm lev}=0+R_{\rm lev}.
 \]
+In particular,
+\[
+   \mathcal F_{\rm lev}=\varnothing,\qquad \deg Z_{\rm lev}=0 .
+\]
+No full constant-permanent three-plane through \(J_4\) over
+\(\overline{\mathbb F}_5\) has a corrected-kernel direction on this face.
 \end{theorem}
 
 \begin{proof}
@@ -773,3 +777,36 @@ If one vertex sum is zero and another is nonzero, a permutation sends
 them to \(m_2,m_3\), placing the direction on the excluded face. If
 all sums are zero, the earlier exclusion of the base \(m_2=m_3=0\)
 already rules out even a quadratic common line.
+
+\paragraph{Irreducible components of the residual.}
+The ambient pure curve \(C\) is geometrically
+integral. On the smooth quotient \(U\), the surviving divisor
+\(R_{\rm lev}=Z\) is finite. For each closed point \(s\) of its support
+write \(a_s\) for its multiplicity and \(d_s=[\kappa(s):\mathbb F_5]\).
+Its decomposition into local schemes over \(\mathbb F_5\) is
+\[
+ R_{\rm lev}=\coprod_{s\in |Z|}
+      \operatorname{Spec}\!\left(\mathcal O_{U,s}/\mathfrak m_s^{a_s}\right),
+       \qquad \sum_s a_s d_s=\deg Z\le 1338 .
+\]
+Indeed each local ring of \(U\) at a closed point is a discrete
+valuation ring. After extending to \(\overline{\mathbb F}_5\), the
+piece at \(s\) splits into \(d_s\) points of length \(a_s\) in one
+Frobenius orbit. The verified exclusion above \(v^{25}-v=0\) gives
+\(v(s)\notin\mathbb F_{25}\), so each \(d_s\ge3\). Thus a nonempty
+residual on this face is geometrically reducible.
+
+There is an exact test for irreducibility over the ground field. Put
+\(A=\Gamma(Z,\mathcal O_Z)\) and \(F(a)=a^5\). Then
+\[
+ \#|Z|=\dim_{\mathbb F_5}\ker(F-\mathrm{id}:A\to A).
+\]
+In each local factor a fixed element reduces to a scalar in
+\(\mathbb F_5\). Subtracting that scalar gives a fixed nilpotent,
+which is zero by iterating Frobenius. Each local factor therefore
+contributes one dimension, including when \(a_s>1\). Dimension one
+is equivalent to a single irreducible component over \(\mathbb F_5\);
+dimension zero is the empty case. The set of supporting orbits of
+\(Z\) and their multiplicities are undetermined. As a separate check,
+on the explicitly computed degree-24 companion fiber this dimension
+is four, including the rational double point as one component.
