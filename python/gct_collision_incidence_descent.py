@@ -1,6 +1,6 @@
 """Recover an ordered permanent frame from a line in the invariant net at five."""
 
-from itertools import combinations, permutations, product
+from itertools import combinations, combinations_with_replacement, permutations, product
 from typing import NamedTuple
 
 import sympy as sp
@@ -15,7 +15,11 @@ from gct_collision_quadrics import quadratic_field
 from gct_common_line_witness import (
     LineWitness, common_line_witness, extension_of_degree, field_elements, horner, verifies_line,
 )
-from gct_permanent_plucker import pencil_coefficients
+from gct_permanent_plucker import PERMUTATIONS, pencil_coefficients
+
+
+LEVEL_SAMPLES = tuple(point for v in range(4)
+                      for point in ((0, 1, v), (0, -1, -v), (1, 1, v))) + ((0, 1, 4),)
 
 
 class OrderedLineWitness(NamedTuple):
@@ -23,6 +27,28 @@ class OrderedLineWitness(NamedTuple):
     coefficient_root: object
     roots: tuple
     frame: tuple
+
+    def is_level(self):
+        """Test whether this recovered common line lifts to a level three-plane."""
+        return not any(level_residual_values(self.frame, self.field))
+
+
+def level_residual_values(frame, field):
+    """Evaluate per(J+sB+tX+uY)-per(J) after the quadratic-stage check.
+
+    On a frame from ordered_line_frame all 13 values vanish exactly when
+    its plane is level. An arbitrary frame may still have lower-degree terms.
+    """
+    if field.characteristic() != 5:
+        raise ValueError("the thirteen-point test is defined in characteristic five")
+    base, x, y = frame
+    residuals = []
+    for s, t, u in LEVEL_SAMPLES:
+        entries = {ij: field.one + s*base[ij] + t*x[ij] + u*y[ij] for ij in base}
+        value = sum(sp.prod(entries[min(i, j), max(i, j)] for i, j in enumerate(order))
+                    for order in PERMUTATIONS)
+        residuals.append(value - field(24))
+    return tuple(residuals)
 
 
 def embed(value, source, root, target):
@@ -181,6 +207,36 @@ def check_extension_transport():
     print("Verified the transported F25 control frame and ordered cubic roots over F625.")
 
 
+def check_level_residual_values():
+    # After the quadratic-stage equations, the only possible terms are the
+    # two binary cubics (without/with s) and the binary quartic.
+    powers = [(i, degree-k, k) for i, degree in ((0, 3), (1, 3), (0, 4))
+              for k in range(degree+1)]
+    evaluation = sp.Matrix([[s**i*t**j*u**k for i, j, k in powers]
+                            for s, t, u in LEVEL_SAMPLES])
+    assert evaluation.det() % 5 != 0
+
+    # A level two-plane of symmetric stars gives a rank-two positive
+    # control. A separate diagonal direction gives a pure quartic residual.
+    field = sp.GF(5)
+    slots = tuple(combinations_with_replacement(range(4), 2))
+    x = {ij: field({(0, 1): 1, (0, 2): -1}.get(ij, 0)) for ij in slots}
+    y = {ij: field({(0, 2): 1, (0, 3): -1}.get(ij, 0)) for ij in slots}
+    diagonal = {ij: field((1, -1, 2, -2)[ij[0]] if ij[0] == ij[1] else 0)
+                for ij in slots}
+    zero = dict.fromkeys(slots, field.zero)
+    constants, _ = ring("c", field)
+    for frame, expected in (((zero, x, y), {}), ((zero, zero, diagonal), {(0, 0, 4): 4})):
+        coefficients = pencil_coefficients(constants, [
+            {ij: constants(a) for ij, a in direction.items()} for direction in frame])
+        assert coefficients == {power: constants(a) for power, a in expected.items()}
+        assert level_residual_values(frame, field) == tuple(
+            sum((a*s**i*t**j*u**k for (i, j, k), a in expected.items()), field.zero)
+            for s, t, u in LEVEL_SAMPLES)
+    print("Verified the invertible 13-point permanent test and the level and quartic controls.")
+
+
 if __name__ == "__main__":
     check_transport()
     check_extension_transport()
+    check_level_residual_values()

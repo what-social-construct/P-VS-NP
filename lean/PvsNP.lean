@@ -4,6 +4,7 @@ public import HCP.CoupledSignResidual
 public import PvsNP.AffineDisclosure
 public import PvsNP.AgreementCertificate
 public import PvsNP.BranchCertificate
+public import PvsNP.CommonLineInterpolation
 public import PvsNP.Compatibility
 public import PvsNP.DiscriminantIdeal
 public import PvsNP.EdgeDiscriminant

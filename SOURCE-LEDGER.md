@@ -688,6 +688,14 @@ the henselian local Artin rings of the scheme-theoretic image.
 [Stacks, schemes étale over a field](https://stacks.math.columbia.edu/tag/03QR)
 · [Stacks, finite étale extensions of henselian local rings](https://stacks.math.columbia.edu/tag/04GK)
 
+The thirteen-value criterion is a calculation on this same common-line
+chart over a commutative $\mathbb F_5$-algebra. The pure, polar and
+quadratic identities hold in the chart ring. The scalar differences in
+the two Vandermonde determinants are already units in $\mathbb F_5$,
+so the coefficient recovery also applies after nonreduced base change.
+[Permanent calculation](manuscript/03-complexity/common-line-decomposition.tex) ·
+[Vandermonde determinant in the pinned Mathlib revision](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Vandermonde.lean#L220-L238)
+
 The residual proposition uses irreducibility and multidegrees of the
 universal homogeneous resultant. On a transverse section its eight
 evaluation factors give the auxiliary square. Specialization in the

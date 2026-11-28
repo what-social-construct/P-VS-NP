@@ -133,16 +133,62 @@ to 1,344 for closed points of \(U\) over \(\mathbb F_5\). Recover
 ten row-echelon charts decide geometric existence in \(\mathcal F_s\).
 On a proper chart the field search recovers a line. Over a common
 field of definition, evaluating its two rows at the ordered roots
-recovers a frame \((B,X_1,X_2)\) and permits direct verification in
-the original permanent. If a full constant-permanent plane is required,
-impose the remaining cubic and quartic tangent coefficients on the
-whole line family. Vanishing of all nonconstant coefficients is
-preserved under a change of frame, adding multiples of \(B\) to its
-representatives, and permuting the vertices. It therefore defines a
-closed subfamily with the same ordering decomposition. For an individual
-recovered line these extra coefficients test that particular lift.
-The complete factorization of \((h)_0\) and the list of its nonempty line
-fibers remain undetermined.
+recovers a frame \((B,X,Y)\). The following test cuts out the full level
+planes in this family.
+
+\begin{proposition}[Thirteen permanent values for a level three-plane]
+\label{prop:common-line-level-test}
+Work on a frame chart of the labeled common-line incidence of
+Theorem~\ref{thm:common-line-decomposition}, over any commutative
+\(\mathbb F_5\)-algebra \(R\). For its lifted frame \((B,X,Y)\), write
+\[
+ F(s,t,u)=\operatorname{per}(J_4+sB+tX+uY)-\operatorname{per}(J_4).
+\]
+The following thirteen values generate the coefficient ideal of \(F\):
+\[
+\begin{aligned}
+ &F(0,1,v),\quad F(0,-1,-v),\quad F(1,1,v)
+       &&(v=0,1,2,3),\\
+ &F(0,1,4). &&
+\end{aligned}
+\]
+Their simultaneous vanishing is equivalent to the polynomial identity
+\(F=0\) on the lifted three-plane. They cut out, with its scheme
+structure, the incidence of level three-planes through the specified
+kernel direction on this face.
+\end{proposition}
+
+\begin{proof}
+The pure equations kill the terms of \((t,u)\)-degree zero, the tangent
+and polar equations kill those of degree one, and the three restricted
+quadrics kill those of degree two. Since the permanent has degree four,
+there remain binary forms \(C,D\) of degree three and \(Q\) of degree
+four such that
+\[
+                F(s,t,u)=C(t,u)+sD(t,u)+Q(t,u).
+\]
+For each of the first four values of \(v\), half the difference and
+half the sum of the first two samples recover \(C(1,v)\) and \(Q(1,v)\),
+respectively. Subtracting the first sample from the third gives \(D(1,v)\).
+The cubic Vandermonde matrix at \(0,1,2,3\) has unit determinant in
+\(\mathbb F_5\). Thus we recover the coefficients of \(C,D\) and can
+subtract \(C(1,4)\) from the final sample to obtain \(Q(1,4)\).
+The quartic Vandermonde matrix at all five scalars also has unit determinant.
+Every coefficient is therefore an \(R\)-linear combination of the
+samples. Evaluation gives the reverse inclusion of ideals.
+
+On the frame chart, taking the inverse image of the quotient two-space
+recovers the rank-three subbundle containing \(RB\). A change of basis
+or of lifts makes an invertible linear substitution in \(F\), preserving
+its coefficient ideal. Permuting the ordered roots relabels vertices and
+preserves the permanent. The ideals consequently glue and descend to a
+closed subscheme \(\mathcal F_{\rm lev}\subseteq\mathcal F\), with labeled
+incidence \(T\times_U\mathcal F_{\rm lev}\).
+\end{proof}
+
+Whether \(\mathcal F_{\rm lev}\) has a geometric point on this face
+remains open. The complete factorization of \((h)_0\) and the list of
+its nonempty common-line fibers are also undetermined.
 
 \paragraph{A complete test over quadratic slopes.}
 For each of the ten monic irreducible quadratics \(v^2+sv+t\) over
